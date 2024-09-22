@@ -108,4 +108,9 @@ public class SysDictDataServiceImpl implements ISysDictDataService
         }
         return row;
     }
+
+    @Override
+    public SysDictData selectDicValue(String dictType, String dictLabel) {
+        return dictDataMapper.selectDicValue(dictType, dictLabel);
+    }
 }

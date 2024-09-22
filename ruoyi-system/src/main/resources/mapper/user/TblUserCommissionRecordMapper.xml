@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.user.mapper.TblUserCommissionRecordMapper">
+    
+    <resultMap type="TblUserCommissionRecord" id="TblUserCommissionRecordResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="transTime"    column="trans_time"    />
+        <result property="transType"    column="trans_type"    />
+        <result property="transAmt"    column="trans_amt"    />
+        <result property="channelFee"    column="channel_fee"    />
+        <result property="profitMethod"    column="profit_method"    />
+        <result property="commissionAmount"    column="commission_amount"    />
+        <result property="commissionRate"    column="commission_rate"    />
+        <result property="respDate"    column="resp_date"    />
+        <result property="respTime"    column="resp_time"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="ttId"    column="tt_id"    />
+    </resultMap>
+
+    <sql id="selectTblUserCommissionRecordVo">
+        select id, user_id, trans_time, trans_type, trans_amt, channel_fee, profit_method, commission_amount, commission_rate, resp_date, resp_time, created_at, tt_id from tbl_user_commission_record
+    </sql>
+
+    <select id="selectTblUserCommissionRecordList" parameterType="TblUserCommissionRecord" resultMap="TblUserCommissionRecordResult">
+        <include refid="selectTblUserCommissionRecordVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="transTime != null "> and trans_time = #{transTime}</if>
+            <if test="transType != null  and transType != ''"> and trans_type = #{transType}</if>
+            <if test="transAmt != null "> and trans_amt = #{transAmt}</if>
+            <if test="channelFee != null "> and channel_fee = #{channelFee}</if>
+            <if test="profitMethod != null  and profitMethod != ''"> and profit_method = #{profitMethod}</if>
+            <if test="commissionAmount != null "> and commission_amount = #{commissionAmount}</if>
+            <if test="commissionRate != null "> and commission_rate = #{commissionRate}</if>
+            <if test="respDate != null  and respDate != ''"> and resp_date = #{respDate}</if>
+            <if test="respTime != null "> and resp_time = #{respTime}</if>
+            <if test="createdAt != null "> and created_at = #{createdAt}</if>
+            <if test="ttId != null "> and tt_id = #{ttId}</if>
+        </where>
+    </select>
+    
+    <select id="selectTblUserCommissionRecordById" parameterType="Long" resultMap="TblUserCommissionRecordResult">
+        <include refid="selectTblUserCommissionRecordVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTblUserCommissionRecord" parameterType="TblUserCommissionRecord">
+        insert into tbl_user_commission_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="transTime != null">trans_time,</if>
+            <if test="transType != null">trans_type,</if>
+            <if test="transAmt != null">trans_amt,</if>
+            <if test="channelFee != null">channel_fee,</if>
+            <if test="profitMethod != null">profit_method,</if>
+            <if test="commissionAmount != null">commission_amount,</if>
+            <if test="commissionRate != null">commission_rate,</if>
+            <if test="respDate != null">resp_date,</if>
+            <if test="respTime != null">resp_time,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="ttId != null ">tt_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="transTime != null">#{transTime},</if>
+            <if test="transType != null">#{transType},</if>
+            <if test="transAmt != null">#{transAmt},</if>
+            <if test="channelFee != null">#{channelFee},</if>
+            <if test="profitMethod != null">#{profitMethod},</if>
+            <if test="commissionAmount != null">#{commissionAmount},</if>
+            <if test="commissionRate != null">#{commissionRate},</if>
+            <if test="respDate != null">#{respDate},</if>
+            <if test="respTime != null">#{respTime},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="ttId != null ">#{ttId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTblUserCommissionRecord" parameterType="TblUserCommissionRecord">
+        update tbl_user_commission_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="transTime != null">trans_time = #{transTime},</if>
+            <if test="transType != null">trans_type = #{transType},</if>
+            <if test="transAmt != null">trans_amt = #{transAmt},</if>
+            <if test="channelFee != null">channel_fee = #{channelFee},</if>
+            <if test="profitMethod != null">profit_method = #{profitMethod},</if>
+            <if test="commissionAmount != null">commission_amount = #{commissionAmount},</if>
+            <if test="commissionRate != null">commission_rate = #{commissionRate},</if>
+            <if test="respDate != null">resp_date = #{respDate},</if>
+            <if test="respTime != null">resp_time = #{respTime},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="ttId != null ">tt_id = #{ttId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTblUserCommissionRecordById" parameterType="Long">
+        delete from tbl_user_commission_record where id = #{id}
+    </delete>
+
+    <delete id="deleteTblUserCommissionRecordByIds" parameterType="String">
+        delete from tbl_user_commission_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

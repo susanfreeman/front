@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.route.mapper.TblRouteInfoMapper">
+    
+    <resultMap type="TblRouteInfo" id="TblRouteInfoResult">
+        <result property="riId"    column="ri_id"    />
+        <result property="uiId"    column="ui_id"    />
+        <result property="cardHead"    column="card_head"    />
+        <result property="ciId"    column="ci_id"    />
+    </resultMap>
+
+    <sql id="selectTblRouteInfoVo">
+        select ri_id, ui_id, card_head, ci_id from tbl_route_info
+    </sql>
+
+    <select id="selectTblRouteInfoList" parameterType="TblRouteInfo" resultMap="TblRouteInfoResult">
+        <include refid="selectTblRouteInfoVo"/>
+        <where>  
+            <if test="uiId != null "> and ui_id = #{uiId}</if>
+            <if test="cardHead != null  and cardHead != ''"> and card_head = #{cardHead}</if>
+            <if test="ciId != null "> and ci_id = #{ciId}</if>
+        </where>
+    </select>
+    
+    <select id="selectTblRouteInfoByRiId" parameterType="Long" resultMap="TblRouteInfoResult">
+        <include refid="selectTblRouteInfoVo"/>
+        where ri_id = #{riId}
+    </select>
+
+    <insert id="insertTblRouteInfo" parameterType="TblRouteInfo" useGeneratedKeys="true" keyProperty="riId">
+        insert into tbl_route_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uiId != null">ui_id,</if>
+            <if test="cardHead != null">card_head,</if>
+            <if test="ciId != null">ci_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uiId != null">#{uiId},</if>
+            <if test="cardHead != null">#{cardHead},</if>
+            <if test="ciId != null">#{ciId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTblRouteInfo" parameterType="TblRouteInfo">
+        update tbl_route_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uiId != null">ui_id = #{uiId},</if>
+            <if test="cardHead != null">card_head = #{cardHead},</if>
+            <if test="ciId != null">ci_id = #{ciId},</if>
+        </trim>
+        where ri_id = #{riId}
+    </update>
+
+    <delete id="deleteTblRouteInfoByRiId" parameterType="Long">
+        delete from tbl_route_info where ri_id = #{riId}
+    </delete>
+
+    <delete id="deleteTblRouteInfoByRiIds" parameterType="String">
+        delete from tbl_route_info where ri_id in 
+        <foreach item="riId" collection="array" open="(" separator="," close=")">
+            #{riId}
+        </foreach>
+    </delete>
+
+</mapper>

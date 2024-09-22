@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.user.mapper.TblUserInfoMapper">
+
+    <resultMap type="TblUserInfo" id="TblUserInfoResult">
+        <result property="uiId"    column="ui_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="curr"    column="curr"    />
+        <result property="firstName"    column="first_name"    />
+        <result property="lastName"    column="last_name"    />
+        <result property="postCode"    column="post_code"    />
+        <result property="country"    column="country"    />
+        <result property="province"    column="province"    />
+        <result property="city"    column="city"    />
+        <result property="email"    column="email"    />
+        <result property="level"    column="level"    />
+        <result property="balance"    column="balance"    />
+        <result property="balanceFroze"    column="balance_froze"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="lastUpdateTime"    column="last_update_time"    />
+        <result property="code2fa"    column="code_2fa"    />
+        <result property="aiId"    column="ai_id"    />
+        <result property="kycFlag"    column="kyc_flag"    />
+        <result property="idType"    column="id_type"    />
+        <result property="idNo"    column="id_no"    />
+        <result property="passportImg"    column="passport_img"    />
+        <result property="faceImg"    column="face_img"    />
+        <result property="birthday"    column="birthday"    />
+        <result property="tronAddr"    column="tron_addr"    />
+        <result property="usdcAddr"    column="usdc_addr"    />
+        <result property="mobile"    column="mobile"    />
+        <result property="mobilePrefix"    column="mobile_prefix"    />
+        <result property="address"    column="address"    />
+        <result property="inviteUri"    column="invite_uri"    />
+        <result property="balanceUsdt"    column="balance_usdt"    />
+        <result property="balanceGbp"    column="balance_gbp"    />
+        <result property="inviteUiId"    column="invite_ui_id"    />
+        <result property="balanceEur"    column="balance_eur"    />
+    </resultMap>
+
+    <sql id="selectTblUserInfoVo">
+        select ui_id, user_id, curr, first_name, last_name, post_code, country, province, city, email, level, balance, balance_froze, create_time, last_update_time, code_2fa, ai_id, kyc_flag, id_type, id_no, passport_img, face_img, birthday, tron_addr, usdc_addr, mobile, mobile_prefix, address, invite_uri, balance_usdt, balance_gbp, invite_ui_id, balance_eur from tbl_user_info
+    </sql>
+
+    <select id="selectTblUserInfoList" parameterType="TblUserInfo" resultMap="TblUserInfoResult">
+        <include refid="selectTblUserInfoVo"/>
+        <where>
+            <if test="userId != null ">and user_id = #{userId}</if>
+            <if test="curr != null  and curr != ''">and curr = #{curr}</if>
+            <if test="firstName != null  and firstName != ''">and first_name like concat('%', #{firstName}, '%')</if>
+            <if test="lastName != null  and lastName != ''">and last_name like concat('%', #{lastName}, '%')</if>
+            <if test="postCode != null  and postCode != ''">and post_code = #{postCode}</if>
+            <if test="country != null  and country != ''">and country = #{country}</if>
+            <if test="province != null  and province != ''">and province = #{province}</if>
+            <if test="city != null  and city != ''">and city = #{city}</if>
+            <if test="email != null  and email != ''">and email = #{email}</if>
+            <if test="level != null  and level != ''">and level = #{level}</if>
+            <if test="balance != null ">and balance = #{balance}</if>
+            <if test="balanceFroze != null ">and balance_froze = #{balanceFroze}</if>
+            <if test="lastUpdateTime != null ">and last_update_time = #{lastUpdateTime}</if>
+            <if test="code2fa != null  and code2fa != ''">and code_2fa = #{code2fa}</if>
+            <if test="aiId != null ">and ai_id = #{aiId}</if>
+            <if test="kycFlag != null  and kycFlag != ''">and kyc_flag = #{kycFlag}</if>
+            <if test="idType != null  and idType != ''">and id_type = #{idType}</if>
+            <if test="idNo != null  and idNo != ''">and id_no = #{idNo}</if>
+            <if test="passportImg != null  and passportImg != ''">and passport_img = #{passportImg}</if>
+            <if test="faceImg != null  and faceImg != ''">and face_img = #{faceImg}</if>
+            <if test="birthday != null ">and birthday = #{birthday}</if>
+            <if test="tronAddr != null  and tronAddr != ''">and tron_addr = #{tronAddr}</if>
+            <if test="usdcAddr != null  and usdcAddr != ''">and usdc_addr = #{usdcAddr}</if>
+            <if test="mobile != null  and mobile != ''"> and mobile = #{mobile}</if>
+            <if test="mobilePrefix != null  and mobilePrefix != ''"> and mobile_prefix = #{mobilePrefix}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="inviteUri != null  and inviteUri != ''"> and invite_uri = #{inviteUri}</if>
+            <if test="balanceUsdt != null "> and balance_usdt = #{balanceUsdt}</if>
+            <if test="balanceGbp != null "> and balance_gbp = #{balanceGbp}</if>
+            <if test="inviteUiId != null "> and invite_ui_id = #{inviteUiId}</if>
+            <if test="balanceEur != null "> and balance_eur = #{balanceEur}</if>
+        </where>
+    </select>
+
+    <select id="selectTblUserInfoListByCoinIsnotNull" parameterType="TblUserInfo" resultMap="TblUserInfoResult">
+        <include refid="selectTblUserInfoVo"/>
+        <where>
+            <if test="tronAddr != null  and tronAddr != ''">and tron_addr is not null</if>
+            <if test="usdcAddr != null  and usdcAddr != ''">and usdc_addr is not null</if>
+        </where>
+    </select>
+
+    <select id="selectTblUserInfoByUiId" parameterType="Long" resultMap="TblUserInfoResult">
+        <include refid="selectTblUserInfoVo"/>
+        where ui_id = #{uiId}
+    </select>
+
+    <insert id="insertTblUserInfo" parameterType="TblUserInfo" useGeneratedKeys="true" keyProperty="uiId">
+        insert into tbl_user_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="curr != null">curr,</if>
+            <if test="firstName != null">first_name,</if>
+            <if test="lastName != null">last_name,</if>
+            <if test="postCode != null">post_code,</if>
+            <if test="country != null">country,</if>
+            <if test="province != null">province,</if>
+            <if test="city != null">city,</if>
+            <if test="email != null">email,</if>
+            <if test="level != null">level,</if>
+            <if test="balance != null">balance,</if>
+            <if test="balanceFroze != null">balance_froze,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="lastUpdateTime != null">last_update_time,</if>
+            <if test="code2fa != null">code_2fa,</if>
+            <if test="aiId != null">ai_id,</if>
+            <if test="kycFlag != null">kyc_flag,</if>
+            <if test="idType != null">id_type,</if>
+            <if test="idNo != null">id_no,</if>
+            <if test="passportImg != null">passport_img,</if>
+            <if test="faceImg != null">face_img,</if>
+            <if test="birthday != null">birthday,</if>
+            <if test="tronAddr != null">tron_addr,</if>
+            <if test="usdcAddr != null">usdc_addr,</if>
+            <if test="mobile != null">mobile,</if>
+            <if test="mobilePrefix != null">mobile_prefix,</if>
+            <if test="address != null">address,</if>
+            <if test="inviteUri != null">invite_uri,</if>
+            <if test="balanceUsdt != null">balance_usdt,</if>
+            <if test="balanceGbp != null">balance_gbp,</if>
+            <if test="inviteUiId != null">invite_ui_id,</if>
+            <if test="balanceEur != null">balance_eur,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="curr != null">#{curr},</if>
+            <if test="firstName != null">#{firstName},</if>
+            <if test="lastName != null">#{lastName},</if>
+            <if test="postCode != null">#{postCode},</if>
+            <if test="country != null">#{country},</if>
+            <if test="province != null">#{province},</if>
+            <if test="city != null">#{city},</if>
+            <if test="email != null">#{email},</if>
+            <if test="level != null">#{level},</if>
+            <if test="balance != null">#{balance},</if>
+            <if test="balanceFroze != null">#{balanceFroze},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="lastUpdateTime != null">#{lastUpdateTime},</if>
+            <if test="code2fa != null">#{code2fa},</if>
+            <if test="aiId != null">#{aiId},</if>
+            <if test="kycFlag != null">#{kycFlag},</if>
+            <if test="idType != null">#{idType},</if>
+            <if test="idNo != null">#{idNo},</if>
+            <if test="passportImg != null">#{passportImg},</if>
+            <if test="faceImg != null">#{faceImg},</if>
+            <if test="birthday != null">#{birthday},</if>
+            <if test="tronAddr != null">#{tronAddr},</if>
+            <if test="usdcAddr != null">#{usdcAddr},</if>
+            <if test="mobile != null">#{mobile},</if>
+            <if test="mobilePrefix != null">#{mobilePrefix},</if>
+            <if test="address != null">#{address},</if>
+            <if test="inviteUri != null">#{inviteUri},</if>
+            <if test="balanceUsdt != null">#{balanceUsdt},</if>
+            <if test="balanceGbp != null">#{balanceGbp},</if>
+            <if test="inviteUiId != null">#{inviteUiId},</if>
+            <if test="balanceEur != null">#{balanceEur},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTblUserInfo" parameterType="TblUserInfo">
+        update tbl_user_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="curr != null">curr = #{curr},</if>
+            <if test="firstName != null">first_name = #{firstName},</if>
+            <if test="lastName != null">last_name = #{lastName},</if>
+            <if test="postCode != null">post_code = #{postCode},</if>
+            <if test="country != null">country = #{country},</if>
+            <if test="province != null">province = #{province},</if>
+            <if test="city != null">city = #{city},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="level != null">level = #{level},</if>
+            <if test="balance != null">balance = #{balance},</if>
+            <if test="balanceFroze != null">balance_froze = #{balanceFroze},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="lastUpdateTime != null">last_update_time = #{lastUpdateTime},</if>
+            <if test="code2fa != null">code_2fa = #{code2fa},</if>
+            <if test="aiId != null">ai_id = #{aiId},</if>
+            <if test="kycFlag != null">kyc_flag = #{kycFlag},</if>
+            <if test="idType != null">id_type = #{idType},</if>
+            <if test="idNo != null">id_no = #{idNo},</if>
+            <if test="passportImg != null">passport_img = #{passportImg},</if>
+            <if test="faceImg != null">face_img = #{faceImg},</if>
+            <if test="birthday != null">birthday = #{birthday},</if>
+            <if test="tronAddr != null">tron_addr = #{tronAddr},</if>
+            <if test="usdcAddr != null">usdc_addr = #{usdcAddr},</if>
+            <if test="mobile != null">mobile = #{mobile},</if>
+            <if test="mobilePrefix != null">mobile_prefix = #{mobilePrefix},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="inviteUri != null">invite_uri = #{inviteUri},</if>
+            <if test="balanceUsdt != null">balance_usdt = #{balanceUsdt},</if>
+            <if test="balanceGbp != null">balance_gbp = #{balanceGbp},</if>
+            <if test="inviteUiId != null">invite_ui_id = #{inviteUiId},</if>
+            <if test="balanceEur != null">balance_eur = #{balanceEur},</if>
+        </trim>
+        where ui_id = #{uiId}
+    </update>
+
+    <delete id="deleteTblUserInfoByUiId" parameterType="Long">
+        delete from tbl_user_info where ui_id = #{uiId}
+    </delete>
+
+    <delete id="deleteTblUserInfoByUiIds" parameterType="String">
+        delete from tbl_user_info where ui_id in
+        <foreach item="uiId" collection="array" open="(" separator="," close=")">
+            #{uiId}
+        </foreach>
+    </delete>
+
+    <update id="updateTblUserInfoBalance" parameterType="TblUserInfo">
+        update tbl_user_info set balance = balance + #{balance},last_update_time = now()
+        <where>
+            ui_id = #{uiId}
+            <if test="balance != null and balance &lt; 0 " > and balance >= cast(#{balance} as DOUBLE)</if>
+        </where>
+    </update>
+
+
+    <update id="updateTblUserInfoBalanceExchange" parameterType="java.util.Map">
+        update tbl_user_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sourceCurr != null and sourceCurr == 'USDT' " >balance_usdt = balance_usdt - cast(#{sourceAmount} as DOUBLE),</if>
+            <if test="sourceCurr != null and sourceCurr == 'USD' " >balance = balance - cast(#{sourceAmount} as DOUBLE),</if>
+            <if test="sourceCurr != null and sourceCurr == 'GBP' " >balance_gbp = balance_gbp - cast(#{sourceAmount} as DOUBLE),</if>
+            <if test="sourceCurr != null and sourceCurr == 'EUR' " >balance_eur = balance_eur - cast(#{sourceAmount} as DOUBLE),</if>
+            <if test="targetCurr != null and targetCurr == 'USDT' " >balance_usdt = balance_usdt + cast(#{targetAmount} as DOUBLE),</if>
+            <if test="targetCurr != null and targetCurr == 'USD' " >balance = balance + cast(#{targetAmount} as DOUBLE),</if>
+            <if test="targetCurr != null and targetCurr == 'GBP' " >balance_gbp = balance_gbp + cast(#{targetAmount} as DOUBLE),</if>
+            <if test="targetCurr != null and targetCurr == 'EUR' " >balance_eur = balance_eur + cast(#{targetAmount} as DOUBLE),</if>
+        </trim>
+        <where>
+            ui_id = #{uiId} and
+            <if test="sourceCurr != null and sourceCurr == 'USDT' " >balance_usdt >= cast(#{sourceAmount} as DOUBLE)</if>
+            <if test="sourceCurr != null and sourceCurr == 'USD' " >balance >= cast(#{sourceAmount} as DOUBLE)</if>
+            <if test="sourceCurr != null and sourceCurr == 'GBP' " >balance_gbp >= cast(#{sourceAmount} as DOUBLE)</if>
+            <if test="sourceCurr != null and sourceCurr == 'EUR' " >balance_eur >= cast(#{sourceAmount} as DOUBLE)</if>
+        </where>
+    </update>
+
+    <select id="selectTblUserInfoByInviteUri" resultMap="TblUserInfoResult">
+        <include refid="selectTblUserInfoVo"/>
+        where invite_uri = #{inviteUri}
+    </select>
+
+    <select id="selectTblUserInfoByCarNo" resultMap="TblUserInfoResult">
+        select a.* from tbl_user_info a LEFT JOIN tbl_user_open_card b on a.ui_id = b.ui_id where b.card_no = #{carNo}
+    </select>
+
+</mapper>

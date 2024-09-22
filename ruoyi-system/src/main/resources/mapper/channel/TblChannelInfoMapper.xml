@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.route.mapper.TblChannelInfoMapper">
+    
+    <resultMap type="TblChannelInfo" id="TblChannelInfoResult">
+        <result property="ciId"    column="ci_id"    />
+        <result property="ciAopName"    column="ci_aop_name"    />
+        <result property="ciUri"    column="ci_uri"    />
+        <result property="appId"    column="app_id"    />
+        <result property="secretKey"    column="secret_key"    />
+        <result property="ciNo"    column="ci_no"    />
+        <result property="ciName"    column="ci_name"    />
+        <result property="ciPrivateKey"    column="ci_private_key"    />
+        <result property="ciPublicKey"    column="ci_public_key"    />
+    </resultMap>
+
+    <sql id="selectTblChannelInfoVo">
+        select ci_id, ci_aop_name, ci_uri, app_id, secret_key, ci_no, ci_name, ci_private_key, ci_public_key from tbl_channel_info
+    </sql>
+
+    <select id="selectTblChannelInfoList" parameterType="TblChannelInfo" resultMap="TblChannelInfoResult">
+        <include refid="selectTblChannelInfoVo"/>
+        <where>  
+            <if test="ciAopName != null  and ciAopName != ''"> and ci_aop_name like concat('%', #{ciAopName}, '%')</if>
+            <if test="ciUri != null  and ciUri != ''"> and ci_uri = #{ciUri}</if>
+            <if test="appId != null  and appId != ''"> and app_id = #{appId}</if>
+            <if test="secretKey != null  and secretKey != ''"> and secret_key = #{secretKey}</if>
+            <if test="ciNo != null  and ciNo != ''"> and ci_no = #{ciNo}</if>
+            <if test="ciName != null  and ciName != ''"> and ci_name like concat('%', #{ciName}, '%')</if>
+            <if test="ciPrivateKey != null  and ciPrivateKey != ''"> and ci_private_key = #{ciPrivateKey}</if>
+            <if test="ciPublicKey != null  and ciPublicKey != ''"> and ci_public_key = #{ciPublicKey}</if>
+        </where>
+    </select>
+    
+    <select id="selectTblChannelInfoByCiId" parameterType="Long" resultMap="TblChannelInfoResult">
+        <include refid="selectTblChannelInfoVo"/>
+        where ci_id = #{ciId}
+    </select>
+
+    <insert id="insertTblChannelInfo" parameterType="TblChannelInfo" useGeneratedKeys="true" keyProperty="ciId">
+        insert into tbl_channel_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ciAopName != null">ci_aop_name,</if>
+            <if test="ciUri != null">ci_uri,</if>
+            <if test="appId != null">app_id,</if>
+            <if test="secretKey != null">secret_key,</if>
+            <if test="ciNo != null">ci_no,</if>
+            <if test="ciName != null">ci_name,</if>
+            <if test="ciPrivateKey != null">ci_private_key,</if>
+            <if test="ciPublicKey != null">ci_public_key,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ciAopName != null">#{ciAopName},</if>
+            <if test="ciUri != null">#{ciUri},</if>
+            <if test="appId != null">#{appId},</if>
+            <if test="secretKey != null">#{secretKey},</if>
+            <if test="ciNo != null">#{ciNo},</if>
+            <if test="ciName != null">#{ciName},</if>
+            <if test="ciPrivateKey != null">#{ciPrivateKey},</if>
+            <if test="ciPublicKey != null">#{ciPublicKey},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTblChannelInfo" parameterType="TblChannelInfo">
+        update tbl_channel_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ciAopName != null">ci_aop_name = #{ciAopName},</if>
+            <if test="ciUri != null">ci_uri = #{ciUri},</if>
+            <if test="appId != null">app_id = #{appId},</if>
+            <if test="secretKey != null">secret_key = #{secretKey},</if>
+            <if test="ciNo != null">ci_no = #{ciNo},</if>
+            <if test="ciName != null">ci_name = #{ciName},</if>
+            <if test="ciPrivateKey != null">ci_private_key = #{ciPrivateKey},</if>
+            <if test="ciPublicKey != null">ci_public_key = #{ciPublicKey},</if>
+        </trim>
+        where ci_id = #{ciId}
+    </update>
+
+    <delete id="deleteTblChannelInfoByCiId" parameterType="Long">
+        delete from tbl_channel_info where ci_id = #{ciId}
+    </delete>
+
+    <delete id="deleteTblChannelInfoByCiIds" parameterType="String">
+        delete from tbl_channel_info where ci_id in 
+        <foreach item="ciId" collection="array" open="(" separator="," close=")">
+            #{ciId}
+        </foreach>
+    </delete>
+
+</mapper>

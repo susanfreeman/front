@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.notify.cardApply.mapper.TblNotifyCardApplyMapper">
+    
+    <resultMap type="TblNotifyCardApply" id="TblNotifyCardApplyResult">
+        <result property="id"    column="id"    />
+        <result property="channelNo"    column="channel_no"    />
+        <result property="platformId"    column="platform_id"    />
+        <result property="channelTransId"    column="channel_trans_id"    />
+        <result property="cardNo"    column="card_no"    />
+        <result property="status"    column="status"    />
+        <result property="respCardStatus"    column="resp_card_status"    />
+        <result property="respCardMsg"    column="resp_card_msg"    />
+        <result property="currency"    column="currency"    />
+        <result property="channelFee"    column="channel_fee"    />
+        <result property="respDate"    column="resp_date"    />
+        <result property="respTime"    column="resp_time"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="rsv1"    column="rsv1"    />
+        <result property="rsv2"    column="rsv2"    />
+    </resultMap>
+
+    <sql id="selectTblNotifyCardApplyVo">
+        select id, channel_no, platform_id, channel_trans_id, card_no, status, resp_card_status, resp_card_msg, currency, channel_fee, resp_date, resp_time, created_at, rsv1, rsv2 from tbl_notify_card_apply
+    </sql>
+
+    <select id="selectTblNotifyCardApplyList" parameterType="TblNotifyCardApply" resultMap="TblNotifyCardApplyResult">
+        <include refid="selectTblNotifyCardApplyVo"/>
+        <where>  
+            <if test="channelNo != null  and channelNo != ''"> and channel_no = #{channelNo}</if>
+            <if test="platformId != null  and platformId != ''"> and platform_id = #{platformId}</if>
+            <if test="channelTransId != null  and channelTransId != ''"> and channel_trans_id = #{channelTransId}</if>
+            <if test="cardNo != null  and cardNo != ''"> and card_no = #{cardNo}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="respCardStatus != null  and respCardStatus != ''"> and resp_card_status = #{respCardStatus}</if>
+            <if test="respCardMsg != null  and respCardMsg != ''"> and resp_card_msg = #{respCardMsg}</if>
+            <if test="currency != null  and currency != ''"> and currency = #{currency}</if>
+            <if test="channelFee != null "> and channel_fee = #{channelFee}</if>
+            <if test="respDate != null  and respDate != ''"> and resp_date = #{respDate}</if>
+            <if test="respTime != null "> and resp_time = #{respTime}</if>
+            <if test="createdAt != null "> and created_at = #{createdAt}</if>
+            <if test="rsv1 != null  and rsv1 != ''"> and rsv1 = #{rsv1}</if>
+            <if test="rsv2 != null  and rsv2 != ''"> and rsv2 = #{rsv2}</if>
+        </where>
+    </select>
+    
+    <select id="selectTblNotifyCardApplyById" parameterType="Long" resultMap="TblNotifyCardApplyResult">
+        <include refid="selectTblNotifyCardApplyVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectTblNotifyTransByTranId" resultMap="TblNotifyCardApplyResult">
+        <include refid="selectTblNotifyCardApplyVo"/>
+        where platform_id = #{ttId}
+    </select>
+
+    <insert id="insertTblNotifyCardApply" parameterType="TblNotifyCardApply">
+        insert into tbl_notify_card_apply
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="channelNo != null">channel_no,</if>
+            <if test="platformId != null">platform_id,</if>
+            <if test="channelTransId != null">channel_trans_id,</if>
+            <if test="cardNo != null">card_no,</if>
+            <if test="status != null">status,</if>
+            <if test="respCardStatus != null">resp_card_status,</if>
+            <if test="respCardMsg != null">resp_card_msg,</if>
+            <if test="currency != null">currency,</if>
+            <if test="channelFee != null">channel_fee,</if>
+            <if test="respDate != null">resp_date,</if>
+            <if test="respTime != null">resp_time,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="rsv1 != null">rsv1,</if>
+            <if test="rsv2 != null">rsv2,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="channelNo != null">#{channelNo},</if>
+            <if test="platformId != null">#{platformId},</if>
+            <if test="channelTransId != null">#{channelTransId},</if>
+            <if test="cardNo != null">#{cardNo},</if>
+            <if test="status != null">#{status},</if>
+            <if test="respCardStatus != null">#{respCardStatus},</if>
+            <if test="respCardMsg != null">#{respCardMsg},</if>
+            <if test="currency != null">#{currency},</if>
+            <if test="channelFee != null">#{channelFee},</if>
+            <if test="respDate != null">#{respDate},</if>
+            <if test="respTime != null">#{respTime},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="rsv1 != null">#{rsv1},</if>
+            <if test="rsv2 != null">#{rsv2},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTblNotifyCardApply" parameterType="TblNotifyCardApply">
+        update tbl_notify_card_apply
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="channelNo != null">channel_no = #{channelNo},</if>
+            <if test="platformId != null">platform_id = #{platformId},</if>
+            <if test="channelTransId != null">channel_trans_id = #{channelTransId},</if>
+            <if test="cardNo != null">card_no = #{cardNo},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="respCardStatus != null">resp_card_status = #{respCardStatus},</if>
+            <if test="respCardMsg != null">resp_card_msg = #{respCardMsg},</if>
+            <if test="currency != null">currency = #{currency},</if>
+            <if test="channelFee != null">channel_fee = #{channelFee},</if>
+            <if test="respDate != null">resp_date = #{respDate},</if>
+            <if test="respTime != null">resp_time = #{respTime},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="rsv1 != null">rsv1 = #{rsv1},</if>
+            <if test="rsv2 != null">rsv2 = #{rsv2},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTblNotifyCardApplyById" parameterType="Long">
+        delete from tbl_notify_card_apply where id = #{id}
+    </delete>
+
+    <delete id="deleteTblNotifyCardApplyByIds" parameterType="String">
+        delete from tbl_notify_card_apply where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

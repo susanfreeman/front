@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.TblCardBinInfoMapper">
+
+    <resultMap type="TblCardBinInfo" id="TblCardBinInfoResult">
+        <result property="cbId"    column="cb_id"    />
+        <result property="level"    column="level"    />
+        <result property="cardBin"    column="card_bin"    />
+        <result property="cardType"    column="card_type"    />
+        <result property="cardCurr"    column="card_curr"    />
+        <result property="cardCountry"    column="card_country"    />
+        <result property="cardMonthFee"    column="card_month_fee"    />
+        <result property="cardMonthLimit"    column="card_month_limit"    />
+        <result property="cardRechargeFee"    column="card_recharge_fee"    />
+        <result property="cardConsumFee"    column="card_consum_fee"    />
+        <result property="needKyc"    column="need_kyc"    />
+        <result property="remark"    column="remark"    />
+        <result property="isEnable"    column="is_enable"    />
+        <result property="cardOpenFee"    column="card_open_fee"    />
+        <result property="cardRechargeMin"    column="card_recharge_min"    />
+    </resultMap>
+
+    <sql id="selectTblCardBinInfoVo">
+        select cb_id, level, card_bin, card_type, card_curr, card_country, card_month_fee, card_month_limit, card_recharge_fee, card_consum_fee, need_kyc, remark, is_enable, card_open_fee, card_recharge_min from tbl_card_bin_info
+    </sql>
+
+    <select id="selectTblCardBinInfoList" parameterType="TblCardBinInfo" resultMap="TblCardBinInfoResult">
+        <include refid="selectTblCardBinInfoVo"/>
+        <where>
+            <if test="level != null  and level != ''"> and level = #{level}</if>
+            <if test="cardBin != null  and cardBin != ''"> and card_bin = #{cardBin}</if>
+            <if test="cardType != null  and cardType != ''"> and card_type = #{cardType}</if>
+            <if test="cardCurr != null  and cardCurr != ''"> and card_curr = #{cardCurr}</if>
+            <if test="cardCountry != null  and cardCountry != ''"> and card_country = #{cardCountry}</if>
+            <if test="cardMonthFee != null "> and card_month_fee = #{cardMonthFee}</if>
+            <if test="cardMonthLimit != null "> and card_month_limit = #{cardMonthLimit}</if>
+            <if test="cardRechargeFee != null "> and card_recharge_fee = #{cardRechargeFee}</if>
+            <if test="cardConsumFee != null "> and card_consum_fee = #{cardConsumFee}</if>
+            <if test="needKyc != null  and needKyc != ''"> and need_kyc = #{needKyc}</if>
+            <if test="remark != null  and remark != ''"> and remark = #{remark}</if>
+            <if test="isEnable != null  and isEnable != ''"> and is_enable = #{isEnable}</if>
+            <if test="cardOpenFee != null "> and card_open_fee = #{cardOpenFee}</if>
+            <if test="cardRechargeMin != null "> and card_recharge_min = #{cardRechargeMin}</if>
+        </where>
+    </select>
+
+    <select id="selectTblCardBinInfoByCbId" parameterType="Long" resultMap="TblCardBinInfoResult">
+        <include refid="selectTblCardBinInfoVo"/>
+        where cb_id = #{cbId}
+    </select>
+
+    <select id="selectTblCardBinInfoByCardNo" resultMap="TblCardBinInfoResult">
+        select a.* from tbl_card_bin_info a LEFT JOIN tbl_user_open_card b on a.cb_id = b.cb_id where b.card_no = #{cardNo}
+    </select>
+
+    <insert id="insertTblCardBinInfo" parameterType="TblCardBinInfo" useGeneratedKeys="true" keyProperty="cbId">
+        insert into tbl_card_bin_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="level != null">level,</if>
+            <if test="cardBin != null">card_bin,</if>
+            <if test="cardType != null">card_type,</if>
+            <if test="cardCurr != null">card_curr,</if>
+            <if test="cardCountry != null">card_country,</if>
+            <if test="cardMonthFee != null">card_month_fee,</if>
+            <if test="cardMonthLimit != null">card_month_limit,</if>
+            <if test="cardRechargeFee != null">card_recharge_fee,</if>
+            <if test="cardConsumFee != null">card_consum_fee,</if>
+            <if test="needKyc != null">need_kyc,</if>
+            <if test="remark != null">remark,</if>
+            <if test="isEnable != null">is_enable,</if>
+            <if test="cardOpenFee != null">card_open_fee,</if>
+            <if test="cardRechargeMin != null">card_recharge_min,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="level != null">#{level},</if>
+            <if test="cardBin != null">#{cardBin},</if>
+            <if test="cardType != null">#{cardType},</if>
+            <if test="cardCurr != null">#{cardCurr},</if>
+            <if test="cardCountry != null">#{cardCountry},</if>
+            <if test="cardMonthFee != null">#{cardMonthFee},</if>
+            <if test="cardMonthLimit != null">#{cardMonthLimit},</if>
+            <if test="cardRechargeFee != null">#{cardRechargeFee},</if>
+            <if test="cardConsumFee != null">#{cardConsumFee},</if>
+            <if test="needKyc != null">#{needKyc},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="isEnable != null">#{isEnable},</if>
+            <if test="cardOpenFee != null">#{cardOpenFee},</if>
+            <if test="cardRechargeMin != null">#{cardRechargeMin},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTblCardBinInfo" parameterType="TblCardBinInfo">
+        update tbl_card_bin_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="level != null">level = #{level},</if>
+            <if test="cardBin != null">card_bin = #{cardBin},</if>
+            <if test="cardType != null">card_type = #{cardType},</if>
+            <if test="cardCurr != null">card_curr = #{cardCurr},</if>
+            <if test="cardCountry != null">card_country = #{cardCountry},</if>
+            <if test="cardMonthFee != null">card_month_fee = #{cardMonthFee},</if>
+            <if test="cardMonthLimit != null">card_month_limit = #{cardMonthLimit},</if>
+            <if test="cardRechargeFee != null">card_recharge_fee = #{cardRechargeFee},</if>
+            <if test="cardConsumFee != null">card_consum_fee = #{cardConsumFee},</if>
+            <if test="needKyc != null">need_kyc = #{needKyc},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="isEnable != null">is_enable = #{isEnable},</if>
+            <if test="cardOpenFee != null">card_open_fee = #{cardOpenFee},</if>
+            <if test="cardRechargeMin != null">card_recharge_min = #{cardRechargeMin},</if>
+        </trim>
+        where cb_id = #{cbId}
+    </update>
+
+    <delete id="deleteTblCardBinInfoByCbId" parameterType="Long">
+        delete from tbl_card_bin_info where cb_id = #{cbId}
+    </delete>
+
+    <delete id="deleteTblCardBinInfoByCbIds" parameterType="String">
+        delete from tbl_card_bin_info where cb_id in
+        <foreach item="cbId" collection="array" open="(" separator="," close=")">
+            #{cbId}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.agent.mapper.TblAgentInfoMapper">
+    
+    <resultMap type="TblAgentInfo" id="TblAgentInfoResult">
+        <result property="aiId"    column="ai_id"    />
+        <result property="parentAiId"    column="parent_ai_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="balance"    column="balance"    />
+        <result property="balanceForze"    column="balance_forze"    />
+        <result property="feeRate"    column="fee_rate"    />
+        <result property="feeType"    column="fee_type"    />
+        <result property="inviteUri"    column="invite_uri"    />
+        <result property="level"    column="level"    />
+        <result property="loginName"    column="login_name"    />
+    </resultMap>
+
+    <sql id="selectTblAgentInfoVo">
+        select ai_id, parent_ai_id, user_id, balance, balance_forze, fee_rate, fee_type, invite_uri, level from tbl_agent_info
+    </sql>
+
+    <select id="selectTblAgentInfoList" parameterType="TblAgentInfo" resultMap="TblAgentInfoResult">
+        <include refid="selectTblAgentInfoVo"/>
+        <where>  
+            <if test="parentAiId != null "> and parent_ai_id = #{parentAiId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="balance != null "> and balance = #{balance}</if>
+            <if test="balanceForze != null  and balanceForze != ''"> and balance_forze = #{balanceForze}</if>
+            <if test="feeRate != null  and feeRate != ''"> and fee_rate = #{feeRate}</if>
+            <if test="feeType != null  and feeType != ''"> and fee_type = #{feeType}</if>
+            <if test="inviteUri != null  and inviteUri != ''"> and invite_uri = #{inviteUri}</if>
+            <if test="level != null  and level != ''"> and level = #{level}</if>
+        </where>
+    </select>
+    
+    <select id="selectTblAgentInfoByAiId" parameterType="Long" resultMap="TblAgentInfoResult">
+        <include refid="selectTblAgentInfoVo"/>
+        where ai_id = #{aiId}
+    </select>
+    <select id="selectTblAgentInfoByUserId" parameterType="Long" resultMap="TblAgentInfoResult">
+        <include refid="selectTblAgentInfoVo"/>
+        where user_id = #{userId}
+    </select>
+    <select id="selectTblAgentInfoAndLoginNameByAiId" parameterType="Long" resultMap="TblAgentInfoResult">
+        select a.*,b.login_name  from tbl_agent_info a LEFT JOIN sys_user b on a.user_id = b.user_id where a.ai_id = #{aiId}
+    </select>
+
+    <select id="getAssociatedAgentsByUserId" resultMap="TblAgentInfoResult">
+        WITH RECURSIVE ParentHierarchy AS (
+            SELECT a.*
+            FROM tbl_agent_info a
+            WHERE a.ai_id = (SELECT ai_id FROM tbl_user_info WHERE ui_id = #{uiId})
+
+            UNION ALL
+
+            SELECT a.*
+            FROM tbl_agent_info a
+                     INNER JOIN ParentHierarchy ph ON a.ai_id = ph.parent_ai_id
+        )
+        SELECT *
+        FROM ParentHierarchy;
+    </select>
+
+    <select id="selectTblAgentInfoByInviteUri" resultMap="TblAgentInfoResult">
+        <include refid="selectTblAgentInfoVo"/>
+        where invite_uri = #{inviteUri}
+    </select>
+
+    <insert id="insertTblAgentInfo" parameterType="TblAgentInfo" useGeneratedKeys="true" keyProperty="aiId">
+        insert into tbl_agent_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="parentAiId != null">parent_ai_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="balance != null">balance,</if>
+            <if test="balanceForze != null">balance_forze,</if>
+            <if test="feeRate != null">fee_rate,</if>
+            <if test="feeType != null">fee_type,</if>
+            <if test="inviteUri != null">invite_uri,</if>
+            <if test="level != null">level,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="parentAiId != null">#{parentAiId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="balance != null">#{balance},</if>
+            <if test="balanceForze != null">#{balanceForze},</if>
+            <if test="feeRate != null">#{feeRate},</if>
+            <if test="feeType != null">#{feeType},</if>
+            <if test="inviteUri != null">#{inviteUri},</if>
+            <if test="level != null">#{level},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTblAgentInfo" parameterType="TblAgentInfo">
+        update tbl_agent_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="parentAiId != null">parent_ai_id = #{parentAiId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="balance != null">balance = #{balance},</if>
+            <if test="balanceForze != null">balance_forze = #{balanceForze},</if>
+            <if test="feeRate != null">fee_rate = #{feeRate},</if>
+            <if test="feeType != null">fee_type = #{feeType},</if>
+            <if test="inviteUri != null">invite_uri = #{inviteUri},</if>
+            <if test="level != null">level = #{level},</if>
+        </trim>
+        where ai_id = #{aiId}
+    </update>
+
+    <update id="updateTblAgentInfoBal">
+        update tbl_agent_info set balance = balance + #{profitFee} where ai_id = #{supPartnerId}
+    </update>
+
+    <delete id="deleteTblAgentInfoByAiId" parameterType="Long">
+        delete from tbl_agent_info where ai_id = #{aiId}
+    </delete>
+
+    <delete id="deleteTblAgentInfoByAiIds" parameterType="String">
+        delete from tbl_agent_info where ai_id in 
+        <foreach item="aiId" collection="array" open="(" separator="," close=")">
+            #{aiId}
+        </foreach>
+    </delete>
+
+</mapper>

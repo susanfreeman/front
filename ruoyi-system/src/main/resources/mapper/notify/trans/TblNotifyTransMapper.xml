@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.notify.trans.mapper.TblNotifyTransMapper">
+    
+    <resultMap type="TblNotifyTrans" id="TblNotifyTransResult">
+        <result property="id"    column="id"    />
+        <result property="channelNo"    column="channel_no"    />
+        <result property="cardNo"    column="card_no"    />
+        <result property="channelTransId"    column="channel_trans_id"    />
+        <result property="transTime"    column="trans_time"    />
+        <result property="orderCreatedAt"    column="order_created_at"    />
+        <result property="transCurrency"    column="trans_currency"    />
+        <result property="transAmt"    column="trans_amt"    />
+        <result property="billingCurrency"    column="billing_currency"    />
+        <result property="billingAmt"    column="billing_amt"    />
+        <result property="crossType"    column="cross_type"    />
+        <result property="authCode"    column="auth_code"    />
+        <result property="merchantCode"    column="merchant_code"    />
+        <result property="merchantName"    column="merchant_name"    />
+        <result property="transType"    column="trans_type"    />
+        <result property="status"    column="status"    />
+        <result property="clearingFlag"    column="clearing_flag"    />
+        <result property="respTransStatus"    column="resp_trans_status"    />
+        <result property="respTransMsg"    column="resp_trans_msg"    />
+        <result property="channelFee"    column="channel_fee"    />
+        <result property="respDate"    column="resp_date"    />
+        <result property="respTime"    column="resp_time"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="rsv1"    column="rsv1"    />
+        <result property="rsv2"    column="rsv2"    />
+    </resultMap>
+
+    <sql id="selectTblNotifyTransVo">
+        select id, channel_no, card_no, channel_trans_id, trans_time, order_created_at, trans_currency, trans_amt, billing_currency, billing_amt, cross_type, auth_code, merchant_code, merchant_name, trans_type, status, clearing_flag,resp_trans_status, resp_trans_msg, channel_fee, resp_date, resp_time, created_at, rsv1, rsv2 from tbl_notify_trans
+    </sql>
+
+    <select id="selectTblNotifyTransList" parameterType="TblNotifyTrans" resultMap="TblNotifyTransResult">
+        <include refid="selectTblNotifyTransVo"/>
+        <where>  
+            <if test="channelNo != null  and channelNo != ''"> and channel_no = #{channelNo}</if>
+            <if test="cardNo != null  and cardNo != ''"> and card_no = #{cardNo}</if>
+            <if test="channelTransId != null  and channelTransId != ''"> and channel_trans_id = #{channelTransId}</if>
+            <if test="transTime != null  and transTime != ''"> and trans_time = #{transTime}</if>
+            <if test="orderCreatedAt != null  and orderCreatedAt != ''"> and order_created_at = #{orderCreatedAt}</if>
+            <if test="transCurrency != null  and transCurrency != ''"> and trans_currency = #{transCurrency}</if>
+            <if test="transAmt != null "> and trans_amt = #{transAmt}</if>
+            <if test="billingCurrency != null  and billingCurrency != ''"> and billing_currency = #{billingCurrency}</if>
+            <if test="billingAmt != null "> and billing_amt = #{billingAmt}</if>
+            <if test="crossType != null  and crossType != ''"> and cross_type = #{crossType}</if>
+            <if test="authCode != null  and authCode != ''"> and auth_code = #{authCode}</if>
+            <if test="merchantCode != null  and merchantCode != ''"> and merchant_code = #{merchantCode}</if>
+            <if test="merchantName != null  and merchantName != ''"> and merchant_name like concat('%', #{merchantName}, '%')</if>
+            <if test="transType != null  and transType != ''"> and trans_type = #{transType}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="clearingFlag != null  and clearingFlag != ''"> and clearing_flag = #{clearingFlag}</if>
+            <if test="respTransStatus != null  and respTransStatus != ''"> and resp_trans_status = #{respTransStatus}</if>
+            <if test="respTransMsg != null  and respTransMsg != ''"> and resp_trans_msg = #{respTransMsg}</if>
+            <if test="channelFee != null "> and channel_fee = #{channelFee}</if>
+            <if test="respDate != null  and respDate != ''"> and resp_date = #{respDate}</if>
+            <if test="respTime != null "> and resp_time = #{respTime}</if>
+            <if test="rsv1 != null  and rsv1 != ''"> and rsv1 = #{rsv1}</if>
+            <if test="rsv2 != null  and rsv2 != ''"> and rsv2 = #{rsv2}</if>
+            <if test="params.beginTime != null and params.beginTime != ''">
+                and date_format(created_at,'%Y%m%d') &gt;= date_format(#{params.beginTime},'%Y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''">
+                and date_format(created_at,'%Y%m%d') &lt;= date_format(#{params.endTime},'%Y%m%d')
+            </if>
+        </where>
+    </select>
+    
+    <select id="selectTblNotifyTransById" parameterType="Long" resultMap="TblNotifyTransResult">
+        <include refid="selectTblNotifyTransVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectTblNotifyTransByTranId" resultMap="TblNotifyTransResult">
+        <include refid="selectTblNotifyTransVo"/>
+        where channelTransId = #{ttId}
+    </select>
+
+    <insert id="insertTblNotifyTrans" parameterType="TblNotifyTrans">
+        insert into tbl_notify_trans
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="channelNo != null">channel_no,</if>
+            <if test="cardNo != null">card_no,</if>
+            <if test="channelTransId != null">channel_trans_id,</if>
+            <if test="transTime != null">trans_time,</if>
+            <if test="orderCreatedAt != null">order_created_at,</if>
+            <if test="transCurrency != null">trans_currency,</if>
+            <if test="transAmt != null">trans_amt,</if>
+            <if test="billingCurrency != null">billing_currency,</if>
+            <if test="billingAmt != null">billing_amt,</if>
+            <if test="crossType != null">cross_type,</if>
+            <if test="authCode != null">auth_code,</if>
+            <if test="merchantCode != null">merchant_code,</if>
+            <if test="merchantName != null">merchant_name,</if>
+            <if test="transType != null">trans_type,</if>
+            <if test="status != null">status,</if>
+            <if test="clearingFlag != null">clearingFlag,</if>
+            <if test="respTransStatus != null">resp_trans_status,</if>
+            <if test="respTransMsg != null">resp_trans_msg,</if>
+            <if test="channelFee != null">channel_fee,</if>
+            <if test="respDate != null">resp_date,</if>
+            <if test="respTime != null">resp_time,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="rsv1 != null">rsv1,</if>
+            <if test="rsv2 != null">rsv2,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="channelNo != null">#{channelNo},</if>
+            <if test="cardNo != null">#{cardNo},</if>
+            <if test="channelTransId != null">#{channelTransId},</if>
+            <if test="transTime != null">#{transTime},</if>
+            <if test="orderCreatedAt != null">#{orderCreatedAt},</if>
+            <if test="transCurrency != null">#{transCurrency},</if>
+            <if test="transAmt != null">#{transAmt},</if>
+            <if test="billingCurrency != null">#{billingCurrency},</if>
+            <if test="billingAmt != null">#{billingAmt},</if>
+            <if test="crossType != null">#{crossType},</if>
+            <if test="authCode != null">#{authCode},</if>
+            <if test="merchantCode != null">#{merchantCode},</if>
+            <if test="merchantName != null">#{merchantName},</if>
+            <if test="transType != null">#{transType},</if>
+            <if test="status != null">#{status},</if>
+            <if test="clearingFlag != null">#{clearingFlag},</if>
+            <if test="respTransStatus != null">#{respTransStatus},</if>
+            <if test="respTransMsg != null">#{respTransMsg},</if>
+            <if test="channelFee != null">#{channelFee},</if>
+            <if test="respDate != null">#{respDate},</if>
+            <if test="respTime != null">#{respTime},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="rsv1 != null">#{rsv1},</if>
+            <if test="rsv2 != null">#{rsv2},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTblNotifyTrans" parameterType="TblNotifyTrans">
+        update tbl_notify_trans
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="channelNo != null">channel_no = #{channelNo},</if>
+            <if test="cardNo != null">card_no = #{cardNo},</if>
+            <if test="channelTransId != null">channel_trans_id = #{channelTransId},</if>
+            <if test="transTime != null">trans_time = #{transTime},</if>
+            <if test="orderCreatedAt != null">order_created_at = #{orderCreatedAt},</if>
+            <if test="transCurrency != null">trans_currency = #{transCurrency},</if>
+            <if test="transAmt != null">trans_amt = #{transAmt},</if>
+            <if test="billingCurrency != null">billing_currency = #{billingCurrency},</if>
+            <if test="billingAmt != null">billing_amt = #{billingAmt},</if>
+            <if test="crossType != null">cross_type = #{crossType},</if>
+            <if test="authCode != null">auth_code = #{authCode},</if>
+            <if test="merchantCode != null">merchant_code = #{merchantCode},</if>
+            <if test="merchantName != null">merchant_name = #{merchantName},</if>
+            <if test="transType != null">trans_type = #{transType},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="clearingFlag != null">clearing_flag = #{clearingFlag},</if>
+            <if test="respTransStatus != null">resp_trans_status = #{respTransStatus},</if>
+            <if test="respTransMsg != null">resp_trans_msg = #{respTransMsg},</if>
+            <if test="channelFee != null">channel_fee = #{channelFee},</if>
+            <if test="respDate != null">resp_date = #{respDate},</if>
+            <if test="respTime != null">resp_time = #{respTime},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="rsv1 != null">rsv1 = #{rsv1},</if>
+            <if test="rsv2 != null">rsv2 = #{rsv2},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTblNotifyTransById" parameterType="Long">
+        delete from tbl_notify_trans where id = #{id}
+    </delete>
+
+    <delete id="deleteTblNotifyTransByIds" parameterType="String">
+        delete from tbl_notify_trans where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

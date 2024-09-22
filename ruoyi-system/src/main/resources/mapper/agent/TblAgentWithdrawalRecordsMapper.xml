@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.agent.mapper.TblAgentWithdrawalRecordsMapper">
+    
+    <resultMap type="TblAgentWithdrawalRecords" id="TblAgentWithdrawalRecordsResult">
+        <result property="id"    column="id"    />
+        <result property="aiId"    column="ai_id"    />
+        <result property="withdrawalAmt"    column="withdrawal_amt"    />
+        <result property="withdrawalDate"    column="withdrawal_date"    />
+        <result property="withdrawalFlag"    column="withdrawal_flag"    />
+        <result property="status"    column="status"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="updatedBy"    column="updated_by"    />
+        <result property="updatedAt"    column="updated_at"    />
+        <result property="remarks"    column="remarks"    />
+    </resultMap>
+
+    <sql id="selectTblAgentWithdrawalRecordsVo">
+        select id, ai_id, withdrawal_amt, withdrawal_date, withdrawal_flag, status, created_by, created_at, updated_by, updated_at, remarks from tbl_agent_withdrawal_records
+    </sql>
+
+    <select id="selectTblAgentWithdrawalRecordsList" parameterType="TblAgentWithdrawalRecords" resultMap="TblAgentWithdrawalRecordsResult">
+        <include refid="selectTblAgentWithdrawalRecordsVo"/>
+        <where>  
+            <if test="aiId != null "> and ai_id = #{aiId}</if>
+            <if test="withdrawalAmt != null "> and withdrawal_amt = #{withdrawalAmt}</if>
+            <if test="withdrawalDate != null "> and date_format(withdrawal_date,'%Y%m%d') = date_format(#{withdrawalDate},'%Y%m%d')</if>
+            <if test="withdrawalFlag != null  and withdrawalFlag != ''"> and withdrawal_flag = #{withdrawalFlag}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="createdBy != null  and createdBy != ''"> and created_by = #{createdBy}</if>
+            <if test="createdAt != null "> and created_at = #{createdAt}</if>
+            <if test="updatedBy != null  and updatedBy != ''"> and updated_by = #{updatedBy}</if>
+            <if test="updatedAt != null "> and updated_at = #{updatedAt}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+        </where>
+    </select>
+    
+    <select id="selectTblAgentWithdrawalRecordsById" parameterType="Long" resultMap="TblAgentWithdrawalRecordsResult">
+        <include refid="selectTblAgentWithdrawalRecordsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTblAgentWithdrawalRecords" parameterType="TblAgentWithdrawalRecords">
+        insert into tbl_agent_withdrawal_records
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="aiId != null">ai_id,</if>
+            <if test="withdrawalAmt != null">withdrawal_amt,</if>
+            <if test="withdrawalDate != null">withdrawal_date,</if>
+            <if test="withdrawalFlag != null">withdrawal_flag,</if>
+            <if test="status != null">status,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedAt != null">updated_at,</if>
+            <if test="remarks != null">remarks,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="aiId != null">#{aiId},</if>
+            <if test="withdrawalAmt != null">#{withdrawalAmt},</if>
+            <if test="withdrawalDate != null">#{withdrawalDate},</if>
+            <if test="withdrawalFlag != null">#{withdrawalFlag},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+            <if test="remarks != null">#{remarks},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTblAgentWithdrawalRecords" parameterType="TblAgentWithdrawalRecords">
+        update tbl_agent_withdrawal_records
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="aiId != null">ai_id = #{aiId},</if>
+            <if test="withdrawalAmt != null">withdrawal_amt = #{withdrawalAmt},</if>
+            <if test="withdrawalDate != null">withdrawal_date = #{withdrawalDate},</if>
+            <if test="withdrawalFlag != null">withdrawal_flag = #{withdrawalFlag},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTblAgentWithdrawalRecordsById" parameterType="Long">
+        delete from tbl_agent_withdrawal_records where id = #{id}
+    </delete>
+
+    <delete id="deleteTblAgentWithdrawalRecordsByIds" parameterType="String">
+        delete from tbl_agent_withdrawal_records where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

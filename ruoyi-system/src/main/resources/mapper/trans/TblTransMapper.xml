@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.trans.mapper.TblTransMapper">
+
+    <resultMap type="TblTrans" id="TblTransResult">
+        <result property="ttId"    column="tt_id"    />
+        <result property="uiId"    column="ui_id"    />
+        <result property="cardNo"    column="card_no"    />
+        <result property="transAmt"    column="trans_amt"    />
+        <result property="transFee"    column="trans_fee"    />
+        <result property="transType"    column="trans_type"    />
+        <result property="transCurr"    column="trans_curr"    />
+        <result property="transTime"    column="trans_time"    />
+        <result property="ciId"    column="ci_id"    />
+        <result property="transStatus"    column="trans_status"    />
+        <result property="agentStatus"    column="agent_status"    />
+        <result property="uocId"    column="uoc_id"    />
+        <result property="transCost"    column="trans_cost"    />
+    </resultMap>
+
+    <sql id="selectTblTransVo">
+        select tt_id, ui_id, card_no, trans_amt, trans_fee, trans_type, trans_curr, trans_time, ci_id, trans_status, agent_status, uoc_id,trans_cost from tbl_trans
+    </sql>
+
+    <select id="selectTblTransList" parameterType="TblTrans" resultMap="TblTransResult">
+        <include refid="selectTblTransVo"/>
+        <where>
+            <if test="uiId != null "> and ui_id = #{uiId}</if>
+            <if test="cardNo != null  and cardNo != ''"> and card_no = #{cardNo}</if>
+            <if test="transAmt != null "> and trans_amt = #{transAmt}</if>
+            <if test="transFee != null "> and trans_fee = #{transFee}</if>
+            <if test="transType != null  and transType != ''"> and trans_type = #{transType}</if>
+            <if test="transCurr != null  and transCurr != ''"> and trans_curr = #{transCurr}</if>
+<!--            <if test="transTime != null "> and trans_time = #{transTime}</if>-->
+            <if test="ciId != null "> and ci_id = #{ciId}</if>
+            <if test="transStatus != null  and transStatus != ''"> and trans_status = #{transStatus}</if>
+            <if test="agentStatus != null  and agentStatus != ''"> and agent_status = #{agentStatus}</if>
+            <if test="uocId != null "> and uoc_id = #{uocId}</if>
+            <if test="params.beginTime != null and params.beginTime != ''">
+                and date_format(trans_time,'%Y%m%d') &gt;= date_format(#{params.beginTime},'%Y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''">
+                and date_format(trans_time,'%Y%m%d') &lt;= date_format(#{params.endTime},'%Y%m%d')
+            </if>
+            <if test="transCost != null "> and trans_cost = #{transCost}</if>
+        </where>
+    </select>
+
+    <select id="selectTblTransByTtId" parameterType="Long" resultMap="TblTransResult">
+        <include refid="selectTblTransVo"/>
+        where tt_id = #{ttId}
+    </select>
+
+    <insert id="insertTblTrans" parameterType="TblTrans" useGeneratedKeys="true" keyProperty="ttId">
+        insert into tbl_trans
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uiId != null">ui_id,</if>
+            <if test="cardNo != null">card_no,</if>
+            <if test="transAmt != null">trans_amt,</if>
+            <if test="transFee != null">trans_fee,</if>
+            <if test="transType != null">trans_type,</if>
+            <if test="transCurr != null">trans_curr,</if>
+            <if test="transTime != null">trans_time,</if>
+            <if test="ciId != null">ci_id,</if>
+            <if test="transStatus != null">trans_status,</if>
+            <if test="agentStatus != null">agent_status,</if>
+            <if test="uocId != null">uoc_id,</if>
+            <if test="transCost != null">trans_cost,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uiId != null">#{uiId},</if>
+            <if test="cardNo != null">#{cardNo},</if>
+            <if test="transAmt != null">#{transAmt},</if>
+            <if test="transFee != null">#{transFee},</if>
+            <if test="transType != null">#{transType},</if>
+            <if test="transCurr != null">#{transCurr},</if>
+            <if test="transTime != null">#{transTime},</if>
+            <if test="ciId != null">#{ciId},</if>
+            <if test="transStatus != null">#{transStatus},</if>
+            <if test="agentStatus != null">#{agentStatus},</if>
+            <if test="uocId != null">#{uocId},</if>
+            <if test="transCost != null">#{transCost},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTblTrans" parameterType="TblTrans">
+        update tbl_trans
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uiId != null">ui_id = #{uiId},</if>
+            <if test="cardNo != null">card_no = #{cardNo},</if>
+            <if test="transAmt != null">trans_amt = #{transAmt},</if>
+            <if test="transFee != null">trans_fee = #{transFee},</if>
+            <if test="transType != null">trans_type = #{transType},</if>
+            <if test="transCurr != null">trans_curr = #{transCurr},</if>
+            <if test="transTime != null">trans_time = #{transTime},</if>
+            <if test="ciId != null">ci_id = #{ciId},</if>
+            <if test="transStatus != null">trans_status = #{transStatus},</if>
+            <if test="agentStatus != null">agent_status = #{agentStatus},</if>
+            <if test="uocId != null">uoc_id = #{uocId},</if>
+            <if test="transCost != null">trans_cost = #{transCost},</if>
+        </trim>
+        where tt_id = #{ttId}
+    </update>
+
+    <delete id="deleteTblTransByTtId" parameterType="Long">
+        delete from tbl_trans where tt_id = #{ttId}
+    </delete>
+
+    <delete id="deleteTblTransByTtIds" parameterType="String">
+        delete from tbl_trans where tt_id in
+        <foreach item="ttId" collection="array" open="(" separator="," close=")">
+            #{ttId}
+        </foreach>
+    </delete>
+
+</mapper>

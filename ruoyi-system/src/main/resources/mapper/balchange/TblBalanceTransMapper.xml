@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.trans.mapper.TblBalanceTransMapper">
+    
+    <resultMap type="TblBalanceTrans" id="TblBalanceTransResult">
+        <result property="btId"    column="bt_id"    />
+        <result property="uiId"    column="ui_id"    />
+        <result property="ubType"    column="ub_type"    />
+        <result property="transId"    column="trans_id"    />
+        <result property="transBeforeAmt"    column="trans_before_amt"    />
+        <result property="transAmt"    column="trans_amt"    />
+        <result property="transAfterAmt"    column="trans_after_amt"    />
+        <result property="transTime"    column="trans_time"    />
+        <result property="transCurr"    column="trans_curr"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTblBalanceTransVo">
+        select bt_id, ui_id, ub_type, trans_id, trans_before_amt, trans_amt, trans_after_amt, trans_time, trans_curr, remark from tbl_balance_trans
+    </sql>
+
+    <select id="selectTblBalanceTransList" parameterType="TblBalanceTrans" resultMap="TblBalanceTransResult">
+        <include refid="selectTblBalanceTransVo"/>
+        <where>  
+            <if test="uiId != null "> and ui_id = #{uiId}</if>
+            <if test="ubType != null  and ubType != ''"> and ub_type = #{ubType}</if>
+            <if test="transId != null "> and trans_id = #{transId}</if>
+            <if test="transBeforeAmt != null "> and trans_before_amt = #{transBeforeAmt}</if>
+            <if test="transAmt != null "> and trans_amt = #{transAmt}</if>
+            <if test="transAfterAmt != null "> and trans_after_amt = #{transAfterAmt}</if>
+            <if test="transTime != null "> and trans_time = #{transTime}</if>
+            <if test="transCurr != null  and transCurr != ''"> and trans_curr = #{transCurr}</if>
+        </where>
+        order by trans_time desc
+    </select>
+    
+    <select id="selectTblBalanceTransByBtId" parameterType="Long" resultMap="TblBalanceTransResult">
+        <include refid="selectTblBalanceTransVo"/>
+        where bt_id = #{btId}
+    </select>
+
+    <insert id="insertTblBalanceTrans" parameterType="TblBalanceTrans" useGeneratedKeys="true" keyProperty="btId">
+        insert into tbl_balance_trans
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uiId != null">ui_id,</if>
+            <if test="ubType != null">ub_type,</if>
+            <if test="transId != null">trans_id,</if>
+            <if test="transBeforeAmt != null">trans_before_amt,</if>
+            <if test="transAmt != null">trans_amt,</if>
+            <if test="transAfterAmt != null">trans_after_amt,</if>
+            <if test="transTime != null">trans_time,</if>
+            <if test="transCurr != null">trans_curr,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uiId != null">#{uiId},</if>
+            <if test="ubType != null">#{ubType},</if>
+            <if test="transId != null">#{transId},</if>
+            <if test="transBeforeAmt != null">#{transBeforeAmt},</if>
+            <if test="transAmt != null">#{transAmt},</if>
+            <if test="transAfterAmt != null">#{transAfterAmt},</if>
+            <if test="transTime != null">#{transTime},</if>
+            <if test="transCurr != null">#{transCurr},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTblBalanceTrans" parameterType="TblBalanceTrans">
+        update tbl_balance_trans
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uiId != null">ui_id = #{uiId},</if>
+            <if test="ubType != null">ub_type = #{ubType},</if>
+            <if test="transId != null">trans_id = #{transId},</if>
+            <if test="transBeforeAmt != null">trans_before_amt = #{transBeforeAmt},</if>
+            <if test="transAmt != null">trans_amt = #{transAmt},</if>
+            <if test="transAfterAmt != null">trans_after_amt = #{transAfterAmt},</if>
+            <if test="transTime != null">trans_time = #{transTime},</if>
+            <if test="transCurr != null">trans_curr = #{transCurr},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where bt_id = #{btId}
+    </update>
+
+    <delete id="deleteTblBalanceTransByBtId" parameterType="Long">
+        delete from tbl_balance_trans where bt_id = #{btId}
+    </delete>
+
+    <delete id="deleteTblBalanceTransByBtIds" parameterType="String">
+        delete from tbl_balance_trans where bt_id in 
+        <foreach item="btId" collection="array" open="(" separator="," close=")">
+            #{btId}
+        </foreach>
+    </delete>
+
+
+    <insert id="insertTblBalanceTransByUserBalance" parameterType="TblBalanceTrans" useGeneratedKeys="true" keyProperty="btId">
+        insert INTO tbl_balance_trans (ui_id, ub_type, trans_id, trans_before_amt, trans_amt, trans_after_amt, trans_time,trans_curr,remark)
+        select #{uiId},#{ubType},#{transId},
+        <if test="transCurr != null and transCurr =='USD' "> t.balance,abs(#{transAmt}),t.balance-#{transAmt}</if>
+        <if test="transCurr != null and transCurr =='USDT' "> t.balance_usdt,abs(#{transAmt}),t.balance_usdt-#{transAmt}</if>
+        <if test="transCurr != null and transCurr =='GBP' "> t.balance_gbp,abs(#{transAmt}),t.balance_gbp-#{transAmt}</if>
+        <if test="transCurr != null and transCurr =='EUR' "> t.balance_eur,abs(#{transAmt}),t.balance_eur-#{transAmt}</if>
+        ,now(),#{transCurr},#{remark} from tbl_user_info t where t.ui_id = #{uiId}
+    </insert>
+
+
+</mapper>

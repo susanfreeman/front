@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.blacklist.mapper.TblUserBlacklistMapper">
+    
+    <resultMap type="TblUserBlacklist" id="TblUserBlacklistResult">
+        <result property="id"    column="id"    />
+        <result property="blacklistType"    column="blacklist_type"    />
+        <result property="blacklistValue"    column="blacklist_value"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="updatedBy"    column="updated_by"    />
+        <result property="updatedAt"    column="updated_at"    />
+        <result property="remarks"    column="remarks"    />
+    </resultMap>
+
+    <sql id="selectTblUserBlacklistVo">
+        select id, blacklist_type, blacklist_value, created_by, created_at, updated_by, updated_at, remarks from tbl_user_blacklist
+    </sql>
+
+    <select id="selectTblUserBlacklistList" parameterType="TblUserBlacklist" resultMap="TblUserBlacklistResult">
+        <include refid="selectTblUserBlacklistVo"/>
+        <where>  
+            <if test="blacklistType != null  and blacklistType != ''"> and blacklist_type = #{blacklistType}</if>
+            <if test="blacklistValue != null  and blacklistValue != ''"> and blacklist_value = #{blacklistValue}</if>
+            <if test="createdBy != null  and createdBy != ''"> and created_by = #{createdBy}</if>
+            <if test="createdAt != null "> and created_at = #{createdAt}</if>
+            <if test="updatedBy != null  and updatedBy != ''"> and updated_by = #{updatedBy}</if>
+            <if test="updatedAt != null "> and updated_at = #{updatedAt}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+        </where>
+    </select>
+    
+    <select id="selectTblUserBlacklistById" parameterType="Long" resultMap="TblUserBlacklistResult">
+        <include refid="selectTblUserBlacklistVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTblUserBlacklist" parameterType="TblUserBlacklist">
+        insert into tbl_user_blacklist
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="blacklistType != null">blacklist_type,</if>
+            <if test="blacklistValue != null">blacklist_value,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedAt != null">updated_at,</if>
+            <if test="remarks != null">remarks,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="blacklistType != null">#{blacklistType},</if>
+            <if test="blacklistValue != null">#{blacklistValue},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+            <if test="remarks != null">#{remarks},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTblUserBlacklist" parameterType="TblUserBlacklist">
+        update tbl_user_blacklist
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="blacklistType != null">blacklist_type = #{blacklistType},</if>
+            <if test="blacklistValue != null">blacklist_value = #{blacklistValue},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTblUserBlacklistById" parameterType="Long">
+        delete from tbl_user_blacklist where id = #{id}
+    </delete>
+
+    <delete id="deleteTblUserBlacklistByIds" parameterType="String">
+        delete from tbl_user_blacklist where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

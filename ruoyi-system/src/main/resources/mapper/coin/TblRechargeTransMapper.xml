@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.coin.mapper.TblRechargeTransMapper">
+
+    <resultMap type="TblRechargeTrans" id="TblRechargeTransResult">
+        <result property="rtId"    column="rt_id"    />
+        <result property="uiId"    column="ui_id"    />
+        <result property="transAmt"    column="trans_amt"    />
+        <result property="transCurr"    column="trans_curr"    />
+        <result property="transRate"    column="trans_rate"    />
+        <result property="exchangeTransAmt"    column="exchange_trans_amt"    />
+        <result property="exchangeCurr"    column="exchange_curr"    />
+        <result property="transTime"    column="trans_time"    />
+        <result property="transStatus"    column="trans_status"    />
+        <result property="agentStatus"    column="agent_status"    />
+        <result property="txId"    column="txId"    />
+    </resultMap>
+
+    <sql id="selectTblRechargeTransVo">
+        select rt_id, ui_id, trans_amt, trans_curr, trans_rate, exchange_trans_amt, exchange_curr, trans_time, trans_status, agent_status, txId from tbl_recharge_trans
+    </sql>
+
+    <select id="selectTblRechargeTransList" parameterType="TblRechargeTrans" resultMap="TblRechargeTransResult">
+        <include refid="selectTblRechargeTransVo"/>
+        <where>
+            <if test="uiId != null "> and ui_id = #{uiId}</if>
+            <if test="transAmt != null "> and trans_amt = #{transAmt}</if>
+            <if test="transCurr != null  and transCurr != ''"> and trans_curr = #{transCurr}</if>
+            <if test="transRate != null "> and trans_rate = #{transRate}</if>
+            <if test="exchangeTransAmt != null "> and exchange_trans_amt = #{exchangeTransAmt}</if>
+            <if test="exchangeCurr != null  and exchangeCurr != ''"> and exchange_curr = #{exchangeCurr}</if>
+            <if test="transTime != null "> and trans_time = #{transTime}</if>
+            <if test="transStatus != null  and transStatus != ''"> and trans_status = #{transStatus}</if>
+            <if test="agentStatus != null  and agentStatus != ''"> and agent_status = #{agentStatus}</if>
+            <if test="txId != null  and txId != ''"> and txId = #{txId}</if>
+        </where>
+    </select>
+
+    <select id="selectTblRechargeTransByRtId" parameterType="Long" resultMap="TblRechargeTransResult">
+        <include refid="selectTblRechargeTransVo"/>
+        where rt_id = #{rtId}
+    </select>
+
+    <insert id="insertTblRechargeTrans" parameterType="TblRechargeTrans" useGeneratedKeys="true" keyProperty="rtId">
+        insert into tbl_recharge_trans
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uiId != null">ui_id,</if>
+            <if test="transAmt != null">trans_amt,</if>
+            <if test="transCurr != null">trans_curr,</if>
+            <if test="transRate != null">trans_rate,</if>
+            <if test="exchangeTransAmt != null">exchange_trans_amt,</if>
+            <if test="exchangeCurr != null">exchange_curr,</if>
+            <if test="transTime != null">trans_time,</if>
+            <if test="transStatus != null">trans_status,</if>
+            <if test="agentStatus != null">agent_status,</if>
+            <if test="txId != null">txId,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uiId != null">#{uiId},</if>
+            <if test="transAmt != null">#{transAmt},</if>
+            <if test="transCurr != null">#{transCurr},</if>
+            <if test="transRate != null">#{transRate},</if>
+            <if test="exchangeTransAmt != null">#{exchangeTransAmt},</if>
+            <if test="exchangeCurr != null">#{exchangeCurr},</if>
+            <if test="transTime != null">#{transTime},</if>
+            <if test="transStatus != null">#{transStatus},</if>
+            <if test="agentStatus != null">#{agentStatus},</if>
+            <if test="txId != null">#{txId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTblRechargeTrans" parameterType="TblRechargeTrans">
+        update tbl_recharge_trans
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uiId != null">ui_id = #{uiId},</if>
+            <if test="transAmt != null">trans_amt = #{transAmt},</if>
+            <if test="transCurr != null">trans_curr = #{transCurr},</if>
+            <if test="transRate != null">trans_rate = #{transRate},</if>
+            <if test="exchangeTransAmt != null">exchange_trans_amt = #{exchangeTransAmt},</if>
+            <if test="exchangeCurr != null">exchange_curr = #{exchangeCurr},</if>
+            <if test="transTime != null">trans_time = #{transTime},</if>
+            <if test="transStatus != null">trans_status = #{transStatus},</if>
+            <if test="agentStatus != null">agent_status = #{agentStatus},</if>
+            <if test="txId != null">txId = #{txId},</if>
+        </trim>
+        where rt_id = #{rtId}
+    </update>
+
+    <delete id="deleteTblRechargeTransByRtId" parameterType="Long">
+        delete from tbl_recharge_trans where rt_id = #{rtId}
+    </delete>
+
+    <delete id="deleteTblRechargeTransByRtIds" parameterType="String">
+        delete from tbl_recharge_trans where rt_id in
+        <foreach item="rtId" collection="array" open="(" separator="," close=")">
+            #{rtId}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.risk.mapper.TblRiskLimitDataMapper">
+    
+    <resultMap type="TblRiskLimitData" id="TblRiskLimitDataResult">
+        <result property="ID"    column="ID"    />
+        <result property="limitDate"    column="LIMIT_DATE"    />
+        <result property="limitElement"    column="LIMIT_ELEMENT"    />
+        <result property="limitValue"    column="LIMIT_VALUE"    />
+        <result property="dayAmt"    column="DAY_AMT"    />
+        <result property="dayCnt"    column="DAY_CNT"    />
+        <result property="monthAmt"    column="MONTH_AMT"    />
+        <result property="monthCnt"    column="MONTH_CNT"    />
+        <result property="yearAmt"    column="YEAR_AMT"    />
+        <result property="yearCnt"    column="YEAR_CNT"    />
+    </resultMap>
+
+    <sql id="selectTblRiskLimitDataVo">
+        select ID, LIMIT_DATE, LIMIT_ELEMENT, LIMIT_VALUE, DAY_AMT, DAY_CNT, MONTH_AMT, MONTH_CNT, YEAR_AMT, YEAR_CNT from TBL_RISK_LIMIT_DATA
+    </sql>
+
+    <select id="selectTblRiskLimitDataList" parameterType="TblRiskLimitData" resultMap="TblRiskLimitDataResult">
+        <include refid="selectTblRiskLimitDataVo"/>
+        <where>  
+            <if test="limitDate != null  and limitDate != ''"> and LIMIT_DATE = #{limitDate}</if>
+            <if test="limitElement != null  and limitElement != ''"> and LIMIT_ELEMENT = #{limitElement}</if>
+            <if test="limitValue != null  and limitValue != ''"> and LIMIT_VALUE = #{limitValue}</if>
+            <if test="dayAmt != null "> and DAY_AMT = #{dayAmt}</if>
+            <if test="dayCnt != null "> and DAY_CNT = #{dayCnt}</if>
+            <if test="monthAmt != null "> and MONTH_AMT = #{monthAmt}</if>
+            <if test="monthCnt != null "> and MONTH_CNT = #{monthCnt}</if>
+            <if test="yearAmt != null "> and YEAR_AMT = #{yearAmt}</if>
+            <if test="yearCnt != null "> and YEAR_CNT = #{yearCnt}</if>
+        </where>
+    </select>
+    
+    <select id="selectTblRiskLimitDataByID" parameterType="Long" resultMap="TblRiskLimitDataResult">
+        <include refid="selectTblRiskLimitDataVo"/>
+        where ID = #{ID}
+    </select>
+
+    <select id="selectTblRiskLimitData" resultMap="TblRiskLimitDataResult">
+        <include refid="selectTblRiskLimitDataVo"/>
+        where
+        LIMIT_DATE = #{limitDate}
+        and LIMIT_ELEMENT = #{limitElement}
+        and LIMIT_VALUE = #{limitValue}
+    </select>
+
+    <insert id="insertTblRiskLimitData" parameterType="TblRiskLimitData" useGeneratedKeys="true" keyProperty="ID">
+        insert into TBL_RISK_LIMIT_DATA
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="limitDate != null">LIMIT_DATE,</if>
+            <if test="limitElement != null">LIMIT_ELEMENT,</if>
+            <if test="limitValue != null">LIMIT_VALUE,</if>
+            <if test="dayAmt != null">DAY_AMT,</if>
+            <if test="dayCnt != null">DAY_CNT,</if>
+            <if test="monthAmt != null">MONTH_AMT,</if>
+            <if test="monthCnt != null">MONTH_CNT,</if>
+            <if test="yearAmt != null">YEAR_AMT,</if>
+            <if test="yearCnt != null">YEAR_CNT,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="limitDate != null">#{limitDate},</if>
+            <if test="limitElement != null">#{limitElement},</if>
+            <if test="limitValue != null">#{limitValue},</if>
+            <if test="dayAmt != null">#{dayAmt},</if>
+            <if test="dayCnt != null">#{dayCnt},</if>
+            <if test="monthAmt != null">#{monthAmt},</if>
+            <if test="monthCnt != null">#{monthCnt},</if>
+            <if test="yearAmt != null">#{yearAmt},</if>
+            <if test="yearCnt != null">#{yearCnt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTblRiskLimitData" parameterType="TblRiskLimitData">
+        update TBL_RISK_LIMIT_DATA
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="limitDate != null">LIMIT_DATE = #{limitDate},</if>
+            <if test="limitElement != null">LIMIT_ELEMENT = #{limitElement},</if>
+            <if test="limitValue != null">LIMIT_VALUE = #{limitValue},</if>
+            <if test="dayAmt != null">DAY_AMT = #{dayAmt},</if>
+            <if test="dayCnt != null">DAY_CNT = #{dayCnt},</if>
+            <if test="monthAmt != null">MONTH_AMT = #{monthAmt},</if>
+            <if test="monthCnt != null">MONTH_CNT = #{monthCnt},</if>
+            <if test="yearAmt != null">YEAR_AMT = #{yearAmt},</if>
+            <if test="yearCnt != null">YEAR_CNT = #{yearCnt},</if>
+        </trim>
+        where ID = #{ID}
+    </update>
+
+    <update id="updateTblRiskLimitDataByCardNo">
+        update TBL_RISK_LIMIT_DATA
+        set DAY_AMT = DAY_AMT + #{transAmt},DAY_CNT = DAY_CNT+1,
+                MONTH_AMT = MONTH_AMT +#{transAmt},MONTH_CNT = MONTH_CNT+1,
+                YEAR_AMT = YEAR_AMT +#{transAmt},YEAR_CNT = YEAR_CNT+1
+        where LIMIT_DATE = #{currentDate} and LIMIT_ELEMENT = '01' and LIMIT_VALUE=#{cardNo}
+    </update>
+
+    <delete id="deleteTblRiskLimitDataByID" parameterType="Long">
+        delete from TBL_RISK_LIMIT_DATA where ID = #{ID}
+    </delete>
+
+    <delete id="deleteTblRiskLimitDataByIDs" parameterType="String">
+        delete from TBL_RISK_LIMIT_DATA where ID in 
+        <foreach item="ID" collection="array" open="(" separator="," close=")">
+            #{ID}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.notify.cardApply.mapper.TblCardApplyFeeDetailMapper">
+    
+    <resultMap type="TblCardApplyFeeDetail" id="TblCardApplyFeeDetailResult">
+        <result property="id"    column="id"    />
+        <result property="cardApplyTableId"    column="card_apply_table_id"    />
+        <result property="channelTransId"    column="channel_trans_id"    />
+        <result property="currency"    column="currency"    />
+        <result property="fee"    column="fee"    />
+        <result property="feeModel"    column="fee_model"    />
+        <result property="totalFee"    column="total_fee"    />
+        <result property="createdAt"    column="created_at"    />
+    </resultMap>
+
+    <sql id="selectTblCardApplyFeeDetailVo">
+        select id, card_apply_table_id, channel_trans_id, currency, fee, fee_model, total_fee, created_at from tbl_card_apply_fee_detail_
+    </sql>
+
+    <select id="selectTblCardApplyFeeDetailList" parameterType="TblCardApplyFeeDetail" resultMap="TblCardApplyFeeDetailResult">
+        <include refid="selectTblCardApplyFeeDetailVo"/>
+        <where>  
+            <if test="cardApplyTableId != null "> and card_apply_table_id = #{cardApplyTableId}</if>
+            <if test="channelTransId != null  and channelTransId != ''"> and channel_trans_id = #{channelTransId}</if>
+            <if test="currency != null  and currency != ''"> and currency = #{currency}</if>
+            <if test="fee != null "> and fee = #{fee}</if>
+            <if test="feeModel != null "> and fee_model = #{feeModel}</if>
+            <if test="totalFee != null "> and total_fee = #{totalFee}</if>
+            <if test="createdAt != null "> and created_at = #{createdAt}</if>
+        </where>
+    </select>
+    
+    <select id="selectTblCardApplyFeeDetailById" parameterType="Long" resultMap="TblCardApplyFeeDetailResult">
+        <include refid="selectTblCardApplyFeeDetailVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTblCardApplyFeeDetail" parameterType="TblCardApplyFeeDetail">
+        insert into tbl_card_apply_fee_detail_
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="cardApplyTableId != null">card_apply_table_id,</if>
+            <if test="channelTransId != null">channel_trans_id,</if>
+            <if test="currency != null">currency,</if>
+            <if test="fee != null">fee,</if>
+            <if test="feeModel != null">fee_model,</if>
+            <if test="totalFee != null">total_fee,</if>
+            <if test="createdAt != null">created_at,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="cardApplyTableId != null">#{cardApplyTableId},</if>
+            <if test="channelTransId != null">#{channelTransId},</if>
+            <if test="currency != null">#{currency},</if>
+            <if test="fee != null">#{fee},</if>
+            <if test="feeModel != null">#{feeModel},</if>
+            <if test="totalFee != null">#{totalFee},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+         </trim>
+    </insert>
+
+    <insert id="insertTblCardApplyFeeDetailBatch" parameterType="map">
+        <if test="list != null and !list.isEmpty()">
+            INSERT INTO ${tableName}
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="list[0].id != null">id,</if>
+                <if test="list[0].cardApplyTableId != null">card_apply_table_id,</if>
+                <if test="list[0].channelTransId != null">channel_trans_id,</if>
+                <if test="list[0].currency != null">currency,</if>
+                <if test="list[0].fee != null">fee,</if>
+                <if test="list[0].feeModel != null">fee_model,</if>
+                <if test="list[0].totalFee != null">total_fee,</if>
+                <if test="list[0].createdAt != null">created_at,</if>
+            </trim>
+            VALUES
+            <foreach collection="list" item="item" separator=",">
+                <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="item.id != null">#{item.id},</if>
+                    <if test="item.cardApplyTableId != null">#{item.cardApplyTableId},</if>
+                    <if test="item.channelTransId != null">#{item.channelTransId},</if>
+                    <if test="item.currency != null">#{item.currency},</if>
+                    <if test="item.fee != null">#{item.fee},</if>
+                    <if test="item.feeModel != null">#{item.feeModel},</if>
+                    <if test="item.totalFee != null">#{item.totalFee},</if>
+                    <if test="item.createdAt != null">#{item.createdAt},</if>
+                </trim>
+            </foreach>
+        </if>
+    </insert>
+
+    <update id="updateTblCardApplyFeeDetail" parameterType="TblCardApplyFeeDetail">
+        update tbl_card_apply_fee_detail_
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="cardApplyTableId != null">card_apply_table_id = #{cardApplyTableId},</if>
+            <if test="channelTransId != null">channel_trans_id = #{channelTransId},</if>
+            <if test="currency != null">currency = #{currency},</if>
+            <if test="fee != null">fee = #{fee},</if>
+            <if test="feeModel != null">fee_model = #{feeModel},</if>
+            <if test="totalFee != null">total_fee = #{totalFee},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTblCardApplyFeeDetailById" parameterType="Long">
+        delete from tbl_card_apply_fee_detail_ where id = #{id}
+    </delete>
+
+    <delete id="deleteTblCardApplyFeeDetailByIds" parameterType="String">
+        delete from tbl_card_apply_fee_detail_ where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

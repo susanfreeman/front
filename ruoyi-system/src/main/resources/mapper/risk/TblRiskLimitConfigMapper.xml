@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.risk.mapper.TblRiskLimitConfigMapper">
+    
+    <resultMap type="TblRiskLimitConfig" id="TblRiskLimitConfigResult">
+        <result property="id"    column="id"    />
+        <result property="limitElement"    column="LIMIT_ELEMENT"    />
+        <result property="limitValue"    column="LIMIT_VALUE"    />
+        <result property="preAmtLimit"    column="PRE_AMT_LIMIT"    />
+        <result property="dayAmtLimit"    column="DAY_AMT_LIMIT"    />
+        <result property="dayCntLimit"    column="DAY_CNT_LIMIT"    />
+        <result property="monthAmtLimit"    column="MONTH_AMT_LIMIT"    />
+        <result property="monthCntLimit"    column="MONTH_CNT_LIMIT"    />
+        <result property="yearCntLimit"    column="YEAR_CNT_LIMIT"    />
+        <result property="yearAmtLimit"    column="YEAR_AMT_LIMIT"    />
+        <result property="createTime"    column="CREATE_TIME"    />
+        <result property="updateTime"    column="UPDATE_TIME"    />
+        <result property="createUser"    column="CREATE_USER"    />
+        <result property="updateUser"    column="UPDATE_USER"    />
+    </resultMap>
+
+    <sql id="selectTblRiskLimitConfigVo">
+        select ID, LIMIT_ELEMENT, LIMIT_VALUE, PRE_AMT_LIMIT, DAY_AMT_LIMIT, DAY_CNT_LIMIT, MONTH_AMT_LIMIT, MONTH_CNT_LIMIT, YEAR_CNT_LIMIT, YEAR_AMT_LIMIT, CREATE_TIME, UPDATE_TIME, CREATE_USER, UPDATE_USER from TBL_RISK_LIMIT_CONFIG
+    </sql>
+
+    <select id="selectTblRiskLimitConfigList" parameterType="TblRiskLimitConfig" resultMap="TblRiskLimitConfigResult">
+        <include refid="selectTblRiskLimitConfigVo"/>
+        <where>  
+            <if test="limitElement != null  and limitElement != ''"> and LIMIT_ELEMENT = #{limitElement}</if>
+            <if test="limitValue != null  and limitValue != ''"> and LIMIT_VALUE = #{limitValue}</if>
+            <if test="preAmtLimit != null "> and PRE_AMT_LIMIT = #{preAmtLimit}</if>
+            <if test="dayAmtLimit != null "> and DAY_AMT_LIMIT = #{dayAmtLimit}</if>
+            <if test="dayCntLimit != null "> and DAY_CNT_LIMIT = #{dayCntLimit}</if>
+            <if test="monthAmtLimit != null "> and MONTH_AMT_LIMIT = #{monthAmtLimit}</if>
+            <if test="monthCntLimit != null "> and MONTH_CNT_LIMIT = #{monthCntLimit}</if>
+            <if test="yearCntLimit != null "> and YEAR_CNT_LIMIT = #{yearCntLimit}</if>
+            <if test="yearAmtLimit != null "> and YEAR_AMT_LIMIT = #{yearAmtLimit}</if>
+            <if test="createTime != null "> and date_format(CREATE_TIME,'%Y%m%d') = date_format(#{createTime},'%Y%m%d')</if>
+            <if test="updateTime != null "> and UPDATE_TIME = #{updateTime}</if>
+            <if test="createUser != null  and createUser != ''"> and CREATE_USER = #{createUser}</if>
+            <if test="updateUser != null  and updateUser != ''"> and UPDATE_USER = #{updateUser}</if>
+        </where>
+    </select>
+    
+    <select id="selectTblRiskLimitConfigByID" parameterType="Long" resultMap="TblRiskLimitConfigResult">
+        <include refid="selectTblRiskLimitConfigVo"/>
+        where ID = #{ID}
+    </select>
+
+    <select id="selectTblRiskLimitConfig" resultMap="TblRiskLimitConfigResult">
+        select min(PRE_AMT_LIMIT)   as PRE_AMT_LIMIT,
+               min(DAY_AMT_LIMIT)   as DAY_AMT_LIMIT,
+               min(DAY_CNT_LIMIT)   as DAY_CNT_LIMIT,
+               min(MONTH_AMT_LIMIT) as MONTH_AMT_LIMIT,
+               min(MONTH_CNT_LIMIT) as MONTH_CNT_LIMIT,
+               min(YEAR_CNT_LIMIT)  as YEAR_CNT_LIMIT,
+               min(YEAR_AMT_LIMIT)  as YEAR_AMT_LIMIT
+        from TBL_RISK_LIMIT_CONFIG
+        where LIMIT_ELEMENT = #{type}
+          and LIMIT_VALUE in ('ALL', #{value})
+        group by LIMIT_ELEMENT
+    </select>
+
+    <insert id="insertTblRiskLimitConfig" parameterType="TblRiskLimitConfig" useGeneratedKeys="true" keyProperty="id">
+        insert into TBL_RISK_LIMIT_CONFIG
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="limitElement != null">LIMIT_ELEMENT,</if>
+            <if test="limitValue != null">LIMIT_VALUE,</if>
+            <if test="preAmtLimit != null">PRE_AMT_LIMIT,</if>
+            <if test="dayAmtLimit != null">DAY_AMT_LIMIT,</if>
+            <if test="dayCntLimit != null">DAY_CNT_LIMIT,</if>
+            <if test="monthAmtLimit != null">MONTH_AMT_LIMIT,</if>
+            <if test="monthCntLimit != null">MONTH_CNT_LIMIT,</if>
+            <if test="yearCntLimit != null">YEAR_CNT_LIMIT,</if>
+            <if test="yearAmtLimit != null">YEAR_AMT_LIMIT,</if>
+            <if test="createTime != null">CREATE_TIME,</if>
+            <if test="updateTime != null">UPDATE_TIME,</if>
+            <if test="createUser != null">CREATE_USER,</if>
+            <if test="updateUser != null">UPDATE_USER,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="limitElement != null">#{limitElement},</if>
+            <if test="limitValue != null">#{limitValue},</if>
+            <if test="preAmtLimit != null">#{preAmtLimit},</if>
+            <if test="dayAmtLimit != null">#{dayAmtLimit},</if>
+            <if test="dayCntLimit != null">#{dayCntLimit},</if>
+            <if test="monthAmtLimit != null">#{monthAmtLimit},</if>
+            <if test="monthCntLimit != null">#{monthCntLimit},</if>
+            <if test="yearCntLimit != null">#{yearCntLimit},</if>
+            <if test="yearAmtLimit != null">#{yearAmtLimit},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createUser != null">#{createUser},</if>
+            <if test="updateUser != null">#{updateUser},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTblRiskLimitConfig" parameterType="TblRiskLimitConfig">
+        update TBL_RISK_LIMIT_CONFIG
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="limitElement != null">LIMIT_ELEMENT = #{limitElement},</if>
+            <if test="limitValue != null">LIMIT_VALUE = #{limitValue},</if>
+            <if test="preAmtLimit != null">PRE_AMT_LIMIT = #{preAmtLimit},</if>
+            <if test="dayAmtLimit != null">DAY_AMT_LIMIT = #{dayAmtLimit},</if>
+            <if test="dayCntLimit != null">DAY_CNT_LIMIT = #{dayCntLimit},</if>
+            <if test="monthAmtLimit != null">MONTH_AMT_LIMIT = #{monthAmtLimit},</if>
+            <if test="monthCntLimit != null">MONTH_CNT_LIMIT = #{monthCntLimit},</if>
+            <if test="yearCntLimit != null">YEAR_CNT_LIMIT = #{yearCntLimit},</if>
+            <if test="yearAmtLimit != null">YEAR_AMT_LIMIT = #{yearAmtLimit},</if>
+            <if test="createTime != null">CREATE_TIME = #{createTime},</if>
+            <if test="updateTime != null">UPDATE_TIME = #{updateTime},</if>
+            <if test="createUser != null">CREATE_USER = #{createUser},</if>
+            <if test="updateUser != null">UPDATE_USER = #{updateUser},</if>
+        </trim>
+        where ID = #{id}
+    </update>
+
+    <delete id="deleteTblRiskLimitConfigByID" parameterType="Long">
+        delete from TBL_RISK_LIMIT_CONFIG where ID = #{ID}
+    </delete>
+
+    <delete id="deleteTblRiskLimitConfigByIDs" parameterType="String">
+        delete from TBL_RISK_LIMIT_CONFIG where ID in 
+        <foreach item="ID" collection="array" open="(" separator="," close=")">
+            #{ID}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.agent.mapper.TblAgentProfitRecordMapper">
+    
+    <resultMap type="TblAgentProfitRecord" id="TblAgentProfitRecordResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="supPartnerId"    column="sup_partner_id"    />
+        <result property="transId"    column="trans_id"    />
+        <result property="transTime"    column="trans_time"    />
+        <result property="transType"    column="trans_type"    />
+        <result property="transAmt"    column="trans_amt"    />
+        <result property="transFee"    column="trans_fee"    />
+        <result property="profitFee"    column="profit_fee"    />
+        <result property="profitMethod"    column="profit_method"    />
+        <result property="lv1Rate"    column="lv1_rate"    />
+        <result property="lv2Rate"    column="lv2_rate"    />
+        <result property="lv3Rate"    column="lv3_rate"    />
+        <result property="lv1Profit"    column="lv1_profit"    />
+        <result property="lv2Profit"    column="lv2_profit"    />
+        <result property="lv3Profit"    column="lv3_profit"    />
+        <result property="lv1PartnerId"    column="lv1_partner_id"    />
+        <result property="lv2PartnerId"    column="lv2_partner_id"    />
+        <result property="lv3PartnerId"    column="lv3_partner_id"    />
+    </resultMap>
+
+    <sql id="selectTblAgentProfitRecordVo">
+        select id, user_id, sup_partner_id, trans_id, trans_time, trans_type, trans_amt, trans_fee, profit_fee, profit_method, lv1_rate, lv2_rate, lv3_rate, lv1_profit, lv2_profit, lv3_profit, lv1_partner_id, lv2_partner_id, lv3_partner_id from tbl_agent_profit_record
+    </sql>
+
+    <select id="selectTblAgentProfitRecordList" parameterType="TblAgentProfitRecord" resultMap="TblAgentProfitRecordResult">
+        <include refid="selectTblAgentProfitRecordVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="supPartnerId != null "> and sup_partner_id = #{supPartnerId}</if>
+            <if test="transId != null  and transId != ''"> and trans_id = #{transId}</if>
+            <if test="transTime != null  and transTime != ''"> and trans_time = #{transTime}</if>
+            <if test="transType != null  and transType != ''"> and trans_type = #{transType}</if>
+            <if test="transAmt != null "> and trans_amt = #{transAmt}</if>
+            <if test="transFee != null "> and trans_fee = #{transFee}</if>
+            <if test="profitFee != null "> and profit_fee = #{profitFee}</if>
+            <if test="profitMethod != null "> and profit_method = #{profitMethod}</if>
+            <if test="lv1Rate != null "> and lv1_rate = #{lv1Rate}</if>
+            <if test="lv2Rate != null "> and lv2_rate = #{lv2Rate}</if>
+            <if test="lv3Rate != null "> and lv3_rate = #{lv3Rate}</if>
+            <if test="lv1Profit != null "> and lv1_profit = #{lv1Profit}</if>
+            <if test="lv2Profit != null "> and lv2_profit = #{lv2Profit}</if>
+            <if test="lv3Profit != null "> and lv3_profit = #{lv3Profit}</if>
+            <if test="lv1PartnerId != null "> and lv1_partner_id = #{lv1PartnerId}</if>
+            <if test="lv2PartnerId != null "> and lv2_partner_id = #{lv2PartnerId}</if>
+            <if test="lv3PartnerId != null "> and lv3_partner_id = #{lv3PartnerId}</if>
+        </where>
+    </select>
+    
+    <select id="selectTblAgentProfitRecordById" parameterType="Long" resultMap="TblAgentProfitRecordResult">
+        <include refid="selectTblAgentProfitRecordVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTblAgentProfitRecord" parameterType="TblAgentProfitRecord">
+        insert into tbl_agent_profit_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="supPartnerId != null">sup_partner_id,</if>
+            <if test="transId != null">trans_id,</if>
+            <if test="transTime != null">trans_time,</if>
+            <if test="transType != null">trans_type,</if>
+            <if test="transAmt != null">trans_amt,</if>
+            <if test="transFee != null">trans_fee,</if>
+            <if test="profitFee != null">profit_fee,</if>
+            <if test="profitMethod != null">profit_method,</if>
+            <if test="lv1Rate != null">lv1_rate,</if>
+            <if test="lv2Rate != null">lv2_rate,</if>
+            <if test="lv3Rate != null">lv3_rate,</if>
+            <if test="lv1Profit != null">lv1_profit,</if>
+            <if test="lv2Profit != null">lv2_profit,</if>
+            <if test="lv3Profit != null">lv3_profit,</if>
+            <if test="lv1PartnerId != null">lv1_partner_id,</if>
+            <if test="lv2PartnerId != null">lv2_partner_id,</if>
+            <if test="lv3PartnerId != null">lv3_partner_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="supPartnerId != null">#{supPartnerId},</if>
+            <if test="transId != null">#{transId},</if>
+            <if test="transTime != null">#{transTime},</if>
+            <if test="transType != null">#{transType},</if>
+            <if test="transAmt != null">#{transAmt},</if>
+            <if test="transFee != null">#{transFee},</if>
+            <if test="profitFee != null">#{profitFee},</if>
+            <if test="profitMethod != null">#{profitMethod},</if>
+            <if test="lv1Rate != null">#{lv1Rate},</if>
+            <if test="lv2Rate != null">#{lv2Rate},</if>
+            <if test="lv3Rate != null">#{lv3Rate},</if>
+            <if test="lv1Profit != null">#{lv1Profit},</if>
+            <if test="lv2Profit != null">#{lv2Profit},</if>
+            <if test="lv3Profit != null">#{lv3Profit},</if>
+            <if test="lv1PartnerId != null">#{lv1PartnerId},</if>
+            <if test="lv2PartnerId != null">#{lv2PartnerId},</if>
+            <if test="lv3PartnerId != null">#{lv3PartnerId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTblAgentProfitRecord" parameterType="TblAgentProfitRecord">
+        update tbl_agent_profit_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="supPartnerId != null">sup_partner_id = #{supPartnerId},</if>
+            <if test="transId != null">trans_id = #{transId},</if>
+            <if test="transTime != null">trans_time = #{transTime},</if>
+            <if test="transType != null">trans_type = #{transType},</if>
+            <if test="transAmt != null">trans_amt = #{transAmt},</if>
+            <if test="transFee != null">trans_fee = #{transFee},</if>
+            <if test="profitFee != null">profit_fee = #{profitFee},</if>
+            <if test="profitMethod != null">profit_method = #{profitMethod},</if>
+            <if test="lv1Rate != null">lv1_rate = #{lv1Rate},</if>
+            <if test="lv2Rate != null">lv2_rate = #{lv2Rate},</if>
+            <if test="lv3Rate != null">lv3_rate = #{lv3Rate},</if>
+            <if test="lv1Profit != null">lv1_profit = #{lv1Profit},</if>
+            <if test="lv2Profit != null">lv2_profit = #{lv2Profit},</if>
+            <if test="lv3Profit != null">lv3_profit = #{lv3Profit},</if>
+            <if test="lv1PartnerId != null">lv1_partner_id = #{lv1PartnerId},</if>
+            <if test="lv2PartnerId != null">lv2_partner_id = #{lv2PartnerId},</if>
+            <if test="lv3PartnerId != null">lv3_partner_id = #{lv3PartnerId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTblAgentProfitRecordById" parameterType="Long">
+        delete from tbl_agent_profit_record where id = #{id}
+    </delete>
+
+    <delete id="deleteTblAgentProfitRecordByIds" parameterType="String">
+        delete from tbl_agent_profit_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

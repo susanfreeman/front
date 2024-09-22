@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.user.mapper.TblUserOpenCardMapper">
+
+    <resultMap type="TblUserOpenCard" id="TblUserOpenCardResult">
+        <result property="uocId"    column="uoc_id"    />
+        <result property="uiId"    column="ui_id"    />
+        <result property="cardNo"    column="card_no"    />
+        <result property="cardHead"    column="card_head"    />
+        <result property="cvv"    column="cvv"    />
+        <result property="expire"    column="expire"    />
+        <result property="firstName"    column="first_name"    />
+        <result property="lastName"    column="last_name"    />
+        <result property="transTime"    column="trans_time"    />
+        <result property="ciId"    column="ci_id"    />
+        <result property="cardId"    column="card_id"    />
+        <result property="cardStatus"    column="card_status"    />
+        <result property="cbId"    column="cb_id"    />
+        <result property="cardCurr"    column="card_curr"    />
+    </resultMap>
+
+    <sql id="selectTblUserOpenCardVo">
+        select uoc_id, ui_id, card_no, card_head, cvv, expire, first_name, last_name, trans_time, ci_id, card_id, card_status, cb_id, card_curr from tbl_user_open_card
+    </sql>
+
+    <select id="selectTblUserOpenCardList" parameterType="TblUserOpenCard" resultMap="TblUserOpenCardResult">
+        <include refid="selectTblUserOpenCardVo"/>
+        <where>
+            <if test="uiId != null "> and ui_id = #{uiId}</if>
+            <if test="cardNo != null  and cardNo != ''"> and card_no = #{cardNo}</if>
+            <if test="cardHead != null  and cardHead != ''"> and card_head = #{cardHead}</if>
+            <if test="cvv != null  and cvv != ''"> and cvv = #{cvv}</if>
+            <if test="expire != null  and expire != ''"> and expire = #{expire}</if>
+            <if test="firstName != null  and firstName != ''"> and first_name like concat('%', #{firstName}, '%')</if>
+            <if test="lastName != null  and lastName != ''"> and last_name like concat('%', #{lastName}, '%')</if>
+            <if test="transTime != null "> and trans_time = #{transTime}</if>
+            <if test="ciId != null "> and ci_id = #{ciId}</if>
+            <if test="cardId != null  and cardId != ''"> and card_id = #{cardId}</if>
+            <if test="cardStatus != null  and cardStatus != ''"> and card_status = #{cardStatus}</if>
+            <if test="cbId != null "> and cb_id = #{cbId}</if>
+            <if test="cardCurr != null  and cardCurr != ''"> and card_curr = #{cardCurr}</if>
+        </where>
+    </select>
+
+
+    <select id="selectTblUserOpenCardByUocId" parameterType="Long" resultMap="TblUserOpenCardResult">
+        <include refid="selectTblUserOpenCardVo"/>
+        where uoc_id = #{uocId}
+    </select>
+
+    <select id="selectTblUserOpenCardByCardNo" parameterType="String" resultMap="TblUserOpenCardResult">
+        <include refid="selectTblUserOpenCardVo"/>
+        where card_no = #{cardNo}
+    </select>
+
+    <select id="selectTblUserOpenCardByCardId" parameterType="String" resultMap="TblUserOpenCardResult">
+        <include refid="selectTblUserOpenCardVo"/>
+        where card_id = #{cardId}
+    </select>
+
+    <insert id="insertTblUserOpenCard" parameterType="TblUserOpenCard" useGeneratedKeys="true" keyProperty="uocId">
+        insert into tbl_user_open_card
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uiId != null">ui_id,</if>
+            <if test="cardNo != null">card_no,</if>
+            <if test="cardHead != null">card_head,</if>
+            <if test="cvv != null">cvv,</if>
+            <if test="expire != null">expire,</if>
+            <if test="firstName != null">first_name,</if>
+            <if test="lastName != null">last_name,</if>
+            <if test="transTime != null">trans_time,</if>
+            <if test="ciId != null">ci_id,</if>
+            <if test="cardId != null">card_id,</if>
+            <if test="cardStatus != null">card_status,</if>
+            <if test="cbId != null">cb_id,</if>
+            <if test="cardCurr != null">card_curr,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uiId != null">#{uiId},</if>
+            <if test="cardNo != null">#{cardNo},</if>
+            <if test="cardHead != null">#{cardHead},</if>
+            <if test="cvv != null">#{cvv},</if>
+            <if test="expire != null">#{expire},</if>
+            <if test="firstName != null">#{firstName},</if>
+            <if test="lastName != null">#{lastName},</if>
+            <if test="transTime != null">#{transTime},</if>
+            <if test="ciId != null">#{ciId},</if>
+            <if test="cardId != null">#{cardId},</if>
+            <if test="cardStatus != null">#{cardStatus},</if>
+            <if test="cbId != null">#{cbId},</if>
+            <if test="cardCurr != null">#{cardCurr},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTblUserOpenCard" parameterType="TblUserOpenCard">
+        update tbl_user_open_card
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uiId != null">ui_id = #{uiId},</if>
+            <if test="cardNo != null">card_no = #{cardNo},</if>
+            <if test="cardHead != null">card_head = #{cardHead},</if>
+            <if test="cvv != null">cvv = #{cvv},</if>
+            <if test="expire != null">expire = #{expire},</if>
+            <if test="firstName != null">first_name = #{firstName},</if>
+            <if test="lastName != null">last_name = #{lastName},</if>
+            <if test="transTime != null">trans_time = #{transTime},</if>
+            <if test="ciId != null">ci_id = #{ciId},</if>
+            <if test="cardId != null">card_id = #{cardId},</if>
+            <if test="cardStatus != null">card_status = #{cardStatus},</if>
+            <if test="cbId != null">cb_id = #{cbId},</if>
+            <if test="cardCurr != null">card_curr = #{cardCurr},</if>
+        </trim>
+        where uoc_id = #{uocId}
+    </update>
+
+    <delete id="deleteTblUserOpenCardByUocId" parameterType="Long">
+        delete from tbl_user_open_card where uoc_id = #{uocId}
+    </delete>
+
+    <delete id="deleteTblUserOpenCardByUocIds" parameterType="String">
+        delete from tbl_user_open_card where uoc_id in
+        <foreach item="uocId" collection="array" open="(" separator="," close=")">
+            #{uocId}
+        </foreach>
+    </delete>
+
+
+    <select id="selectTblUserOpenCardListGtTransTime" parameterType="TblUserOpenCard" resultMap="TblUserOpenCardResult">
+        <include refid="selectTblUserOpenCardVo"/>
+        <where>
+            <if test="uiId != null "> and ui_id = #{uiId}</if>
+            <if test="cardNo != null  and cardNo != ''"> and card_no = #{cardNo}</if>
+            <if test="cardHead != null  and cardHead != ''"> and card_head = #{cardHead}</if>
+            <if test="cvv != null  and cvv != ''"> and cvv = #{cvv}</if>
+            <if test="expire != null  and expire != ''"> and expire = #{expire}</if>
+            <if test="firstName != null  and firstName != ''"> and first_name like concat('%', #{firstName}, '%')</if>
+            <if test="lastName != null  and lastName != ''"> and last_name like concat('%', #{lastName}, '%')</if>
+            <if test="transTime != null "> and trans_time &gt;= #{transTime}</if>
+            <if test="ciId != null "> and ci_id = #{ciId}</if>
+            <if test="cardId != null  and cardId != ''"> and card_id = #{cardId}</if>
+            <if test="cardStatus != null  and cardStatus != ''"> and card_status = #{cardStatus}</if>
+        </where>
+    </select>
+
+
+    <update id="batchUpdateStatus" parameterType="TblUserOpenCard">
+        update tbl_user_open_card set card_status = #{cardStatus} where card_status = #{oldStatus}
+    </update>
+
+
+    <update id="updateTblUserOpenCardByStatus" parameterType="TblUserOpenCard">
+        update tbl_user_open_card
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uiId != null">ui_id = #{uiId},</if>
+            <if test="cardNo != null">card_no = #{cardNo},</if>
+            <if test="cardHead != null">card_head = #{cardHead},</if>
+            <if test="cvv != null">cvv = #{cvv},</if>
+            <if test="expire != null">expire = #{expire},</if>
+            <if test="firstName != null">first_name = #{firstName},</if>
+            <if test="lastName != null">last_name = #{lastName},</if>
+            <if test="transTime != null">trans_time = #{transTime},</if>
+            <if test="ciId != null">ci_id = #{ciId},</if>
+            <if test="cardId != null">card_id = #{cardId},</if>
+            <if test="cardStatus != null">card_status = #{cardStatus},</if>
+        </trim>
+        where uoc_id = #{uocId} and card_status = #{oldStatus}
+    </update>
+</mapper>
