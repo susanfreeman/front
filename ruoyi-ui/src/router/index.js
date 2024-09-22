@@ -42,8 +42,32 @@ export const constantRoutes = [
     ]
   },
   {
+    path: "/home",
+    redirect: "/home/account/account"
+  },
+  {
+    path: "/home/account",
+    redirect: "/home/account/account"
+  },
+  {
+    path: "/home/notice",
+    redirect: "/home/notice/notice-index"
+  },
+  {
+      path: "/home/help",
+      redirect: "/home/help/help-index"
+  },
+  {
     path: "/login",
     redirect: "/login/login"
+  },
+  {
+    path: "/home/exchange-account",
+    redirect: "/home/exchange-account/exchange"
+  },
+  {
+      path: "/home/user",
+      redirect: "/home/user/me"
   },
   {
     path: '/login',

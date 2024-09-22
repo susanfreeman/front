@@ -8,6 +8,7 @@ import { isRelogin } from '@/utils/request'
 
 NProgress.configure({ showSpinner: false })
 
+// 无需登录验证
 const whiteList = [
   '/login/login', 
   '/login/register',
@@ -49,14 +50,24 @@ router.beforeEach((to, from, next) => {
       }
     }
   } else {
-    // 没有token
+    // 没有对接登录，所以先把没有token的校验给去掉
     if (whiteList.indexOf(to.path) !== -1) {
-      // 在免登录白名单，直接进入
+      next()
+    } else if (to.path.startsWith('/home')) {
       next()
     } else {
       next(`/login/login?redirect=${encodeURIComponent(to.fullPath)}`) // 否则全部重定向到登录页
       NProgress.done()
     }
+
+
+  //   if (whiteList.indexOf(to.path) !== -1) {
+  //     // 在免登录白名单，直接进入
+  //     next()
+  //   } else {
+  //     next(`/login/login?redirect=${encodeURIComponent(to.fullPath)}`) // 否则全部重定向到登录页
+  //     NProgress.done()
+  //   }
   }
 })
 
