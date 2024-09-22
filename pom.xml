@@ -182,6 +182,74 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcpkix-jdk15to18</artifactId>
+                <version>1.72</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>5.8.25</version>
+            </dependency>
+            <!--        tron end   -->
+
+            <!--            &lt;!&ndash; https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api &ndash;&gt;-->
+            <!--            <dependency>-->
+            <!--                <groupId>jakarta.servlet</groupId>-->
+            <!--                <artifactId>jakarta.servlet-api</artifactId>-->
+            <!--                <version>6.0.0</version>-->
+            <!--                <scope>provided</scope>-->
+            <!--            </dependency>-->
+
+
+            <!--            <dependency>-->
+            <!--                <groupId>javax.mail</groupId>-->
+            <!--                <artifactId>javax.mail-api</artifactId>-->
+            <!--                <version>1.6.2</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId >com.sun.mail</groupId >-->
+            <!--                <artifactId >javax.mail</artifactId >-->
+            <!--                <version>1.4.7</version>-->
+            <!--            </dependency>-->
+            <!--            &lt;!&ndash; https://mvnrepository.com/artifact/javax.mail/mail &ndash;&gt;-->
+            <!--            <dependency>-->
+            <!--                <groupId>javax.mail</groupId>-->
+            <!--                <artifactId>mail</artifactId>-->
+            <!--                <version>1.4.7</version>-->
+            <!--            </dependency>-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-mail</artifactId>
+                <version>2.5.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.safeheron</groupId>
+                <artifactId>api-sdk-java</artifactId>
+                <version>0.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.retrofit2</groupId>
+                <artifactId>retrofit</artifactId>
+                <version>2.5.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.retrofit2</groupId>
+                <artifactId>converter-jackson</artifactId>
+                <version>2.5.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>4.9.3</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>2.6</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

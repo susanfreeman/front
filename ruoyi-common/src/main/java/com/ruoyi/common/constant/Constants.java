@@ -170,4 +170,43 @@ public class Constants
      */
     public static final String[] JOB_ERROR_STR = { "java.net.URL", "javax.naming.InitialContext", "org.yaml.snakeyaml",
             "org.springframework", "org.apache", "com.ruoyi.common.utils.file", "com.ruoyi.common.config", "com.ruoyi.generator" };
+
+    /**
+     * 查询标志
+     */
+    public static interface QUEYR_STATUS{
+        public static String STATUS = "1";
+        public static String INFO = "2";
+        public static String BALANCE = "3";
+        public static String ALL = "4";
+    }
+
+    /**
+     * 查询标志
+     */
+    public static interface COIN_TYPE{
+        public static String TRON_COIN = "TRON";
+        public static String BNB_COIN = "BNB";
+    }
+
+//    redisKey
+    public static interface REDIS_BLOCK_NUMBER{
+
+        public static String TRON_BLOCK_PROCESSED = "TRON_BLOCK_PROCESSED";
+        public static String ETH_BLOCK_PROCESSED = "TRON_BLOCK_PROCESSED";
+    }
+
+    public static interface COIN_MAP_KEY{
+
+        public static String TRX_ID = "TRX_ID";
+        public static String FROM_ADDR = "FROM_ADDR";
+        public static String TARGET_ADDR = "TARGET_ADDR";
+        public static String CHARGE_AMOUNT = "CHARGE_AMOUNT";
+
+    }
+    public static interface EMAIL_VALIDATE_KEY{
+
+        public static String REGISTER_KEY = "REGISTER_KEY";
+
+    }
 }

@@ -59,7 +59,7 @@ public class AsyncFactory
                 String browser = userAgent.getBrowser().getName();
                 // 封装对象
                 SysLogininfor logininfor = new SysLogininfor();
-                logininfor.setUserName(username);
+                logininfor.setLoginName(username);
                 logininfor.setIpaddr(ip);
                 logininfor.setLoginLocation(address);
                 logininfor.setBrowser(browser);
