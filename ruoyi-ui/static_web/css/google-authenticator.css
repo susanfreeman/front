@@ -1,0 +1,186 @@
+.head {
+	position: relative;
+}
+
+.google_outer {
+	width: 100%;
+	min-height: 500px;
+	height: calc(100vh - 500px);
+	overflow: hidden;
+	background: #fff;
+}
+
+.google_box {
+	width: 100%;
+	margin: 120px auto 60px;
+	padding-left: 300px;
+	position: relative;
+}
+
+.google_box .title {
+	color: #333333;
+	font-size: 30px;
+	font-weight: bold;
+}
+
+.google_box .tip {
+	color: #6F7590;
+	font-size: 14px;
+	margin: 10px 0 20px;
+}
+
+.google_box .code {
+	color: #333333;
+	font-size: 14px;
+	display: flex;
+	text-align: center;
+}
+
+.google_box .code div {
+	margin-right: 24px;
+}
+
+.google_box .code img {
+	width: 140px;
+	height: 140px;
+	border: 1px solid #E8E8F1;
+	display: block;
+	margin-bottom: 6px;
+}
+
+.google_box .google_img {
+	width: 157px;
+	position: absolute;
+	top: 52px;
+	right: 215px;
+}
+
+.description_outer {
+	width: 100%;
+	background: #F5F5F5;
+	padding: 60px 0;
+}
+
+.description_outer .description {
+	width: 100%;
+	margin: 0 auto;
+	padding: 0 100px;
+}
+
+.description_outer .description .title {
+	color: #333333;
+	font-size: 30px;
+	font-weight: bold;
+}
+
+.description_outer .description .step_box {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.description_outer .description .step_box .step {
+	margin-top: 60px;
+	width: 50%;
+}
+
+.description_outer .description .step_box .step .box {
+	width: 110px;
+	height: 110px;
+	padding: 16px 0 0 16px;
+	color: #FFFFFF;
+	font-size: 40px;
+	font-weight: bold;
+}
+
+.description_outer .description .step_box .step .box label {
+	display: block;
+	font-size: 16px;
+	font-weight: initial;
+	margin-bottom: 10px;
+}
+
+.description_outer .description .step_box .step .box .font_12 {
+	font-size: 12px;
+}
+
+.description_outer .description .step_box .step .bg_01 {
+	background: #1A72FF;
+}
+
+.description_outer .description .step_box .step .bg_02 {
+	background: #231AFF;
+}
+
+.description_outer .description .step_box .step .bg_03 {
+	background: #721AFF;
+}
+
+.description_outer .description .step_box .step .bg_04 {
+	background: #A71AFF;
+}
+
+.description_outer .description .step_box .step .tip1 {
+	width: 434px;
+	color: #333333;
+	margin-top: 10px;
+	line-height: 21px;
+}
+
+.description_outer .description .step_box .step .tip2 {
+	width: 434px;
+	color: #E53E3E;
+	margin-top: 10px;
+	line-height: 21px;
+}
+
+@media only screen and (min-width: 100px) and (max-width: 640px) {
+	.google_box {
+		width: 100%;
+		margin: 60px auto;
+		padding: 0 24px;
+	}
+	.google_box .title {
+		font-size: 20px;
+	}
+	.google_box .tip {
+		font-size: 12px;
+	}
+	.google_box .google_img {
+		display: none;
+	}
+	.description_outer .description {
+		width: 100%;
+		padding: 0px 24px;
+	}
+	.description_outer .description .title {
+		font-size: 20px;
+	}
+	.description_outer .description .step_box .step {
+		width: 100%;
+		min-height: 110px;
+		margin-top: 32px;
+		position: relative;
+		padding-left: 110px;
+	}
+	.description_outer .description .step_box .step .box {
+		position: absolute;
+		top: 0;
+		left: 0;
+		margin-top: 0;
+		line-height: 18px;
+	}
+	.description_outer .description .step_box .step .tip1 {
+		width: 100%;
+		padding-left: 16px;
+		margin-top: 0;
+	}
+	.description_outer .description .step_box .step .tip2 {
+		width: 100%;
+		padding-left: 16px;
+	}
+	.description_outer .description .step_box .step .box label {
+		font-size: 12px;
+	}
+}

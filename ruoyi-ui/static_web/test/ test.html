@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D轮播图效果</title>
+    <style>
+        body{
+            background-color: #000;
+        }
+        .container{
+            width: 600px;
+            height: 400px;
+            position: relative;
+            margin: 100px auto;
+        }
+        .container img{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 5px;
+            box-shadow: 5px -5px 5px #fff;
+            object-fit: cover;
+        }
+        /* 初始样式 */
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    width: 50px;
+    height: 35px;
+    transform: translate(-50%, -50%); /* 定位到轮播图中心 */
+    background-color: orange;
+    cursor: pointer;
+    z-index: 99;
+    transition: all 1s linear;
+  }
+  .prev {
+    left: 0px; /* 调整按钮与中心的距离 */
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+  }
+  
+  .next {
+    right: 0px; /* 调整按钮与中心的距离 */
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+  }
+        .item {
+            opacity: 0; /* 初始时隐藏图片 */
+            transition: opacity 1s linear; /* 图片透明度变化过渡效果 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <span class="prev"></span>
+        <span class="next"></span>
+        <img class="item" src="./img/1.jpg" alt="">
+        <img class="item" src="./img/2.jpg" alt="">
+        <img class="item" src="./img/3.jpg" alt="">
+        <img class="item" src="./img/4.jpg" alt="">
+        <img class="item" src="./img/5.jpg" alt="">
+    </div>
+    <script>
+        let items = document.querySelectorAll(".item");
+let prev = document.querySelector(".prev");
+let next = document.querySelector(".next");
+let index = 2; //  当前显示的是第几张图片
+
+// 布局
+function layout(){
+    const xOffsetStep = 100; // 每张轮播图之间的间隔
+    const count = items.length;
+    const scaleStep = .7; // 缩放比例
+    const opacityStep = .7; // 透明倍率
+    // console.log("layout");
+    for (let i = 0; i < items.length; i++) {
+        const sign = Math.sign(i - index);
+        const item = items[i];
+        const rotateY = i === index ? 0 : 45 *-sign;
+        let xOffset = (i - index) * xOffsetStep;
+        console.log('offset:', xOffset)
+        if (i !==index) {
+            xOffset = xOffset + 200*sign;
+        }
+        console.log('offset12:', xOffset)
+        const scale = scaleStep ** Math.abs(i -index);
+        // transform 
+        // opacity
+        //  rotateY()
+        item.style.transform = `translateX(${xOffset}px) scale(${scale}) rotateY(${rotateY}deg)`
+        item.style.opacity = opacityStep ** Math.abs(i -index);
+        item.style.zIndex = count - Math.abs(index - i);
+        item.style.transition = `all .5s ease`;
+    }
+}
+layout();
+// 上一张
+prev.addEventListener("click", function() {
+    index--;
+    if(index <0) index =0;
+    layout();
+})
+// 下一张
+next.addEventListener("click",function() {
+    index++;
+    if (index > items.length -1) {
+        index = items.length -1;
+    }
+    layout();
+})
+items.forEach((item, i) =>{
+    item.addEventListener("click",function() {
+        index = i;
+        layout();
+    })
+})
+
+    </script>
+    <script src="./js/index.js"></script>
+</body>
+</html>

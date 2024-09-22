@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Orbiter IOS内测版</title>
+		<link rel="icon" href="img/dupay.ico" type="image/x-icon" />
+		<link rel="stylesheet" type="text/css" href="/css/init.css" />
+		<link rel="stylesheet" type="text/css" href="/css/ios.css" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	</head>
+
+	<body>
+		<div class="head">
+			<div class="head_inner">
+				<span>
+					<a href="/index.html"><img href="/index.html" class="logo" src="img/depay_logo5.png" /></a>
+					<img class="menu" src="/img/menu2.png" />
+					<img class="close" src="/img/close.png" />
+				</span>
+				<div>
+					<a href="index.html">首页</a>
+					<a href="rights.html">卡片权益</a>
+					<a href="faq.html">常见问题</a>
+					<!-- <a href="google-authenticator.html">谷歌身份验证器</a> -->
+					<!--<a href="about.html">关于我们</a>-->
+					<a class="lang_outer">
+						简体中文
+						<img class="arrow" src="img/arrow_bottom.png" />
+						<span class="lang">
+							<p data-lang="zh-cn">简体中文</p>
+							<p data-lang="en-us">ENGLISH</p>
+						</span>
+					</a>
+				</div>
+			</div>
+		</div>
+		<!--<div class="tips">
+			<div class="tips_inner">
+				<img src="img/tip.png" />
+				<p class="full">Orbiter IOS Beta 测试版可能会满员，请下载官方App Store 版本</p>
+				<a href="course1.html" class="download">下载</a>
+			</div>
+		</div>-->
+		<div class="flight">
+			<p class="line"></p>
+			<div class="title1">
+				<img class="step" src="/img/step0.png" />下载TestFlight
+			</div>
+			<div class="title2">Step 1</div>
+			<div class="info info1">
+				<div>
+					<p class="name">TestFlight</p>
+					<p class="url">Apple</p>
+					<img class="score" src="/img/score.png" />
+				</div>
+				<a href="https://apps.apple.com/cn/app/testflight/id899247664" class="obtain">获取</a>
+			</div>
+			<div class="title1">
+				<img class="step" src="/img/step1.png" />返回本页面 点击安装Orbiter
+			</div>
+			<div class="title2">Step 2</div>
+			<div class="info info2">
+				<div>
+					<p class="name">Orbiter</p>
+					<p class="url">Orbiter.one</p>
+					<img class="score" src="/img/score.png" />
+				</div>
+				<a href="https://testflight.apple.com/join/LpdH6PGp" class="obtain">安装</a>
+			</div>
+			<div class="faq">
+				<p class="faq_t1">常见问题</p>
+				<p class="faq_t2">1、 Orbiter Visa / Master卡是信用卡还是借记卡？ </p>
+				<p class="faq_b">Orbiter Visa / Master卡是一种预付卡。从广义上讲，预付卡与借记卡相同。不同之处在于借记卡与您的银行帐户相关联，但预付卡需要充值。在我们的产品中，您可以使用加密货币进行充值。</p>
+				<p class="faq_t2">2、如何申请 Orbiter Visa / Master 卡？</p>
+				<p class="faq_b">首先使用手机号或者邮箱注册Orbiter，下载APP之后按照提示步骤完成KYC，一般系统会花费2分钟时间来检验，通过之后即可在APP首页上点击申请，您将会立刻收到一张Orbiter Visa / Master卡,点击安全码后可以获得卡片详细信息。</p>
+			</div>
+		</div>
+
+		<script src="/js/jquery.min.js"></script>
+		<script>
+			$(".menu").click(function() {
+				$(".head").addClass("head_show");
+			})
+
+			$(".close").click(function() {
+				$(".head").removeClass("head_show");
+			})
+
+			$(".lang_outer").click(function() {
+				$(".lang,.lang_mask").show();
+			})
+
+			$(".lang_mask").click(function() {
+				$(".lang_outer,.lang").hide();
+			})
+
+			$(".lang p").click(function() {
+				let lang = $(this).attr("data-lang");
+				let href2 = window.location.href;
+				if(href2.includes("zh-cn")) {
+					href2 = href2.replace("zh-cn", lang);
+				} else {
+					href2 = href2.replace("en-us", lang);
+				}
+				window.location.href = href2
+			})
+		</script>
+
+		<script type="text/javascript">
+			(function(c, l, a, r, i, t, y) {
+				c[a] = c[a] || function() {
+					(c[a].q = c[a].q || []).push(arguments)
+				};
+				t = l.createElement(r);
+				t.async = 1;
+				t.src = "https://www.clarity.ms/tag/" + i;
+				y = l.getElementsByTagName(r)[0];
+				y.parentNode.insertBefore(t, y);
+			})(window, document, "clarity", "script", "frbl4jplc1");
+		</script>
+	<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'8b623d25cb34851e',t:'MTcyNDE1NTM5Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/js/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
+</html>

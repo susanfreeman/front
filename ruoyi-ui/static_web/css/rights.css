@@ -1,0 +1,137 @@
+.rights {
+	overflow: hidden;
+	width: 100%;
+	height: 310px;
+	margin-top: 60px;
+	background: url(../img/about_bg.jpg);
+}
+
+.rights .rights_t {
+	width: 100%;
+	padding-left: 143px;
+	font-size: 42px;
+	font-weight: bold;
+	color: #FFFFFF;
+	margin: 124px auto 64px;
+}
+
+.info > :nth-child(2) {
+	display: none;
+}
+
+.info > :nth-child(3) {
+	display: none;
+}
+
+.info > :nth-child(4) {
+	display: none;
+}
+
+.info > :nth-child(5) {
+	display: none;
+}
+
+.card {
+	display: flex;
+	justify-content: center;
+	margin: 64px 0;
+}
+
+.card li {
+	height: 36px;
+	line-height: 36px;
+	text-align: center;
+	border-radius: 18px;
+	color: #B7BDC6;
+	font-weight: 400;
+	font-size: 16px;
+	margin-right: 10px;
+	cursor: pointer;
+	padding: 0 26px;
+}
+
+.card .active {
+	background: #000000;
+	color: #B7BDC6;
+}
+
+.data {
+	display: flex;
+	justify-content: center;
+	margin: 0 auto 64px;
+}
+
+.data li {
+	width: 260px;
+	height: 260px;
+	background: #F5F5F7;
+	border-radius: 10px;
+	text-align: center;
+	margin-right: 14px;
+	overflow: hidden;
+	position: relative;
+}
+
+.data li div {
+	font-size: 32px;
+	font-weight: bold;
+	color: #000000;
+	margin: 111px auto 67px;
+}
+
+.data li p {
+	font-size: 16px;
+	font-weight: bold;
+	color: #000001;
+	width: 100%;
+	position: absolute;
+	bottom: 25px;
+}
+
+.button0 {
+	display: block;
+	margin: 64px auto 172px;
+}
+
+@media only screen and (min-width: 100px) and (max-width: 640px) {
+	.rights {
+		width: 100%;
+		height: 224px;
+		/* background: url(../img/about_bg_h5.png); */
+	}
+	.rights .rights_t {
+		width: 100%;
+		padding-left: 0;
+		margin: 103px 0 66px;
+		text-align: center;
+	}
+	.card {
+		padding: 0 16px;
+		margin: 32px 0;
+		flex-flow: wrap;
+		justify-content: flex-start;
+	}
+	.card li {
+		width: 25%;
+		height: auto;
+		margin-right: 0;
+		padding: 0;
+		margin-bottom: 16px;
+	}
+	.data {
+		padding: 0 16px;
+		flex-flow: wrap;
+		margin-bottom: 19px;
+	}
+	.data li {
+		width: calc(50% - 5px);
+		margin-right: 10px;
+		margin-bottom: 13px;
+	}
+	.data li:nth-child(even) {
+		margin-right: 0px;
+	}
+	.button0 {
+		margin: 32px auto;
+	}
+}

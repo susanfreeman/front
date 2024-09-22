@@ -1,0 +1,155 @@
+body {
+	background: #fff;
+	padding-top: 60px;
+	font-family: "Arial";
+}
+
+.tips {
+	width: 100%;
+	background: #FEF6D8;
+}
+
+.tips .tips_inner {
+	width: 375px;
+	margin: 10px auto 32px;
+	padding: 11px 25px 11px 16px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.tips .full {
+	width: 232px;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 18px;
+	color: #17191F;
+	margin: 0 14px 0 10px;
+}
+
+.tips .download {
+	width: 60px;
+	height: 22px;
+	line-height: 22px;
+	text-align: center;
+	background: #F0B71A;
+	border-radius: 5px;
+	font-weight: bold;
+	color: #17191F;
+}
+
+.flight {
+	width: 375px;
+	margin: 0 auto;
+	padding-left: 45px;
+	position: relative;
+}
+
+.line {
+	width: 4px;
+	height: 302px;
+	background: #F7F8FA;
+	position: absolute;
+	top: 16px;
+	left: 24px;
+}
+
+.title1 {
+	font-size: 20px;
+	font-weight: bold;
+	color: #090118;
+	position: relative;
+}
+
+.title1 .step {
+	position: absolute;
+	top: 6px;
+	left: -28px;
+}
+
+.title2 {
+	font-size: 12px;
+	font-weight: 400;
+	color: #1A72FF;
+	margin-bottom: 10px;
+}
+
+.info {
+	width: 310px;
+	height: 91px;
+	background: #F7F8FA;
+	padding: 0 15px 0 0px;
+	margin: 0 20px 32px 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.info div {
+	height: 60px;
+	padding-left: 83px;
+	background-repeat: no-repeat;
+	background-position: 13px 0px;
+}
+
+.info1 div:nth-child(1) {
+	background-image: url(../img/ios_img1.png);
+}
+
+.info2 div:nth-child(1) {
+	background-image: url(../img/ios_img2.png);
+}
+
+.info .name {
+	font-size: 14px;
+	font-weight: bold;
+	color: #090118;
+	margin-bottom: 2px;
+}
+
+.info .url {
+	font-size: 12px;
+	font-weight: 400;
+	color: #838287;
+	margin-bottom: 2px;
+}
+
+.obtain {
+	width: 50px;
+	height: 22px;
+	line-height: 22px;
+	text-align: center;
+	border: 1px solid #1A72FF;
+	border-radius: 5px;
+	font-size: 12px;
+	font-weight: bold;
+	color: #1A72FF;
+}
+
+.faq {
+	width: 100%;
+	margin-top: 41px;
+	margin-left: -22px;
+}
+
+.faq_t1 {
+	font-size: 18px;
+	font-weight: bold;
+	color: #090118;
+	margin-bottom: 20px;
+}
+
+.faq_t2 {
+	font-size: 14px;
+	font-weight: bold;
+	color: #17191F;
+	margin-bottom: 10px;
+}
+
+.faq_b {
+	line-height: 21px;
+	font-size: 12px;
+	font-weight: 400;
+	color: #999999;
+	margin-bottom: 20px;
+}

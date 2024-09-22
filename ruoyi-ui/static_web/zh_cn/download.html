@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Orbiter - APP下载</title>
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+		<link rel="icon" href="img/dupay.ico" type="image/x-icon" />
+		<link rel="stylesheet" type="text/css" href="/css/init.css" />
+		<link rel="stylesheet" type="text/css" href="/css/index.css" />
+		<link rel="stylesheet" type="text/css" href="/css/download.css" />
+	</head>
+
+	<body>
+		<div class="head">
+			<div class="head_inner">
+				<span>
+				<a href="index.html"><img href="index.html" class="logo" src="/img2/orbiter_black.png" alt="Orbiter官网" title="Orbiter" /></a>
+				<img class="menu" src="/img/menu.png" />
+				<img class="close" src="/img/close.png" />
+			</span>
+				<div>
+					<div class="pc_btn">
+						<a class="login" href="/web-app/Login.html">登录</a>
+						<a class="register" href="/web-app/agreement.html">注册</a>
+					</div>
+					<a href="rights.html">卡片权益</a>
+					<a href="faq.html">帮助中心</a>
+					<a class="pc_hide" href="download.html">下载APP</a>
+					<a href="google-authenticator.html">谷歌身份验证器</a>
+					<a class="lang_outer">
+						简体中文
+						<img class="arrow" src="/img/arrow_bottom.png" />
+						<span class="lang">
+						<p data-lang="zh-cn">简体中文</p>
+						<p data-lang="en-us">ENGLISH</p>
+					</span>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="main">
+			<div class="introduce1_outer">
+				<div class="introduce1">
+					<p class="introduce1_t hidden">THE WORLD IN YOUR WALLET</p>
+					<p class="word4">在Orbiter拥有您的第一张数字货币Visa / Master卡</p>
+					<img class="home2_h5 hidden" src="/img/home2_h5.png" />
+					<div class="down_b2">
+						<div class="ios_box ios download1">
+							<img src="/img/apple.png" />
+							<div class="ios_box_r">
+								<p>App Store</p>
+								<div>需非大陆 Apple ID</div>
+							</div>
+						</div>
+						<a class="download1 test" href="ios.html">IOS内测版</a>
+						<a class="download android_store_url download2" href=""><img class="android" src="/img/android2.png" /></a>
+						<a class="android_box android_url download2">
+							<img src="/img/android1.png" />
+							<div class="ios_box_r">
+								<p>下载客户端</p>
+								<div>Android</div>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="mask_home">
+			微信内不能直接下载<br/>请点击右上角，选择【在浏览器打开】
+			<img src="/img/arrow.png" />
+		</div>
+		<script src="/js/jquery.min.js"></script>
+		<script src="/js/public.js"></script>
+		<script>
+			var width = window.screen.width;
+			if(width < 640) {
+				var u = navigator.userAgent;
+				var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;
+				if(isAndroid) {
+					$(".android_box").show();
+					$(".ios_box,.test").remove();
+				} else {
+					$(".ios_box").show();
+					$(".download2").remove();
+				};
+			}
+
+			$(".down_b2").click(function() {
+				var ua = window.navigator.userAgent.toLowerCase();
+				if(ua.match(/MicroMessenger/i) == 'micromessenger') {
+					$(".mask_home").show()
+				}
+			})
+
+			let local = "";
+			let project = window.location.href;
+			if(project.includes("http://192.168.1.119")) {
+				local = "http://49.4.25.111:10008/IndividualWeb"
+			} else {
+				local = window.location.protocol + "//" + window.location.host + "/IndividualWeb";
+			}
+
+			$.ajax({
+				type: "post",
+				url: local + "/Common/versionInfo",
+				success: function(data) {
+					if(data.status == 1) {
+						let maps = data.data;
+						var ua = window.navigator.userAgent.toLowerCase();
+						if(ua.match(/MicroMessenger/i) != 'micromessenger') {
+							$(".android_url").attr("href", maps.android.url)
+							$(".android_store_url").attr("href", maps.android.store_url)
+							$(".ios").click(function() {
+								window.location.href = maps.ios.store_url;
+							})
+
+						} else {
+							$(".download1").removeAttr("href");
+							$(".download2").removeAttr("href");
+						}
+					}
+				}
+			});
+		</script>
+	<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'8b623d244f7785a3',t:'MTcyNDE1NTM5Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/js/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
+</html>
