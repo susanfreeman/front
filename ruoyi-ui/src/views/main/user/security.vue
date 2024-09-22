@@ -1,0 +1,151 @@
+<template>
+  <div class="pc_inner">
+    <div class="pc_back" @click="handleBack">
+      <i class="el-icon-back"></i>
+      安全中心
+    </div>
+
+    <div class="level">
+      <p class="level_t">安全等级： 低</p>
+      <el-progress :percentage="50" :show-text="false"></el-progress>
+    </div>
+
+    <ul class="info">
+      <li>
+        <span>邮箱</span>
+        <div class="info_r">
+          <span>oneketes@protonmail.com</span>
+          <i class="el-icon-arrow-right"></i>
+        </div>
+      </li>
+      <li @click="gotoauthenticationStatus">
+        <span>身份认证</span>
+        <div class="info_r">
+          <i class="el-icon-arrow-right"></i>
+        </div>
+      </li>
+    </ul>
+    <p class="title">验证方式</p>
+
+    <ul class="info">
+      <li>
+        <span>电子邮箱</span>
+        <div class="info_r">
+          <el-switch
+            v-model="value"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+          >
+          </el-switch>
+        </div>
+      </li>
+      <li @click="gotogoogle">
+        <span>谷歌验证码</span>
+        <div class="info_r">
+          <span class="warn"><i class="el-icon-warning"></i> 未绑定</span>
+          <i class="el-icon-arrow-right"></i>
+        </div>
+      </li>
+    </ul>
+
+    <p class="title">密码管理</p>
+
+    <ul class="info">
+      <li>
+        <span>修改登录密码</span>
+        <div class="info_r">
+          <i class="el-icon-arrow-right"></i>
+        </div>
+      </li>
+    </ul>
+  </div>    
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        value: false
+      }
+    },
+    methods: {
+      handleBack() {
+        this.$router.push('/home/user/me')
+      },
+
+      gotoauthenticationStatus() {
+        this.$router.push('/home/user/authenticationStatus')
+      },
+
+      gotogoogle() {
+        this.$router.push('/home/user/google')
+      }
+    }
+  }
+</script>
+
+<style lang="less" scoped>
+  .pc_inner {
+    width: 602px;
+    height: 685px;
+    margin: 60px auto;
+    border-radius: 14px;
+    background: #fff;
+    padding: 34px 32px 9px;
+    .pc_back {
+      display: flex;
+      font-size: 16px;
+      margin-bottom: 32px;
+      font-weight: 700;
+      color: #333;
+      cursor: pointer;
+      align-items: center;
+      i {
+        margin-right: 10px;
+      }
+    }
+    .level {
+      width: 100%;
+      margin: 16px 0;
+      .level_t {
+        font-size: 14px;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 10px;
+      }
+    }
+    .info {
+      background: #fff;
+      border-radius: 2px;
+      margin-top: 10px;
+      li {
+        height: 52px;
+        cursor: pointer;
+        padding-right: 16px;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #f5f5f8;
+        align-items: center;
+        & > span {
+          font-weight: 700;
+          color: #333;
+        }
+        .info_r {
+          font-size: 12px;
+          font-weight: 700;
+          color: #6f7590;
+          .warn {
+            color: #e53e3e;
+            font-weight: 700;
+          }
+        }
+      }
+    }
+    .title {
+      font-size: 12px;
+      font-weight: 400;
+      color: #6f7590;
+      margin: 16px 0;
+    }
+  }
+</style>

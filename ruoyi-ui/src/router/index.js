@@ -42,9 +42,257 @@ export const constantRoutes = [
     ]
   },
   {
+    path: "/login",
+    redirect: "/login/login"
+  },
+  {
     path: '/login',
-    component: () => import('@/views/login'),
-    hidden: true
+    component: () => import("@/views/login/components/LoginPublic.vue"),
+    // component: () => import('@/views/login/login'),
+    hidden: true,
+    meta: "登录注册",
+    children: [
+        {
+            path: "login",
+            name: "login",
+            component: () => import("@/views/login/login/index.vue"),
+            meta: "登录页"
+        },
+        {
+            path: "agreement",
+            name: "agreement",
+            component: () => import("@/views/login/agreement/index.vue"),
+            meta: "服务协议"
+        },
+        {
+            path: "agreement-detail/:id",
+            name: "agreementDetail",
+            component: () => import("@/views/login/agreement/Detail.vue"),
+            meta: "服务协议详情"
+        },
+        {
+            path: "register",
+            name: "register",
+            component: () => import("@/views/login/register/index.vue"),
+            meta: "注册账户"
+        },
+        {
+            path: "forgot",
+            name: "forgot",
+            component: () => import("@/views/login/forgot/index.vue"),
+            meta: "忘记密码"
+        },
+        {
+            path: "second",
+            name: "second",
+            component: () => import("@/views/login/loginSecond/index.vue"),
+            meta: "二次验证"
+        },
+    ]
+  },
+  {
+    path: "/home",
+    component: () => import("@/views/main/components/MainPublic.vue"),
+    meta: "首页",
+    children: [
+        {
+            path: "account",
+            name: "account",
+            component: () => import("@/views/main/account/index.vue"),
+            children: [
+                {
+                    path: "account",
+                    name: "account",
+                    component: () => import("@/views/main/account/Account.vue"),
+                    meta: "卡管理首页"
+                },
+                {
+                    path: "Created",
+                    name: "Created",
+                    component: () => import("@/views/main/account/Created.vue"),
+                    meta: "申请卡"
+                },
+
+                {
+                    path: "Equity",
+                    name: "Equity",
+                    component: () => import("@/views/main/account/Equity.vue"),
+                    meta: "权益"
+                },
+                {
+                    path: "coin-transfer",
+                    name: "coin-transfer",
+                    component: () => import("@/views/main/account/CoinTransfer.vue"),
+                    meta: "充值"
+                },
+            ],
+            meta: "卡管理"
+        },
+        {
+            path: "exchange-account",
+            name: "exchange-account",
+            component: () => import("@/views/main/exchangeAccount/index.vue"),
+            children: [
+                {
+                    path: "exchange",
+                    name: "exchange",
+                    component: () => import("@/views/main/exchangeAccount/ExchangeAccount.vue"),
+                    meta: "钱包首页"
+                },
+                {
+                    path: "coin-charge",
+                    name: "coin-charge",
+                    component: () => import("@/views/main/exchangeAccount/CoinCharge.vue"),
+                    meta: "充币"
+                },
+                {
+                    path: "coin-withdrawal",
+                    name: "coin-withdrawal",
+                    component: () => import("@/views/main/exchangeAccount/CoinWithdrawal.vue"),
+                    meta: "提币"
+                },
+                {
+                    path: "exchangeLog",
+                    name: "exchangeLog",
+                    component: () => import("@/views/main/exchangeAccount/exchangeLog.vue"),
+                    meta: "兑换记录"
+                },
+
+            ],
+            meta: "钱包管理"
+        },
+        {
+            path: "notice",
+            name: "notice",
+            component: () => import("@/views/main/notice/index.vue"),
+            children: [
+                {
+                    path: "notice-index",
+                    name: "notice-index",
+                    component: () => import("@/views/main/notice/notice.vue"),
+                    meta: "公告"
+                },
+                {
+                    path: "notice-detail",
+                    name: "notice-detail",
+                    component: () => import("@/views/main/notice/detail.vue"),
+                    meta: "公告详情"
+                },
+            ],
+            meta: "公告栏"
+        },
+        {
+            path: "help",
+            name: "help",
+            component: () => import("@/views/main/help/index.vue"),
+            children: [
+                {
+                    path: "help-index",
+                    name: "help-index",
+                    component: () => import("@/views/main/help/help.vue"),
+                    meta: "帮助"
+                },
+                {
+                    path: "common-problem",
+                    name: "common-problem",
+                    component: () => import("@/views/main/help/CommonProblem.vue"),
+                    meta: "常见问题"
+                },
+                {
+                    path: "help-detail",
+                    name: "help-detail",
+                    component: () => import("@/views/main/help/helpDetail.vue"),
+                    meta: "详情"
+                },
+            ],
+            meta: "帮助中心"
+        },
+        {
+            path: "contactUs",
+            name: "contactUs",
+            component: () => import("@/views/main/contactUs/index.vue"),
+            meta: "联系我们"
+        },
+        {
+            path: "user",
+            name: "user",
+            component: () => import("@/views/main/account/index.vue"),
+            children: [
+                {
+                    path: "me",
+                    name: "me",
+                    component: () => import("@/views/main/user/User.vue"),
+                    meta: "我的首页"
+                },
+
+                {
+                    path: "security",
+                    name: "security",
+                    component: () => import("@/views/main/user/security.vue"),
+                    meta: "安全中心"
+                },
+
+                {
+                    path: "commission",
+                    name: "commission",
+                    component: () => import("@/views/main/user/commission.vue"),
+                    meta: "邀请好友"
+                },
+
+                {
+                    path: "manage",
+                    name: "manage",
+                    component: () => import("@/views/main/user/manage.vue"),
+                    meta: "卡片管理"
+                },
+
+                {
+                    path: "service",
+                    name: "service",
+                    component: () => import("@/views/main/user/service.vue"),
+                    meta: "客服"
+                },
+
+                {
+                    path: "mode",
+                    name: "mode",
+                    component: () => import("@/views/main/user/mode.vue"),
+                    meta: "计价方式"
+                },
+                {
+                    path: "language",
+                    name: "language",
+                    component: () => import("@/views/main/user/language.vue"),
+                    meta: "语言"
+                },
+                {
+                    path: "authenticationStatus",
+                    name: "authenticationStatus",
+                    component: () => import("@/views/main/user/authenticationStatus.vue"),
+                    meta: "身份认证"
+                },
+                {
+                    path: "google",
+                    name: "google",
+                    component: () => import("@/views/main/user/google.vue"),
+                    meta: "谷歌验证器"
+                },
+                {
+                    path: "bindGoogle",
+                    name: "bindGoogle",
+                    component: () => import("@/views/main/user/bindGoogle.vue"),
+                    meta: "绑定谷歌验证器"
+                },
+                {
+                    path: "google-authenticator",
+                    name: "google-authenticator",
+                    component: () => import("@/views/main/user/googleAuthenticator.vue"),
+                    meta: "下载谷歌验证器"
+                },
+            ],
+            meta: "我的"
+        },
+    ]
   },
   {
     path: '/register',
@@ -88,6 +336,7 @@ export const constantRoutes = [
       }
     ]
   }
+  
 ]
 
 // 动态路由，基于用户权限动态去加载
