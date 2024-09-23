@@ -10,10 +10,10 @@ NProgress.configure({ showSpinner: false })
 
 // 无需登录验证
 const whiteList = [
-  '/login/login', 
+  '/login/login',
   '/login/register',
   '/login/agreement',
-  '/login/agreement-detail/:id',
+  '/login/agreement-detail',
   '/login/forgot',
   '/login/second',
 ]

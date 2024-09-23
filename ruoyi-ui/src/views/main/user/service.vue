@@ -1,7 +1,8 @@
 <template>
-  <div class="pc_inner">
+  <div class="pc">
     <div class="pc_back" @click="handleBack">
       <i class="el-icon-back"></i>
+      客服
     </div>
 
     <p class="hot_t">热门问题</p>
@@ -104,13 +105,7 @@
 </script>
 
 <style lang="less" scoped>
-  .pc_inner {
-    width: 602px;
-    // height: 685px;
-    margin: 60px auto;
-    border-radius: 14px;
-    background: #fff;
-    padding: 34px 32px 9px;
+  .pc {
     .pc_back {
       display: flex;
       font-size: 16px;

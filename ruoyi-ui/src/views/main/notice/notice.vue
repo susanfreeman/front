@@ -1,5 +1,5 @@
 <template>
-  <div class="pc_inner">
+  <div class="pc">
     <p class="title">公告</p>
     <p class="title2">来自官方的发布</p>
 
@@ -36,13 +36,7 @@
 </script>
 
 <style lang="less" scoped>
-  .pc_inner {
-    width: 602px;
-    height: 685px;
-    margin: 60px auto;
-    border-radius: 14px;
-    background: #fff;
-    padding: 34px 32px 9px;
+  .pc {
     .title {
       font-weight: 700;
       font-size: 24px;

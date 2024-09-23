@@ -15,5 +15,7 @@ const getters = {
   topbarRouters:state => state.permission.topbarRouters,
   defaultRoutes:state => state.permission.defaultRoutes,
   sidebarRouters:state => state.permission.sidebarRouters,
+
+  isMobile: state => state.base.isMobile, // 获取设置数据
 }
 export default getters

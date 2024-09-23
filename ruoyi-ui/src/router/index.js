@@ -89,7 +89,7 @@ export const constantRoutes = [
             meta: "服务协议"
         },
         {
-            path: "agreement-detail/:id",
+            path: "agreement-detail",
             name: "agreementDetail",
             component: () => import("@/views/login/agreement/Detail.vue"),
             meta: "服务协议详情"
@@ -360,7 +360,7 @@ export const constantRoutes = [
       }
     ]
   }
-  
+
 ]
 
 // 动态路由，基于用户权限动态去加载

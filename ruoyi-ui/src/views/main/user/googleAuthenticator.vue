@@ -1,5 +1,10 @@
 <template>
   <div class="google_outer">
+    <div class="pc_back" @click="handleBack">
+      <i class="el-icon-back"></i>
+      谷歌身份验证器
+    </div>
+
     <div class="google_box">
       <p class="title">下载谷歌验证器</p>
       <p class="tip">下载谷歌验证器</p>
@@ -21,52 +26,118 @@
 </template>
 
 <script>
-  export default {}
+  export default {
+    methods: {
+      handleBack() {
+        this.$router.push('/home/user/google')
+      }
+    }
+  }
 </script>
 
 <style lang="less" scoped>
-  .google_outer {
-    width: 100%;
-    min-height: 500px;
-    height: calc(100vh - 500px);
-    overflow: hidden;
-    background: #fff;
-    .google_box {
-      width: 1366px;
-      margin: 120px auto 60px;
-      padding-left: 100px;
-      position: relative;
-      .title {
-        color: #333;
-        font-size: 30px;
-        font-weight: 700;
+  @media screen and (min-width: 600px) {
+    .google_outer {
+      width: 100%;
+      min-height: 500px;
+      height: calc(100vh - 500px);
+      overflow: hidden;
+      background: #fff;
+      .pc_back {
+        display: none;
       }
-      .tip {
-        color: #6f7590;
-        font-size: 14px;
-        margin: 10px 0 20px;
-      }
-      .code {
-        color: #333;
-        font-size: 14px;
-        display: flex;
-        text-align: center;
-        div {
-          margin-right: 24px;
-          img {
-            width: 140px;
-            height: 140px;
-            border: 1px solid #e8e8f1;
-            display: block;
-            margin-bottom: 6px;
+      .google_box {
+        width: 1366px;
+        margin: 120px auto 60px;
+        padding-left: 100px;
+        position: relative;
+        .title {
+          color: #333;
+          font-size: 30px;
+          font-weight: 700;
+        }
+        .tip {
+          color: #6f7590;
+          font-size: 14px;
+          margin: 10px 0 20px;
+        }
+        .code {
+          color: #333;
+          font-size: 14px;
+          display: flex;
+          text-align: center;
+          div {
+            margin-right: 24px;
+            img {
+              width: 140px;
+              height: 140px;
+              border: 1px solid #e8e8f1;
+              display: block;
+              margin-bottom: 6px;
+            }
           }
         }
+        .google_img {
+          width: 157px;
+          position: absolute;
+          top: 52px;
+          right: 215px;
+        }
       }
-      .google_img {
-        width: 157px;
-        position: absolute;
-        top: 52px;
-        right: 215px;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .google_outer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      border-radius: 0px;
+      background: #fff;
+      padding: 16px;
+      .pc_back {
+        display: flex;
+        font-size: 16px;
+        margin-bottom: 32px;
+        font-weight: 700;
+        color: #333;
+        cursor: pointer;
+        align-items: center;
+        i {
+          margin-right: 10px;
+        }
+      }
+      .google_box {
+        padding-top: 30px;
+        .title {
+          color: #333;
+          font-size: 20px;
+          font-weight: 700;
+        }
+        .tip {
+          color: #6f7590;
+          font-size: 14px;
+          margin: 10px 0 20px;
+        }
+        .code {
+          color: #333;
+          font-size: 14px;
+          display: flex;
+          text-align: center;
+          div {
+            margin-right: 24px;
+            img {
+              width: 140px;
+              height: 140px;
+              border: 1px solid #e8e8f1;
+              display: block;
+              margin-bottom: 6px;
+            }
+          }
+        }
+        .google_img {
+          display: none;
+        }
       }
     }
   }

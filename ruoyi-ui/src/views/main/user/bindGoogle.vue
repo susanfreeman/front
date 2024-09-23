@@ -1,5 +1,5 @@
 <template>
-  <div class="pc_inner">
+  <div class="pc">
     <div class="pc_back" @click="handleBack">
       <i class="el-icon-back"></i>
       绑定谷歌验证器
@@ -88,13 +88,10 @@
 </script>
 
 <style lang="less" scoped>
-  .pc_inner {
-    width: 602px;
-    height: 685px;
-    margin: 60px auto;
-    border-radius: 14px;
-    background: #fff;
-    padding: 34px 32px 9px;
+  .pc {
+    @media screen and (min-width: 600px) {
+      height: 685px !important;
+    }
     .pc_back {
       display: flex;
       font-size: 16px;
@@ -108,7 +105,7 @@
       }
     }
     .form-area {
-        padding: 0 100px;
+        padding: 0 20px;
     }
   }
 </style>

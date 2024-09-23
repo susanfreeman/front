@@ -1,6 +1,6 @@
 <template>
   <div class="exchange">
-    <div class="content">
+    <div class="pc">
       <el-tabs
         v-model="activeName"
         @tab-click="handleClick"
@@ -134,7 +134,12 @@
       </el-tabs>
     </div>
 
-    <el-dialog title="币种" :visible.sync="visible" width="30%" center>
+    <el-dialog
+      title="币种"
+      :visible.sync="visible"
+      :width="isMobile ? '90%' : '30%'"
+      center
+    >
       <ul class="list list2">
         <li @click="goToUSDT">
           <div class="list_l">
@@ -209,7 +214,7 @@
     <el-dialog
       title="提示"
       :visible.sync="centerDialogVisible"
-      width="20%"
+      :width="isMobile ? '90%' : '20%'"
       center
     >
       <div
@@ -234,6 +239,8 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
+
   export default {
     data() {
       return {
@@ -243,6 +250,10 @@
         current: 1,
         centerDialogVisible: false
       }
+    },
+
+    computed: {
+      ...mapGetters(["isMobile"])
     },
 
     methods: {
@@ -284,12 +295,8 @@
 
 <style lang="less" scoped>
   .exchange {
-    .content {
-      width: 602px;
-      margin: 60px auto;
-      border-radius: 14px;
-      background: #fff;
-      padding: 34px 32px 9px;
+    height: 100%;
+    .pc {
       .account {
         .balance_t {
           font-size: 12px;
