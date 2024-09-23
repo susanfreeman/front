@@ -34,7 +34,7 @@
                 <span>USDT</span>
               </div>
               <div class="list_r">
-                <div>0.00</div>
+                <div > {{usdtBal}}</div>
                 <p>￥ 0.00</p>
               </div>
             </li>
@@ -45,7 +45,7 @@
                 <span>USD</span>
               </div>
               <div class="list_r">
-                <div>0.00</div>
+                <div>{{usdBal}}</div>
                 <p>￥ 0.00</p>
               </div>
             </li>
@@ -67,7 +67,7 @@
                 <span>EUR</span>
               </div>
               <div class="list_r">
-                <div>0.00</div>
+                <div>{{eurBal}}</div>
                 <p>￥ 0.00</p>
               </div>
             </li>
@@ -148,7 +148,7 @@
             </span>
           </div>
           <div class="list_r">
-            <div class="opacity2">0.00</div>
+            <div class="opacity2">{{usdtBal}}</div>
             <p class="opacity2">$ 0.00</p>
           </div>
         </li>
@@ -165,27 +165,27 @@
             </span>
           </div>
           <div class="list_r">
-            <div class="opacity2">0.00</div>
+            <div class="opacity2">{{usdBal}}</div>
             <p class="opacity2">$ 0.00</p>
           </div>
         </li>
 
-        <li class="opacity">
-          <div class="list_l">
-            <img
-              src="../../../assets/newlogo-3.png"
-              alt=""
-              class="icon opacity2"
-            />
-            <span>
-              <span class="opacity2">GBP</span>
-            </span>
-          </div>
-          <div class="list_r">
-            <div class="opacity2">0.00</div>
-            <p class="opacity2">$ 0.00</p>
-          </div>
-        </li>
+<!--        <li class="opacity">-->
+<!--          <div class="list_l">-->
+<!--            <img-->
+<!--              src="../../../assets/newlogo-3.png"-->
+<!--              alt=""-->
+<!--              class="icon opacity2"-->
+<!--            />-->
+<!--            <span>-->
+<!--              <span class="opacity2">GBP</span>-->
+<!--            </span>-->
+<!--          </div>-->
+<!--          <div class="list_r">-->
+<!--            <div class="opacity2">0.00</div>-->
+<!--            <p class="opacity2">$ 0.00</p>-->
+<!--          </div>-->
+<!--        </li>-->
 
         <li class="opacity">
           <div class="list_l">
@@ -199,7 +199,7 @@
             </span>
           </div>
           <div class="list_r">
-            <div class="opacity2">0.00</div>
+            <div class="opacity2">{{eurBal}}</div>
             <p class="opacity2">$ 0.00</p>
           </div>
         </li>
@@ -234,18 +234,33 @@
 </template>
 
 <script>
+  import {getBalance,getRechargeAddr,getRechargeList} from "@/api/custom/exchange";
+
   export default {
     data() {
       return {
         activeName: 'first',
-
         visible: false,
         current: 1,
-        centerDialogVisible: false
+        centerDialogVisible: false,
+        usdtBal: 0,
+        usdBal: 0,
+        eurBal: 0
       }
     },
-
+    created() {
+      this.getBal();
+    },
     methods: {
+      getBal() {
+        getBalance().then(res => {
+          if (res.code == 200) {
+            this.usdtBal = res.data.balanceUsdt;
+            this.usdBal = res.data.balanceUsd;
+            this.eurBal = res.data.balanceEur;
+          }
+        });
+      },
       handleClick(tab, event) {
         console.log(tab, event)
       },

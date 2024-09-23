@@ -35,7 +35,7 @@ const user = {
   actions: {
     // 登录
     Login({ commit }, userInfo) {
-      const username = userInfo.username.trim()
+      const username = userInfo.username
       const password = userInfo.password
       const code = userInfo.code
       const uuid = userInfo.uuid

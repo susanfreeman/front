@@ -61,13 +61,13 @@ public class SysLoginController
     {
         SysUser user = SecurityUtils.getLoginUser().getUser();
         // 角色集合
-        Set<String> roles = permissionService.getRolePermission(user);
-        // 权限集合
-        Set<String> permissions = permissionService.getMenuPermission(user);
+//        Set<String> roles = permissionService.getRolePermission(user);
+//        // 权限集合
+//        Set<String> permissions = permissionService.getMenuPermission(user);
         AjaxResult ajax = AjaxResult.success();
         ajax.put("user", user);
-        ajax.put("roles", roles);
-        ajax.put("permissions", permissions);
+//        ajax.put("roles", roles);
+//        ajax.put("permissions", permissions);
         return ajax;
     }
 
