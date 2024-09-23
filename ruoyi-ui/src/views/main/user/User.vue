@@ -1,5 +1,5 @@
 <template>
-  <div class="user">
+  <div class="pc">
     <div class="user-info">
       <img src="../../../assets/user-me.png" alt="" class="user_img" />
       <span>LLJJ LLL</span>
@@ -151,12 +151,7 @@
 </script>
 
 <style lang="less" scoped>
-  .user {
-    width: 602px;
-    margin: 60px auto;
-    border-radius: 14px;
-    background: #fff;
-    padding: 34px 32px 1px;
+  .pc {
     .user-info {
       width: 100%;
       padding-left: 59px;

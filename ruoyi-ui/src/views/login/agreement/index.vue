@@ -55,7 +55,7 @@
     methods: {
       handleActive(val) {
         this.activeNames = []
-        this.$router.push({ name: 'agreementDetail', params: { id: val[0] } })
+        this.$router.push(`/login/agreement-detail?id=${val[0]}`)
       },
 
       handleChange(val) {

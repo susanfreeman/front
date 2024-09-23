@@ -1,5 +1,5 @@
 <template>
-  <div class="pc_inner">
+  <div class="pc">
     <span class="pc_back" @click="goBack">
       <i class="el-icon-back"></i>
     </span>
@@ -133,13 +133,7 @@
 </script>
 
 <style lang="less" scoped>
-  .pc_inner {
-    width: 602px;
-    margin: 60px auto;
-    border-radius: 14px;
-    background: #fff;
-    padding: 34px 32px 9px;
-    overflow: auto;
+  .pc {
     .pc_back {
       display: flex;
       align-items: center;

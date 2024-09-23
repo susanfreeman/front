@@ -1,5 +1,5 @@
 <template>
-  <div class="pc_inner">
+  <div class="pc">
     <div class="pc_back" @click="handleBack">
       <i class="el-icon-back"></i>
       USDT充币
@@ -53,7 +53,12 @@
       </div>
     </div>
 
-    <el-dialog title="选择网络" :visible.sync="visible" width="25%" center>
+    <el-dialog
+      title="选择网络"
+      :visible.sync="visible"
+      :width="isMobile ? '90%' : '25%'"
+      center
+    >
       <div class="card_type_m">
         <i class="el-icon-info"></i>
         提示: 请选择与提币平台一致的网络进行充值,否则会 造成资金丢失。
@@ -79,6 +84,8 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
+
   export default {
     data() {
       return {
@@ -88,6 +95,10 @@
 
         radio: ''
       }
+    },
+
+    computed: {
+      ...mapGetters(["isMobile"])
     },
     methods: {
       handleBack() {
@@ -104,20 +115,14 @@
 
       changeInput(val) {
         this.radio = val
-        this.visible =false
+        this.visible = false
       }
     }
   }
 </script>
 
 <style lang="less" scoped>
-  .pc_inner {
-    width: 602px;
-    // height: 685px;
-    margin: 60px auto;
-    border-radius: 14px;
-    background: #fff;
-    padding: 34px 32px 9px;
+  .pc {
     .pc_back {
       display: flex;
       font-size: 16px;

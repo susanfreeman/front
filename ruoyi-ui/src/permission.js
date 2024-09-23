@@ -13,7 +13,7 @@ const whiteList = [
   '/login/login',
   '/login/register',
   '/login/agreement',
-  '/login/agreement-detail/:id',
+  '/login/agreement-detail',
   '/login/forgot',
   '/login/second',
 ]

@@ -379,12 +379,14 @@
 }
 
 .next {
-	right: 10px; 
+	right: 10px;
 }
 
 
 .introduce3_l {
+  position: absolute;
 	width: 436px;
+  z-index: 100;
 }
 
 .introduce3_l .introduce3_l_t {
@@ -412,7 +414,9 @@
 }
 
 .introduce3_r {
-	width: 309px;
+  position: absolute;
+  z-index: 10;
+	width: 650px;
 }
 
 .faq {

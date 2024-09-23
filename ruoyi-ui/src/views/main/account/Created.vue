@@ -1,5 +1,5 @@
 <template>
-  <div class="created">
+  <div class="pc">
     <div class="body">
       <div class="header">
         <span @click="goBack">
@@ -262,13 +262,7 @@
 </script>
 
 <style lang="less" scoped>
-  .created {
-    width: 602px;
-    // height: 685px;
-    margin: 60px auto;
-    border-radius: 14px;
-    background: #fff;
-    padding: 34px 32px 9px;
+  .pc {
     .body {
       //   background: #fff;
       //   border-radius: 10px;
