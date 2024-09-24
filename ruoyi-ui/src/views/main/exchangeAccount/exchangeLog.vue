@@ -15,13 +15,26 @@
 </template>
 
 <script>
+import {getBaltrans} from "@/api/custom/trans";
+
   export default {
     data() {
       return {}
     },
+    created() {
+
+    },
     methods: {
       handleBack() {
         this.$router.push('/home/exchange-account/exchange')
+      },
+      queryBaltrans() {
+        getBaltrans().then(res => {
+          if (res.code == 200) {
+            this.changeAmtForm.sourceAmount = res.data.balanceEur;
+            this.getTa();
+          }
+        })
       }
     }
   }
