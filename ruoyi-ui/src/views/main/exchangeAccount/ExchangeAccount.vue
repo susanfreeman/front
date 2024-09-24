@@ -9,7 +9,7 @@
         <el-tab-pane label="钱包" name="first" class="account">
           <div class="balance_t">Total Balance</div>
           <div class="balance_b">
-            <div class="money">￥ 0.00</div>
+            <div class="money">$ {{totalAmount}}</div>
             <div class="exchange" @click="swicthExchange">
               <img src="../../../assets/icon-15.png" alt="" />
               Exchange
@@ -35,7 +35,7 @@
               </div>
               <div class="list_r">
                 <div > {{usdtBal}}</div>
-                <p>￥ 0.00</p>
+                <p>$  {{usdtBal}}</p>
               </div>
             </li>
 
@@ -46,7 +46,7 @@
               </div>
               <div class="list_r">
                 <div>{{usdBal}}</div>
-                <p>￥ 0.00</p>
+                <p>$  {{usdBal}}</p>
               </div>
             </li>
 
@@ -68,7 +68,7 @@
               </div>
               <div class="list_r">
                 <div>{{eurBal}}</div>
-                <p>￥ 0.00</p>
+                <p>$ {{eur2UsdBal}}</p>
               </div>
             </li>
           </ul>
@@ -149,12 +149,12 @@
               class="icon opacity2"
             />
             <span>
-              <span class="opacity2">USDT</span>
+              <span class="opacity2">USDT/USDC</span>
             </span>
           </div>
           <div class="list_r">
             <div class="opacity2">{{usdtBal}}</div>
-            <p class="opacity2">$ 0.00</p>
+            <p class="opacity2">$ {{usdtBal}}</p>
           </div>
         </li>
 
@@ -171,7 +171,7 @@
           </div>
           <div class="list_r">
             <div class="opacity2">{{usdBal}}</div>
-            <p class="opacity2">$ 0.00</p>
+            <p class="opacity2">$ {{usdBal}}</p>
           </div>
         </li>
 
@@ -205,7 +205,7 @@
           </div>
           <div class="list_r">
             <div class="opacity2">{{eurBal}}</div>
-            <p class="opacity2">$ 0.00</p>
+            <p class="opacity2">$ {{eur2UsdBal}}</p>
           </div>
         </li>
       </ul>
@@ -239,7 +239,7 @@
 </template>
 
 <script>
-  import {getBalance,getRechargeAddr,getRechargeList} from "@/api/custom/exchange";
+  import {getBalance,getRechargeAddr,getRechargeList,getTargetAmount} from "@/api/custom/exchange";
 
   import { mapGetters } from 'vuex'
 
@@ -252,17 +252,22 @@
         centerDialogVisible: false,
         usdtBal: 0,
         usdBal: 0,
-        eurBal: 0
+        eurBal: 0,
+        eur2UsdBal: 0,
+        totalAmount: 0,
+        changeAmtForm: {
+          sourceCurr: "EUR",
+          targetCurr: "USD",
+          sourceAmount: 0
+        }
       }
     },
     created() {
       this.getBal();
     },
-
     computed: {
-      ...mapGetters(["isMobile"])
+      ...mapGetters(["isMobile"]),
     },
-
     methods: {
       getBal() {
         getBalance().then(res => {
@@ -270,8 +275,22 @@
             this.usdtBal = res.data.balanceUsdt;
             this.usdBal = res.data.balanceUsd;
             this.eurBal = res.data.balanceEur;
+            this.changeAmtForm.sourceAmount = res.data.balanceEur;
+            this.getTa();
           }
         });
+      },
+      getTa() {
+        getTargetAmount(this.changeAmtForm).then(res => {
+          console.log(res)
+          if (res.code == 200) {
+            this.eur2UsdBal = res.data;
+            this.calculamount();
+          }
+        });
+      },
+      calculamount() {
+        this.totalAmount = this.usdtBal + this.usdBal + this.eur2UsdBal
       },
       handleClick(tab, event) {
         console.log(tab, event)

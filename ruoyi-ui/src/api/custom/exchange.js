@@ -23,3 +23,12 @@ export function getRechargeAddr() {
     method: 'get'
   })
 }
+
+// 查询币种兑换后金额
+export function getTargetAmount(data) {
+  return request({
+    url: '/exchange/getTargetAmount',
+    method: 'post',
+    data: data
+  })
+}

@@ -71,7 +71,11 @@ public class NomalController {
         TblUserInfo userInfo = tblUserInfoService.selectTblUserInfoByUserId(getUserId());
         if (null != userInfo) {
             List<AccountCoinResponse> accountCoinResponseList = SafeHeronUtils.listAccountCoin(safeheronConfig, userInfo.getTronAddr());
-            return success(accountCoinResponseList);
+            Map map = new HashMap();
+            accountCoinResponseList.forEach(acctCoin ->{
+                map.put(acctCoin.getCoinKey(), acctCoin.getAddressList().get(0).getAddress());
+            });
+            return success(map);
         }
         return error();
     }

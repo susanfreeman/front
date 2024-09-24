@@ -51,7 +51,7 @@ import java.util.Map;
  * @author ruoyi
  * @date 2024-07-20
  */
-@Controller
+@RestController
 @RequestMapping("/usercard")
 public class UserOpenCardController extends BaseController {
     @Autowired

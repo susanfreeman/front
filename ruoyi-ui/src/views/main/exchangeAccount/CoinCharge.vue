@@ -17,16 +17,17 @@
         USDT
       </p>
       <div class="qrcode2">
-        <img
-          alt="Scan me!"
-          src="data:image/png;base64,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"
-          style="display: block"
-        />
+        <canvas ref="qrcode"></canvas>
+<!--        <img-->
+<!--          alt="Scan me!"-->
+<!--          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAYAAAA5ZDbSAAAAAXNSR0IArs4c6QAACKVJREFUeF7tndt24zoMQ5P//+jO8qzjxtaRhA1dpmmLeZwquhAkCFKO83w8Hh+Phf8+Pl7TPZ/Pz5lb/39dujbGnc9d57p+a7/OmOscLbNe99iaexUkBwIB+D9r/miAW15FPIlE6kxknXtoRQeZu8UUrfMRsGv7WsU4q/D4jOBVE7oHdAwfgEm4PR5XOwXghs1+dAS7QsExxmHP0UhcxQ7kfEr8EeaZSV0zaUdGMDEAMTbJb6OGJMZz5u6RnzI2UcXEXu6ZyPmqFB2A73AHYFDvuiLudDJl3DLyyPjRvRxrqc+S4CCRR85B5tkawW5urhX9qw5KciZJKQEYdLKI2E8E1zuCpDv2z0TWDF05TQRyaMeperRfYxlClT9SZAVg3Yt3gSfOnAgGzQ2Ss2sO7ALmjl8CMKGzFlXNiCIlssi+SC1JjOqstfrMRK339icjmBwuAL86cgG44zGqC6TKknLqRHDjssGNWjcXEFqsgbMKsJ3z7Jh7FR5ffuGvgN9hPLXmYVxnXWcsnTsAm+3RHSCcjrJj7mUAf7hJbnBlt21Z62SpJsNIg0JpgJ6ider8f2Tm/6HzDMD1R9KIQwbgiz8Rgzl1MDHuqugk8yhie9sIJsCsGlMzEgFSGbf3d9fwqnvl9gdmnIfU35KiV4FH5gnALwsQxw7AILR/fASfD74TqnDrR2BfOYQAQNjBHUMaOQ7juPZtrW+XZAF4nBYDsIxPPSARfLeRHcG1OpjQ2e6mg2p07F7fpchzvA3ApSN3XZMIKB0ej0dVRQfgtumUbQJwYTtlEJeiXXGkACvnU+PVecrWZ6sc2hrBo/REjaGM5NJvi9rIPCsMOaOQ3XqXnOk2xulFO8Aci7je7KjSmUhdnesCcPGNAMdRiIcngjuaYTSCiYJzo0zRzwo6LfdEom9FxJN13EYSGh+A9XVhADbDeVQZJ4J9XWPVwU7u7GHuiK/daxLfVPsljkcoenVK+yt0nU7WbmPX5t+95o8HeMVlg+t5RBnXPJ40BVYA1hNiau+j6Yfse2SMfAmLoqfeoqtpKQD7EAfgxveZR5Xz20Wwk4NbdSqpx1zfq90mzUQw+azLVue5V83tOgdhSEtkBeC7mwbgC/0lgr0vg7fsRaqK6xj5VKVqH7rAHeNdKqqt4daeLv0651pxnp5dCKhNh/hOrUpX+BBtoMoeAnQALqy0wiCJYOJ6j8fwe7LcaCLbIcCf8xDlStYkwlGlKbLvmRQx48wB+IIeyXU1xwrAMJSIoRLBLzVOWHRJBLcWIrgq6nJAP9YjoomIr5kypeaEZE2XQVCjo3bZQIzUMsAMIDUjzMxH9kiM6ubpAAzyXq1V6TJCAAYqmlCLUpllEU8UsOpFz0Q2oTaSdhymI3YkbELG3PBQFE02FoA1txA7EvDImADc6JETZiHOXIP7ywEm+co9HDmUUqukyCflAqFccj6VGoiTqMqhl9Jce8gXobn5ihhbGela7rgHIuOd9UsHVJ8NwOZtEgGMONWvjeDzNokkbzKG0BwB5AR2VUS4KUiljpJGa7XvDqciGFTvg90PKqq60mxPY6o8HYDv9+cuTp8X/u4HA3D9wQXikIQdHJYr57tF8Oqfl3WpkDhWbU5iSNKIUAyiK1zW/ybzEL3h7leqaLIxMoaoccIKTq4LwJdWJQFpZkwA1tbbGsFkckK/o5RbijKlosleVil6kg/PMcSRXXXtnuM2XvWitd/5Ko+IjABctxJJOwG44WGExdSYbxfB6kAkwo8xZB4lsgj9E3VN9+wIupGxvfKG2ItQvXxkx12I5MZREAJw2zWbzKFycABmP0n/bSOY0Jmi1pZCJhTligqyXzLGaSiQ6z9Cp2RfLUXd2q+kaLJoANZfLAvAjTfjJYLbIUaYw/qGPyn4SZlAxtSORfSAQ629FEHEosq7rr1GxWfvHAH4Yh3CFjXndD9HIm+G0qu3SW5UuZEyU+Kch00EE0VU/PqoeqLD9c6WyiNbU2KN7IWsQ+jXjbIVKYUoZPd88sKfGNWNfmLg2hiyF9cAq/Lk2wKsLvx3gEfExCiYhMbd/KbSy+hej30Q+7rp8MYEAbj+tlmHLgPwwGXDqNESwfdkId+yQ8TGDIW0cmYN4N3gEW2g9kVEphKTPR3hprcA3PjdIiK+auVbAIYyV0UKoXASKe48al9vB7BzXejQaakQXWpRHSMCniOUjrEr9rjDRiQmhm+TiCFdwxD6C8AE1teYAHzJtaT2HHXCt4tg53XCbqS60a/Gq4ZDSbNqPkrLJK+OdrLcpguJ69tlQwDW750KwI23prsRpMYngkn8FrdJjop2SwqiYsmciv5m8t6Kz5JmEINmfNQSkUXAIALG7UgFYA18AL7YSKUCV3y9dQQ7LwTXfnQfQVT3CgEzOkfZjCHnUyzmspPrbO542Ysmh16Rx3pR41C0AqCcixjMcaAADC+5lWORXK/m+BURrC78iZFIsU4iS7UnW+u4qWCGcVSppv5eMhW5aiU5vunwAfgFN3EUBaD6ewAuwss1OmGTXxnBrthoCQ8yD/Hyc/4ZgFtAuvmbnKm2X7IOmXs0vf1lC/XzsiQHO4D1KKq2VgBmr2mSOZh4EqE2Mo/jEAF4A8AuJTiArap33RRBlOioSt95/h6DomBSlw0kj+08IDqEeZlPmhHOmJ3nD8CN7xWXhkkEg1/CJhTmeD4FYVRRk+hvUT0pt06ncZsVRLgSWyN23UnRRCA5uZTM59JlAG64yYzXjtaHAdhX1MMvYSEAk7JKUSGJSHeMS3+K6t2qw2GtXt+A6IoADLRHAAZlymiuc6OT0P+vj2BX5REQCMCKrsm+duRpdT6ypnt+Yguy7pf3oonUJ8DuLKUC8CKKJl6rwEZePbHf0YcSvjyCleHo30kOnBlD91Gqz5m8OxrBzl6PsaRJROa8zfMVT3QE4DpMAZi472WMS9ckyh2KNre7JYL/AD8qx0+8CCpTAAAAAElFTkSuQmCC"-->
+<!--          style="display: block"-->
+<!--        />-->
       </div>
       <p class="title1">充值地址</p>
       <div class="addr_b">
         <span class="no_addr" style="display: none">选择主网显示充值地址</span>
-        <span>0xdFDb57720489731541901786E8a3Ce2DE3dEfD2A</span>
+        <span>{{coin}}</span>
         <img src="../../../assets/copy.png" alt="" />
       </div>
       <p class="tip1">平均到账时间:1分钟</p>
@@ -64,27 +65,38 @@
         提示: 请选择与提币平台一致的网络进行充值,否则会 造成资金丢失。
       </div>
 
-      <el-radio-group
-        v-model="radio"
-        class="coin-roaio-group"
-        style="margin-bottom: 50px"
-        @input="changeInput"
-      >
-        <el-radio label="POLYGON"> POLYGON </el-radio>
-        <el-radio label="BNB SMART CHAIN (BEP20)">
-          BNB SMART CHAIN (BEP20)
-        </el-radio>
-        <el-radio label="TRC20">
-          TRC20
-          <p>入账手续费：<span>1</span>USDT</p>
-        </el-radio>
+      <el-radio-group v-model="radio" class="coin-roaio-group" style="margin-bottom: 50px" @input="changeInput">
+        <el-radio
+          v-for="coin in coinList"
+          :key="coin"
+          :value="coin"
+          :label="coin"
+        >{{coin}}</el-radio>
       </el-radio-group>
+
+<!--      <el-radio-group-->
+<!--        v-model="radio"-->
+<!--        class="coin-roaio-group"-->
+<!--        style="margin-bottom: 50px"-->
+<!--        @input="changeInput"-->
+<!--      >-->
+<!--        <el-radio label="POLYGON"> POLYGON </el-radio>-->
+<!--        <el-radio label="BNB SMART CHAIN (BEP20)">-->
+<!--          BNB SMART CHAIN (BEP20)-->
+<!--        </el-radio>-->
+<!--        <el-radio label="TRC20">-->
+<!--          TRC20-->
+<!--          <p>入账手续费：<span>1</span>USDT</p>-->
+<!--        </el-radio>-->
+<!--      </el-radio-group>-->
     </el-dialog>
   </div>
 </template>
 
 <script>
   import { mapGetters } from 'vuex'
+  import QRCode from 'qrcode'
+  import {getBalance,getRechargeAddr,getRechargeList,getTargetAmount} from "@/api/custom/exchange";
 
   export default {
     data() {
@@ -92,15 +104,39 @@
         value: '',
         visible: true,
         isKnow: true,
-
-        radio: ''
+        radio: '',
+        form: {
+          informantType: "",
+        },
+        coinList: [],
+        coinAddrMap: {},
+        coin: ''
       }
     },
-
+    created() {
+      this.getAllCurr();
+      this.getAllAddr();
+    },
     computed: {
       ...mapGetters(["isMobile"])
     },
     methods: {
+      getAllCurr() {
+        getRechargeList().then(res => {
+          console.log(res);
+          if (res.code == 200) {
+            this.coinList = res.data;
+          }
+        });
+      },
+      getAllAddr() {
+        getRechargeAddr().then(res => {
+          console.log(res);
+          if (res.code == 200) {
+            this.coinAddrMap = res.data;
+          }
+        });
+      },
       handleBack() {
         this.$router.push('/home/exchange-account/exchange')
       },
@@ -113,9 +149,16 @@
         this.visible = true
       },
 
+      generateQRCode() {
+        QRCode.toCanvas(this.$refs.qrcode, this.coin, error => {
+          if (error) console.error(error)
+        })
+      },
+
       changeInput(val) {
-        this.radio = val
         this.visible = false
+        this.coin = this.coinAddrMap[val];
+        this.generateQRCode();
       }
     }
   }

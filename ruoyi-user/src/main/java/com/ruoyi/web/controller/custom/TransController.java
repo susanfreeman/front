@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ import java.util.List;
  * @author ruoyi
  * @date 2024-07-20
  */
-@Controller
+@RestController
 @RequestMapping("/trans")
 public class TransController extends BaseController {
 
