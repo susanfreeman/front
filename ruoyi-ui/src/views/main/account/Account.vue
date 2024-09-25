@@ -40,6 +40,60 @@
       </div>
     </div>
 
+    <div class="account-carousel">
+      <el-carousel :autoplay="false" arrow="always" class="">
+        <el-carousel-item>
+          <div class="item">
+            <img src="../../../assets/20240823-9.png" alt="" class="visa_img" />
+            <img
+              src="../../../assets/banklogo-6.png"
+              alt=""
+              class="master_logo2"
+            />
+
+            <div class="login">
+              <div class="balance">
+                $ 17.00
+                <span>如何充值</span>
+              </div>
+            </div>
+
+            <div class="visa_info">
+              <p class="num">4767 1500 6751 3281</p>
+              <div>
+                <p class="name">
+                  <span>JACK ZHA</span>
+                  <span class="expiry">Expiry 08/2026</span>
+                </p>
+              </div>
+            </div>
+
+            <p class="card_type_word">
+              Subscription
+              <i class="el-icon-arrow-right"></i>
+            </p>
+          </div>
+        </el-carousel-item>
+
+        <el-carousel-item>
+          <div class="item" @click="goToCreated">
+            <img src="../../../assets/20240823-9.png" alt="" class="visa_img" />
+
+            <div class="login">
+              <p class="word">申请卡</p>
+              <i class="el-icon-arrow-right"></i>
+            </div>
+
+            <img
+              src="../../../assets/banklogo-7.png"
+              alt=""
+              class="visa_master"
+            />
+          </div>
+        </el-carousel-item>
+      </el-carousel>
+    </div>
+
     <div class="account_r">
       <div class="card_title">
         <img
@@ -104,16 +158,23 @@
             <i class="el-icon-arrow-right"></i>
           </span>
         </p>
+
+        <div class="no_data" style="">
+          <img
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAC6UlEQVR4Xu3c326TUBwH8N8BapdWa8wuzJwPoDHemrjXMNubzJfYm0yfwwvvjRdbshv3pxeNi7a1FDgY5lYnQjmnX1po+ZL0Cr5w+PCDc4AGJZwgAQWlGRYCgkVAQAKCAmC8tAr8enq+F0dyCLanFvFIy9Hrl7ufTBpTGuCXk2/7KlbHJhut+zKxjg9evXj+waSdBMxQIqBJ6cxZhoAEBAXAOCuQgKAAGF9KBfb7g7eROO9z26blWRCFb8C2W8evf4yl5XnWuXmBJQFev9MSfyy1pSWs7PTsSnqPOtJqlYfYKMCTs6ubJyK9Xqe0SmwcYFLISsmfSizhdG4kYJmIjQUsC7HRgGUgVgI4DSIZjf3MfrXbacuDljubNxz5EoRR5rJPHnes+uakE8makGsiAW9FF0Uk4L2SXASRgKlz2haRgBkXRRtEAuZ0Q6aIlQCGYSQTP8xs+lbbE8/72wv/mgQSRTpz2YfdtlUvfNH/LmGoJTZMuY6Sbmdr7tJLAby8HOyL49TypdHPkS86RzCpOs91bn5u8nOUDMe+BEH2MCqRbRzgcDyV6FbQUUpcV83QHOf/92YETJ2AySA+mZIqywJLn68ENLze5S1GQAKCAmCcFUhAUACMswIJCAqAcVbgJgJqHUuYc38L7q91vGhAXcsKnPdI31oADKRfIazFnQgBC4560dMYAoKA854HgmekdTz9/HEtTmHrvawwUMtOpEIP600T0Jrs3wABCQgKgHFW4CYCchgDjgM5kCbgTKCS98KsQLAC+TgLBAQ7xpXGOYwBuQlIQFAAjLMCCQgKgPFaViDHgeAwhoAE5K3cncBavhcGr+srjdeyE1mpALgxAoKA48n0sz8JL/JWs5SPjxX9MwHcp9XGtT7Y2dk2+rhYUcOMPz5GwGxKAhaVWMF8AhJwAQFeAxdAux8h4BoCnvcHe0qcjfjIbCz6aPfpttFHZosOlXEnUrSips4nIHjkCUhAUACMswJBwN92tiSN4UlkyAAAAABJRU5ErkJggg=="
+          />
+          <p>没有记录</p>
+        </div>
       </div>
     </div>
 
-    <el-dialog title="安全验证" :visible.sync="visible" width="25%" center>
+    <el-dialog title="安全验证" :visible.sync="visible" :width="isMobile ? '90%' : '25%'" center>
       <el-form :model="form" ref="form" label-position="top">
         <el-form-item
           label=""
           prop="code"
           :rules="[
-            { required: true, message: '请输入验证码', trigger: 'blur' }
+            { required: true, message: '请输入验证码', trigger: 'blur' },
           ]"
         >
           <el-input v-model="form.code" placeholder="邮箱验证码">
@@ -132,7 +193,7 @@
           label=""
           prop="code"
           :rules="[
-            { required: true, message: '请输入验证码', trigger: 'blur' }
+            { required: true, message: '请输入验证码', trigger: 'blur' },
           ]"
         >
           <el-input v-model="form.code2" placeholder="谷歌验证码">
@@ -151,61 +212,178 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        visible: false,
+import { mapGetters } from "vuex";
 
-        form: {
-          code: '',
-          code2: ''
-        },
+export default {
+  data() {
+    return {
+      visible: false,
 
-        codeDisabled: false,
-        codeInput: '获取验证码',
-        time: 60
-      }
+      form: {
+        code: "",
+        code2: "",
+      },
+
+      codeDisabled: false,
+      codeInput: "获取验证码",
+      time: 60,
+    };
+  },
+
+  computed: {
+    ...mapGetters(["isMobile"]),
+  },
+
+  methods: {
+    goToCreated() {
+      this.$router.push("Created");
     },
 
-    methods: {
-      goToCreated() {
-        this.$router.push('Created')
-      },
+    goToEquity() {
+      this.$router.push("Equity");
+    },
 
-      goToEquity() {
-        this.$router.push('Equity')
-      },
+    //获取验证码
+    getCode() {
+      this.time = 60;
+      this.codeInput = this.time + "s";
+      this.codeDisabled = true;
 
-      //获取验证码
-      getCode() {
-        this.time = 60
-        this.codeInput = this.time + 's'
-        this.codeDisabled = true
+      let timeEle = setInterval(() => {
+        this.time--;
 
-        let timeEle = setInterval(() => {
-          this.time--
+        this.codeInput = this.time + "s";
+      }, 1000);
 
-          this.codeInput = this.time + 's'
-        }, 1000)
+      setTimeout(() => {
+        this.time = 0;
+        this.codeInput = "再次发送";
+        this.codeDisabled = false;
 
-        setTimeout(() => {
-          this.time = 0
-          this.codeInput = '再次发送'
-          this.codeDisabled = false
+        clearInterval(timeEle);
+        timeEle = null;
+      }, 61000);
+    },
 
-          clearInterval(timeEle)
-          timeEle = null
-        }, 61000)
-      },
-
-      gotoCoinTransfer() {
-        this.$router.push('/home/account/coin-transfer')
-      }
-    }
-  }
+    gotoCoinTransfer() {
+      this.$router.push("/home/account/coin-transfer");
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
+.item {
+  width: 100%;
+  height: 179px;
+  margin-top: 4px;
+  border-radius: 14px;
+  overflow: hidden;
+  padding: 20px 0 0 25px;
+  margin-bottom: 22px;
+  position: relative;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  .visa_img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .master_logo2 {
+    width: 45px;
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    z-index: 1;
+  }
+  .login {
+    position: relative;
+    z-index: 1;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    .balance {
+      display: flex;
+      align-items: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      span {
+        height: 18px;
+        background: hsla(0, 0%, 100%, 0.39);
+        border-radius: 4px;
+        font-size: 10px;
+        font-weight: 400;
+        color: #fff;
+        padding: 1px 5px;
+        margin-left: 3px;
+      }
+    }
+    .word {
+      cursor: pointer;
+      margin-right: 10px;
+    }
+  }
+  .visa_info {
+    position: absolute;
+    left: 0;
+    font-size: 14px;
+    color: #fff;
+    bottom: 10px;
+    padding-left: 24px;
+    z-index: 1;
+    .num {
+      font-family: qiqi;
+      letter-spacing: 2px;
+      font-size: 12px;
+    }
+    .name {
+      font-weight: 400;
+      margin-top: 6px;
+      font-size: 12px;
+      .expiry {
+        margin-left: 10px;
+      }
+    }
+  }
+  .card_type_word {
+    font-size: 12px;
+    font-weight: 400;
+    color: #fff;
+    position: absolute;
+    right: 20px;
+    bottom: 13px;
+    cursor: pointer;
+  }
+  .visa_master {
+    position: absolute;
+    right: 20px;
+    bottom: 18px;
+    vertical-align: middle;
+  }
+}
+
+.no_data {
+  width: 100%;
+  border-radius: 4px;
+  overflow: hidden;
+  img {
+    display: block;
+    margin: 66px auto 10px;
+  }
+  p {
+    font-size: 12px;
+    color: #333;
+    text-align: center;
+  }
+}
+
+// pc端
+@media screen and (min-width: 600px) {
   .account {
     min-width: 1110px;
     background: #f4f5f7;
@@ -216,100 +394,11 @@
     .account_l {
       width: 407px;
       padding: 10px 32px;
-      .item {
-        width: 100%;
-        height: 179px;
-        margin-top: 4px;
-        border-radius: 14px;
-        overflow: hidden;
-        padding: 20px 0 0 25px;
-        margin-bottom: 22px;
-        position: relative;
-        background-size: 100%;
-        background-repeat: no-repeat;
-        .visa_img {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-        }
-        .master_logo2 {
-          width: 45px;
-          position: absolute;
-          top: 18px;
-          right: 24px;
-          z-index: 1;
-        }
-        .login {
-          position: relative;
-          z-index: 1;
-          font-size: 16px;
-          font-weight: 700;
-          color: #fff;
-          display: flex;
-          align-items: center;
-          .balance {
-            display: flex;
-            align-items: center;
-            font-size: 20px;
-            font-weight: 700;
-            color: #fff;
-            span {
-              height: 18px;
-              background: hsla(0, 0%, 100%, 0.39);
-              border-radius: 4px;
-              font-size: 10px;
-              font-weight: 400;
-              color: #fff;
-              padding: 1px 5px;
-              margin-left: 3px;
-            }
-          }
-          .word {
-            cursor: pointer;
-            margin-right: 10px;
-          }
-        }
-        .visa_info {
-          position: absolute;
-          left: 0;
-          font-size: 14px;
-          color: #fff;
-          bottom: 10px;
-          padding-left: 24px;
-          z-index: 1;
-          .num {
-            font-family: qiqi;
-            letter-spacing: 2px;
-            font-size: 12px;
-          }
-          .name {
-            font-weight: 400;
-            margin-top: 6px;
-            font-size: 12px;
-            .expiry {
-              margin-left: 10px;
-            }
-          }
-        }
-        .card_type_word {
-          font-size: 12px;
-          font-weight: 400;
-          color: #fff;
-          position: absolute;
-          right: 20px;
-          bottom: 13px;
-          cursor: pointer;
-        }
-        .visa_master {
-          position: absolute;
-          right: 20px;
-          bottom: 18px;
-          vertical-align: middle;
-        }
-      }
     }
+    .account-carousel {
+      display: none;
+    }
+
     .account_r {
       flex: auto;
       padding: 0 60px;
@@ -348,7 +437,7 @@
           position: absolute;
           top: 0;
           right: 0;
-          content: '';
+          content: "";
           width: 1px;
           height: 44px;
           background: #eaeaea;
@@ -403,4 +492,88 @@
       }
     }
   }
+}
+
+//移动端
+@media screen and (max-width: 600px) {
+  .account {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    border-radius: 0px;
+    overflow-y: scroll;
+    flex-direction: column;
+
+    .account_l {
+      display: none;
+    }
+    .account-carousel {
+      width: 100%;
+      padding: 20px 20px 0 20px;
+      .item {
+        height: 260px !important;
+      }
+    }
+
+    .account_r {
+      flex: auto;
+      display: flex;
+      flex-direction: column;
+      // padding: 0 60px;
+      // background: #fff;
+      .card_title {
+        display: none;
+      }
+      .card_info_pc {
+        display: none;
+      }
+      .menu {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        font-size: 12px;
+        border-radius: 4px;
+        color: #333;
+        align-items: center;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eaeaea;
+        .choose {
+          width: 100%;
+          display: flex;
+          justify-content: space-around;
+          text-align: center;
+          position: relative;
+          & > div {
+            cursor: pointer;
+          }
+        }
+      }
+      .bill_list {
+        flex: auto;
+        width: 100%;
+        padding: 0 20px;
+        border-radius: 4px;
+        background: #fff;
+        .bill_list_t {
+          width: 100%;
+          height: 42px;
+          line-height: 42px;
+          display: flex;
+          justify-content: space-between;
+          .lable {
+            font-size: 16px;
+            font-weight: 700;
+            color: #2c335c;
+          }
+          .title {
+            font-size: 12px;
+            font-weight: 400;
+            color: #1a72ff;
+          }
+        }
+      }
+    }
+  }
+}
 </style>
