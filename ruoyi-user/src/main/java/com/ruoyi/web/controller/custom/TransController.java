@@ -37,10 +37,10 @@ public class TransController extends BaseController {
      */
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list() {
+    public TableDataInfo list(TblTrans tblTrans) {
 
         TblUserInfo userInfo  = tblUserInfoService.selectTblUserInfoByUserId(getUserId());
-        TblTrans tblTrans = new TblTrans();
+//        TblTrans tblTrans = new TblTrans();
         tblTrans.setUiId(userInfo.getUiId());
         startPage();
         List<TblTrans> list = tblTransService.selectTblTransList(tblTrans);

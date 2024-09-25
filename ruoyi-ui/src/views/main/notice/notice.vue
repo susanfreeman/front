@@ -4,30 +4,70 @@
     <p class="title2">来自官方的发布</p>
 
     <ul class="list">
-      <li @click="toDetail">
-        Dupay预付卡维护通知
-        <i class="el-icon-arrow-right"></i>
-      </li>
-
-      <li @click="toDetail">
-        Dupay借记卡服务关闭通知
-        <i class="el-icon-arrow-right"></i>
-      </li>
-
-      <li @click="toDetail">
-        Dupay 卡BIN轮换计划公告
-        <i class="el-icon-arrow-right"></i>
+      <li @click="toDetail" v-for="item in noticeList">
+        {{item.noticeTitle}}
       </li>
     </ul>
+
+<!--    <el-table v-loading="loading" :data="noticeList" >-->
+<!--      <el-table-column-->
+<!--        label="公告标题"-->
+<!--        align="center"-->
+<!--        prop="noticeTitle"-->
+<!--        :show-overflow-tooltip="true"-->
+<!--      />-->
+<!--      <el-table-column label="创建时间" align="center" prop="createTime" width="100">-->
+<!--        <template slot-scope="scope">-->
+<!--          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--    </el-table>-->
+
+
+<!--    <pagination-->
+<!--      v-show="total>0"-->
+<!--      :total="total"-->
+<!--      :page.sync="queryParams.pageNum"-->
+<!--      :limit.sync="queryParams.pageSize"-->
+<!--      @pagination="getList"-->
+<!--    />-->
   </div>
 </template>
 
 <script>
+  import {listNotice} from "@/api/system/notice";
+
   export default {
     data() {
-      return {}
+      return {
+        // 遮罩层
+        loading: true,
+        // 总条数
+        total: 0,
+        // 公告表格数据
+        noticeList: [],
+        queryParams: {
+          pageNum: 1,
+          pageSize: 10,
+          noticeTitle: undefined,
+          createBy: undefined,
+          status: undefined
+        },
+      }
+    },
+    created() {
+      this.getList();
     },
     methods: {
+      /** 查询公告列表 */
+      getList() {
+        this.loading = true;
+        listNotice(this.queryParams).then(response => {
+          this.noticeList = response.rows;
+          this.total = response.total;
+          this.loading = false;
+        });
+      },
         toDetail() {
             this.$router.push("/home/notice/notice-detail")
         }

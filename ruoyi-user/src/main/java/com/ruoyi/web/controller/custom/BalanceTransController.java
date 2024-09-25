@@ -37,10 +37,9 @@ public class BalanceTransController extends BaseController
      */
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list()
+    public TableDataInfo list(TblBalanceTrans tblBalanceTrans)
     {
         TblUserInfo userInfo = tblUserInfoService.selectTblUserInfoByUserId(getUserId());
-        TblBalanceTrans tblBalanceTrans = new TblBalanceTrans();
         tblBalanceTrans.setUiId(userInfo.getUiId());
         startPage();
         List<TblBalanceTrans> list = tblBalanceTransService.selectTblBalanceTransList(tblBalanceTrans);
