@@ -66,7 +66,7 @@
       <router-view></router-view>
     </div>
 
-    <div class="footer">
+    <div class="footer" v-show="footerShow">
       <el-menu
         :default-active="$route.name"
         class="mobile-menu"
@@ -110,129 +110,157 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {}
+import { mapGetters } from "vuex";
+
+export default {
+  data() {
+    return {
+      footerShow: true,
+    };
+  },
+
+  computed: {
+    ...mapGetters(["isMobile"]),
+  },
+
+  watch: {
+    $route(newValue, oldValue) {
+      //路由name
+      let pathName = [
+        "account",
+        "exchange",
+        "notice-index",
+        "help-index",
+        "contactUs",
+        "me",
+      ];
+
+      if (this.isMobile && pathName.includes(newValue.name)) {
+        this.footerShow = true;
+      } else {
+        this.footerShow = false;
+      }
+    },
+  },
+
+  methods: {
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
     },
 
-    methods: {
-      handleOpen(key, keyPath) {
-        console.log(key, keyPath)
-      },
-      handleClose(key, keyPath) {
-        console.log(key, keyPath)
-      },
-
-      handleToUser() {
-        this.$router.push('/home/user')
-      }
-    }
-  }
+    handleToUser() {
+      this.$router.push("/home/user");
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
-  .main-body {
-    width: 100%;
-    height: 100%;
+.main-body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  @media screen and (max-width: 600px) {
     display: flex;
-    overflow: hidden;
+    flex-direction: column;
+  }
+  .left {
+    width: 240px;
+    height: 100vh;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
     @media screen and (max-width: 600px) {
-      display: flex;
-      flex-direction: column;
+      display: none;
     }
-    .left {
-      width: 240px;
-      height: 100vh;
-      background: #fff;
-      display: flex;
-      flex-direction: column;
-      flex-shrink: 0;
-      @media screen and (max-width: 600px) {
-        display: none;
-      }
-      .logo-img {
-        display: block;
-        margin: 20px auto;
-      }
+    .logo-img {
+      display: block;
+      margin: 20px auto;
+    }
 
-      .el-menu-vertical-demo {
-        flex: 1;
-        overflow: auto;
-      }
-      .me {
-        padding: 24px;
-        display: flex;
-        flex-direction: column;
-        .commission {
-          width: 100%;
-          height: 53px;
-          background: #45a1ff;
-          border-radius: 4px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          cursor: pointer;
-          padding: 0 14px 0 10px;
-          .commission_l {
-            font-size: 12px;
-            font-weight: 700;
-            line-height: 18px;
-            color: #fff;
-          }
-        }
-        .user {
-          width: 100%;
-          margin-top: 29px;
-          display: flex;
-          align-items: center;
-          font-size: 14px;
-          font-weight: 400;
-          color: #000;
-          cursor: pointer;
-        }
-      }
-    }
-    .content {
-      background: #ccc;
-      position: relative;
-      flex: auto;
+    .el-menu-vertical-demo {
+      flex: 1;
       overflow: auto;
     }
-    .footer {
-      width: 100%;
-      height: 60px;
-      background: #fff;
-      display: none;
-      @media screen and (max-width: 600px) {
-        display: flex;
-      }
-    }
-  }
-</style>
-<style lang="less">
-  .el-menu-item.is-active {
-    background: #45a1ff !important;
-    color: #fff;
-  }
-
-  .mobile-menu {
-    display: flex;
-    width: 100%;
-    .el-menu-item {
-      flex: 1;
+    .me {
+      padding: 24px;
       display: flex;
       flex-direction: column;
-      padding: 0;
-      align-items: center;
-      justify-content: center;
-      i {
-        margin-right: 0;
-        margin-bottom: 5px;
+      .commission {
+        width: 100%;
+        height: 53px;
+        background: #45a1ff;
+        border-radius: 4px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        padding: 0 14px 0 10px;
+        .commission_l {
+          font-size: 12px;
+          font-weight: 700;
+          line-height: 18px;
+          color: #fff;
+        }
+      }
+      .user {
+        width: 100%;
+        margin-top: 29px;
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 400;
+        color: #000;
+        cursor: pointer;
       }
     }
-    .el-menu-item,
-    .el-submenu__title {
-      line-height: 20px;
+  }
+  .content {
+    background: #ccc;
+    position: relative;
+    flex: auto;
+    overflow: auto;
+  }
+  .footer {
+    width: 100%;
+    height: 60px;
+    background: #fff;
+    display: none;
+    @media screen and (max-width: 600px) {
+      display: flex;
     }
   }
+}
+</style>
+<style lang="less">
+.el-menu-item.is-active {
+  background: #45a1ff !important;
+  color: #fff;
+}
+
+.mobile-menu {
+  display: flex;
+  width: 100%;
+  .el-menu-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    i {
+      margin-right: 0;
+      margin-bottom: 5px;
+    }
+  }
+  .el-menu-item,
+  .el-submenu__title {
+    line-height: 20px;
+  }
+}
 </style>

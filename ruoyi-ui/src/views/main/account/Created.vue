@@ -143,7 +143,7 @@
           </ul>
 
           <div class="button">
-            <el-button type="primary">立即开卡</el-button>
+            <el-button type="primary" @click="handleActivateCard">立即开卡</el-button>
           </div>
         </div>
 
@@ -255,7 +255,12 @@
 
     methods: {
       goBack() {
-        this.$router.go(-1)
+        this.$router.push("/home/account/account")
+      },
+
+      //立即开卡
+      handleActivateCard() {
+        this.$router.push("/home/account/create-card")
       }
     }
   }
