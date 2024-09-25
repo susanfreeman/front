@@ -1,23 +1,23 @@
 <template>
   <div class="account">
     <div class="account_l">
-      <div class="item">
+      <div class="item" v-for="item in cardList" >
         <img src="../../../assets/20240823-9.png" alt="" class="visa_img" />
         <img src="../../../assets/banklogo-6.png" alt="" class="master_logo2" />
 
         <div class="login">
           <div class="balance">
-            $ 17.00
+            $ *** 查看
             <span>如何充值</span>
           </div>
         </div>
 
         <div class="visa_info">
-          <p class="num">4767 1500 6751 3281</p>
+          <p class="num">{{item.cardNo}}</p>
           <div>
             <p class="name">
-              <span>JACK ZHA</span>
-              <span class="expiry">Expiry 08/2026</span>
+              <span>{{item.firstName}} {{item.lastName}}</span>
+              <span class="expiry">Expiry {{item.expire}}</span>
             </p>
           </div>
         </div>
@@ -54,7 +54,7 @@
             <div class="login">
               <div class="balance">
                 $ 17.00
-                <span>如何充值</span>
+                <span>如何充值2</span>
               </div>
             </div>
 
@@ -213,28 +213,44 @@
 
 <script>
 import { mapGetters } from "vuex";
+import {getCardBin, userCardList} from "@/api/custom/opencard";
 
 export default {
   data() {
     return {
+      loading: false,
       visible: false,
 
       form: {
         code: "",
         code2: "",
       },
-
+      cardList: [],
       codeDisabled: false,
       codeInput: "获取验证码",
       time: 60,
+      queryData: {
+        cardStatus: "2"
+      }
     };
   },
-
+  created() {
+    this.getOpenCardList();
+  },
   computed: {
     ...mapGetters(["isMobile"]),
   },
-
   methods: {
+    getOpenCardList() {
+      this.loading = true;
+      userCardList(this.queryData).then(response => {
+        // console.log(response)
+        this.cardList = response.rows;
+        this.loading = false;
+        // this.selectCardBin(0);
+      });
+    },
+
     goToCreated() {
       this.$router.push("Created");
     },

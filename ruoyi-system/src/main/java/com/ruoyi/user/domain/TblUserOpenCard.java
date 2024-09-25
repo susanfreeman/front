@@ -36,12 +36,12 @@ public class TblUserOpenCard extends BaseEntity
 
     /** cvv */
     @Excel(name = "cvv")
-    @CommonMask(start = 0,end = 4)
+    @CommonMask(start = 0,end = 0)
     private String cvv;
 
     /** 有效期 */
     @Excel(name = "有效期")
-    @CommonMask(start = 0,end = 4)
+    @CommonMask(start = 0,end = 0)
     private String expire;
 
     /** 姓氏 */

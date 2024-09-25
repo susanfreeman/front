@@ -10,8 +10,8 @@
 
       <div class="main">
         <div class="item">
-          <el-carousel :autoplay="false" arrow="always" class="create-carousel">
-            <el-carousel-item>
+          <el-carousel :autoplay="false" arrow="always" class="create-carousel" @change="selectCardBin">
+            <el-carousel-item v-for="(item,index) in cardBinList" :key="index">
               <div class="card-item">
                 <img
                   src="../../../assets/20240823-9.png"
@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="visa_info">
-                  <p class="num">4767 15●● ●●●● ●●●●</p>
+                  <p class="num">{{item.cardBin}}●● ●●●● ●●●●</p>
                   <div>
                     <p class="name">
                       <span>YOUR NAME</span>
@@ -40,106 +40,105 @@
                 />
               </div>
             </el-carousel-item>
-            <el-carousel-item>
-              <div class="card-item">
-                <img
-                  src="../../../assets/20240823-9.png"
-                  alt=""
-                  class="visa_img"
-                />
+<!--            <el-carousel-item>-->
+<!--              <div class="card-item">-->
+<!--                <img-->
+<!--                  src="../../../assets/20240823-9.png"-->
+<!--                  alt=""-->
+<!--                  class="visa_img"-->
+<!--                />-->
 
-                <div class="login">
-                  <img src="../../../assets/logo3.png" alt="" width="150" />
-                </div>
+<!--                <div class="login">-->
+<!--                  <img src="../../../assets/logo3.png" alt="" width="150" />-->
+<!--                </div>-->
 
-                <div class="visa_info">
-                  <p class="num">4767 15●● ●●●● ●●●●</p>
-                  <div>
-                    <p class="name">
-                      <span>YOUR NAME</span>
-                      <!-- <span class="expiry">Expiry 08/2026</span> -->
-                    </p>
-                  </div>
-                </div>
+<!--                <div class="visa_info">-->
+<!--                  <p class="num">4767 15●● ●●●● ●●●●</p>-->
+<!--                  <div>-->
+<!--                    <p class="name">-->
+<!--                      <span>YOUR NAME</span>-->
+<!--                      &lt;!&ndash; <span class="expiry">Expiry 08/2026</span> &ndash;&gt;-->
+<!--                    </p>-->
+<!--                  </div>-->
+<!--                </div>-->
 
-                <img
-                  src="../../../assets/visa.png"
-                  alt=""
-                  class="card_type_word"
-                />
-              </div>
-            </el-carousel-item>
-            <el-carousel-item>
-              <div class="card-item">
-                <img
-                  src="../../../assets/20240823-9.png"
-                  alt=""
-                  class="visa_img"
-                />
+<!--                <img-->
+<!--                  src="../../../assets/visa.png"-->
+<!--                  alt=""-->
+<!--                  class="card_type_word"-->
+<!--                />-->
+<!--              </div>-->
+<!--            </el-carousel-item>-->
+<!--            <el-carousel-item>-->
+<!--              <div class="card-item">-->
+<!--                <img-->
+<!--                  src="../../../assets/20240823-9.png"-->
+<!--                  alt=""-->
+<!--                  class="visa_img"-->
+<!--                />-->
 
-                <div class="login">
-                  <img src="../../../assets/logo3.png" alt="" width="150" />
-                </div>
+<!--                <div class="login">-->
+<!--                  <img src="../../../assets/logo3.png" alt="" width="150" />-->
+<!--                </div>-->
 
-                <div class="visa_info">
-                  <p class="num">4767 15●● ●●●● ●●●●</p>
-                  <div>
-                    <p class="name">
-                      <span>YOUR NAME</span>
-                      <!-- <span class="expiry">Expiry 08/2026</span> -->
-                    </p>
-                  </div>
-                </div>
+<!--                <div class="visa_info">-->
+<!--                  <p class="num">4767 15●● ●●●● ●●●●</p>-->
+<!--                  <div>-->
+<!--                    <p class="name">-->
+<!--                      <span>YOUR NAME</span>-->
+<!--                      &lt;!&ndash; <span class="expiry">Expiry 08/2026</span> &ndash;&gt;-->
+<!--                    </p>-->
+<!--                  </div>-->
+<!--                </div>-->
 
-                <img
-                  src="../../../assets/visa.png"
-                  alt=""
-                  class="card_type_word"
-                />
-              </div>
-            </el-carousel-item>
+<!--                <img-->
+<!--                  src="../../../assets/visa.png"-->
+<!--                  alt=""-->
+<!--                  class="card_type_word"-->
+<!--                />-->
+<!--              </div>-->
+<!--            </el-carousel-item>-->
           </el-carousel>
 
-          <!-- <img src="../../../assets/20240823-9.png" alt="" width="100%" /> -->
 
           <ul class="info">
             <li>
               <p>卡片类型</p>
-              <div>预付卡</div>
+              <div>{{cardBin.cardType}}</div>
             </li>
 
             <li>
               <p>币种</p>
-              <div>USD</div>
+              <div>{{cardBin.cardCurr}}</div>
             </li>
 
             <li>
               <p>地区</p>
-              <div>美国</div>
+              <div>{{cardBin.cardCountry}}</div>
             </li>
           </ul>
 
           <ul class="tips">
-            <li>
-              <p>支持消费场景</p>
-              <div>
-                支持支付宝、PayPal、ChatGPT、OPEN AI、AppStore美区、Google
-                play美区、MIDJOURNEY等支付场景
-              </div>
-            </li>
+            <li class="tip" v-html="cardBin.remark"></li>
 
-            <li class="tip">
-              <p>用卡须知</p>
-              <div>
-                1、因资金不足导致授权失败累计达到10次，卡片将被冻结；
-                <br />
-                2、卡片的总授权失败率超过20%，卡片将被冻结；
-                <br />
-                3、卡片被冻结后，需支付0.5美元的每笔授权失败罚金方能解冻；
-                <br />
-                4、单笔消费≤1美元的交易，将收取每笔0.5美元的手续费。
-              </div>
-            </li>
+<!--            <li class="tip">-->
+<!--              <p>支持消费场景</p>-->
+<!--              <div>-->
+<!--                支持支付宝、PayPal、ChatGPT、OPEN AI、AppStore美区、Google-->
+<!--                play美区、MIDJOURNEY等支付场景-->
+<!--              </div>-->
+<!--              <br /><br />-->
+<!--              <p>用卡须知</p>-->
+<!--              <div>-->
+<!--                1、因资金不足导致授权失败累计达到10次，卡片将被冻结；-->
+<!--                <br />-->
+<!--                2、卡片的总授权失败率超过20%，卡片将被冻结；-->
+<!--                <br />-->
+<!--                3、卡片被冻结后，需支付0.5美元的每笔授权失败罚金方能解冻；-->
+<!--                <br />-->
+<!--                4、单笔消费≤1美元的交易，将收取每笔0.5美元的手续费。-->
+<!--              </div>-->
+<!--            </li>-->
           </ul>
 
           <div class="button">
@@ -147,113 +146,34 @@
           </div>
         </div>
 
-        <!-- <div class="item">
-          <img src="../../../assets/20240823-9.png" alt="" width="100%" />
-
-          <ul class="info">
-            <li>
-              <p>卡片类型</p>
-              <div>预付卡</div>
-            </li>
-
-            <li>
-              <p>币种</p>
-              <div>USD</div>
-            </li>
-
-            <li>
-              <p>地区</p>
-              <div>美国</div>
-            </li>
-          </ul>
-
-          <ul class="tips">
-            <li>
-              <p>支持消费场景</p>
-              <div>
-                支持支付宝、PayPal、ChatGPT、OPEN AI、AppStore美区、Google
-                play美区、MIDJOURNEY等支付场景
-              </div>
-            </li>
-
-            <li class="tip">
-              <p>用卡须知</p>
-              <div>
-                1、因资金不足导致授权失败累计达到10次，卡片将被冻结；
-                <br />
-                2、卡片的总授权失败率超过20%，卡片将被冻结；
-                <br />
-                3、卡片被冻结后，需支付0.5美元的每笔授权失败罚金方能解冻；
-                <br />
-                4、单笔消费≤1美元的交易，将收取每笔0.5美元的手续费。
-              </div>
-            </li>
-          </ul>
-
-          <div class="button">
-            <el-button type="primary">立即开卡</el-button>
-          </div>
-        </div>
-
-        <div class="item">
-          <img src="../../../assets/20240823-9.png" alt="" width="100%" />
-
-          <ul class="info">
-            <li>
-              <p>卡片类型</p>
-              <div>预付卡</div>
-            </li>
-
-            <li>
-              <p>币种</p>
-              <div>USD</div>
-            </li>
-
-            <li>
-              <p>地区</p>
-              <div>美国</div>
-            </li>
-          </ul>
-
-          <ul class="tips">
-            <li>
-              <p>支持消费场景</p>
-              <div>
-                支持支付宝、PayPal、ChatGPT、OPEN AI、AppStore美区、Google
-                play美区、MIDJOURNEY等支付场景
-              </div>
-            </li>
-
-            <li class="tip">
-              <p>用卡须知</p>
-              <div>
-                1、因资金不足导致授权失败累计达到10次，卡片将被冻结；
-                <br />
-                2、卡片的总授权失败率超过20%，卡片将被冻结；
-                <br />
-                3、卡片被冻结后，需支付0.5美元的每笔授权失败罚金方能解冻；
-                <br />
-                4、单笔消费≤1美元的交易，将收取每笔0.5美元的手续费。
-              </div>
-            </li>
-          </ul>
-
-          <div class="button">
-            <el-button type="primary">立即开卡</el-button>
-          </div>
-        </div> -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import {getCardBin} from "@/api/custom/opencard";
+
   export default {
     data() {
-      return {}
+      return {
+        loading: false,
+        cardBinList: [],
+        cardBin: null
+      }
     },
-
+    created() {
+      this.getCardBinMethod();
+    },
     methods: {
+      getCardBinMethod() {
+        this.loading = true;
+        getCardBin().then(response => {
+          this.cardBinList = response.data;
+          this.loading = false;
+          this.selectCardBin(0);
+        });
+      },
       goBack() {
         this.$router.push("/home/account/account")
       },
@@ -261,6 +181,10 @@
       //立即开卡
       handleActivateCard() {
         this.$router.push("/home/account/create-card")
+      },
+      selectCardBin(index) {
+        this.cardBin = this.cardBinList[index];
+        console.log(this.cardBin)
       }
     }
   }

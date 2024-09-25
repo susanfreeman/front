@@ -89,9 +89,8 @@ public class UserOpenCardController extends BaseController {
      */
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list() {
+    public TableDataInfo list(@RequestBody TblUserOpenCard tblUserOpenCard) {
         TblUserInfo userInfo = tblUserInfoService.selectTblUserInfoByUserId(getUserId());
-        TblUserOpenCard tblUserOpenCard = new TblUserOpenCard();
         tblUserOpenCard.setUiId(userInfo.getUiId());
         startPage();
         List<TblUserOpenCard> list = tblUserOpenCardService.selectTblUserOpenCardList(tblUserOpenCard);

@@ -4,8 +4,9 @@
     <p class="title2">来自官方的发布</p>
 
     <ul class="list">
-      <li @click="toDetail" v-for="item in noticeList">
+      <li  @click="toDetail(item)" v-for="item in noticeList" >
         {{item.noticeTitle}}
+<!--        <router-link :to="{ name: 'notice-detail', params: { id: item.id }}">{{item.noticeTitle}}</router-link>-->
       </li>
     </ul>
 
@@ -68,9 +69,13 @@
           this.loading = false;
         });
       },
-        toDetail() {
-            this.$router.push("/home/notice/notice-detail")
-        }
+        toDetail(notice) {
+          console.log(notice);
+            this.$router.push({name:"notice-detail",params: {
+                notice: notice
+          }}
+        )
+      }
     }
   }
 </script>
