@@ -1,7 +1,18 @@
 <template>
   <div class="account">
     <div class="account_l">
-      <div class="item" v-for="item in cardList" >
+      <div class="item" @click="goToCreated">
+        <img src="../../../assets/20240823-9.png" alt="" class="visa_img" />
+
+        <div class="login">
+          <p class="word">申请卡</p>
+          <i class="el-icon-arrow-right"></i>
+        </div>
+
+        <img src="../../../assets/banklogo-7.png" alt="" class="visa_master" />
+      </div>
+
+      <div class="item" v-for="(item,index) in cardList" :key="index" @click="selectCardDiv(index)">
         <img src="../../../assets/20240823-9.png" alt="" class="visa_img" />
         <img src="../../../assets/banklogo-6.png" alt="" class="master_logo2" />
 
@@ -22,59 +33,15 @@
           </div>
         </div>
 
-        <p class="card_type_word">
+        <p class="card_type_word" >
           Subscription
           <i class="el-icon-arrow-right"></i>
         </p>
       </div>
-
-      <div class="item" @click="goToCreated">
-        <img src="../../../assets/20240823-9.png" alt="" class="visa_img" />
-
-        <div class="login">
-          <p class="word">申请卡</p>
-          <i class="el-icon-arrow-right"></i>
-        </div>
-
-        <img src="../../../assets/banklogo-7.png" alt="" class="visa_master" />
-      </div>
     </div>
 
-    <div class="account-carousel">
-      <el-carousel :autoplay="false" arrow="always" class="">
-        <el-carousel-item>
-          <div class="item">
-            <img src="../../../assets/20240823-9.png" alt="" class="visa_img" />
-            <img
-              src="../../../assets/banklogo-6.png"
-              alt=""
-              class="master_logo2"
-            />
-
-            <div class="login">
-              <div class="balance">
-                $ 17.00
-                <span>如何充值2</span>
-              </div>
-            </div>
-
-            <div class="visa_info">
-              <p class="num">4767 1500 6751 3281</p>
-              <div>
-                <p class="name">
-                  <span>JACK ZHA</span>
-                  <span class="expiry">Expiry 08/2026</span>
-                </p>
-              </div>
-            </div>
-
-            <p class="card_type_word">
-              Subscription
-              <i class="el-icon-arrow-right"></i>
-            </p>
-          </div>
-        </el-carousel-item>
-
+    <div class="account-carousel" >
+      <el-carousel :autoplay="false" arrow="always" class="" @change="selectCard">
         <el-carousel-item>
           <div class="item" @click="goToCreated">
             <img src="../../../assets/20240823-9.png" alt="" class="visa_img" />
@@ -89,6 +56,39 @@
               alt=""
               class="visa_master"
             />
+          </div>
+        </el-carousel-item>
+
+        <el-carousel-item v-for="(item,index) in cardList" :key="index">
+          <div class="item">
+            <img src="../../../assets/20240823-9.png" alt="" class="visa_img" />
+            <img
+              src="../../../assets/banklogo-6.png"
+              alt=""
+              class="master_logo2"
+            />
+
+            <div class="login">
+              <div class="balance">
+                $ *** 查看
+                <span>如何充值2</span>
+              </div>
+            </div>
+
+            <div class="visa_info">
+              <p class="num">{{item.cardNo}}</p>
+              <div>
+                <p class="name">
+                  <span>{{item.firstName}} {{item.lastName}}</span>
+                  <span class="expiry">Expiry {{item.expire}}</span>
+                </p>
+              </div>
+            </div>
+
+            <p class="card_type_word">
+              Subscription
+              <i class="el-icon-arrow-right"></i>
+            </p>
           </div>
         </el-carousel-item>
       </el-carousel>
@@ -107,22 +107,22 @@
       <ul class="card_info_pc">
         <li style="min-width: 206px">
           <p>Card number</p>
-          <div class="content"></div>
+          <div class="content">{{card.cardNo}}</div>
         </li>
 
         <li>
-          <p>EXpire date</p>
-          <div class="content"></div>
+          <p>Expire date</p>
+          <div class="content">{{card.expire}}</div>
         </li>
 
         <li>
           <p>CVV安全码</p>
-          <div class="content"></div>
+          <div class="content">{{card.cvv}}</div>
         </li>
 
         <li>
           <p>Card holder</p>
-          <div class="content"></div>
+          <div class="content">{{card.firstName}} {{card.lastName}}</div>
         </li>
       </ul>
 
@@ -213,13 +213,14 @@
 
 <script>
 import { mapGetters } from "vuex";
-import {getCardBin, userCardList} from "@/api/custom/opencard";
+import {userCardList} from "@/api/custom/opencard";
 
 export default {
   data() {
     return {
       loading: false,
       visible: false,
+      isSelectCard: false,
 
       form: {
         code: "",
@@ -227,6 +228,7 @@ export default {
       },
       cardList: [],
       codeDisabled: false,
+      card: {},
       codeInput: "获取验证码",
       time: 60,
       queryData: {
@@ -247,7 +249,7 @@ export default {
         // console.log(response)
         this.cardList = response.rows;
         this.loading = false;
-        // this.selectCardBin(0);
+        // this.selectCard(0);
       });
     },
 
@@ -280,10 +282,29 @@ export default {
         timeEle = null;
       }, 61000);
     },
-
     gotoCoinTransfer() {
-      this.$router.push("/home/account/coin-transfer");
+      // this.$router.push("/home/account/coin-transfer");
+      if (!this.isSelectCard) {
+        this.$message('请先选择要充值的卡片');
+        return;
+      }
+      this.$router.push({name:"coin-transfer",params: {
+          card: this.card
+        }}
+      );
     },
+    selectCard(index) {
+      if (index > 0){
+        this.card = this.cardList[index-1];
+        this.isSelectCard = true;
+        // console.log(this.card);
+      }else {
+        this.card = {};
+      }
+    },
+    selectCardDiv(i) {
+      this.selectCard(i + 1);
+    }
   },
 };
 </script>

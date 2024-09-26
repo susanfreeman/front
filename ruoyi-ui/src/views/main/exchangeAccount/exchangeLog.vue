@@ -45,7 +45,7 @@
 import {getBaltrans} from "@/api/custom/trans";
 
   export default {
-    dicts: ['bus_bal_type', 'sys_notice_type'],
+    dicts: ['bus_bal_type'],
     data() {
       return {
         // 遮罩层

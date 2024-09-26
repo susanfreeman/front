@@ -159,7 +159,7 @@ import {getCardBin} from "@/api/custom/opencard";
       return {
         loading: false,
         cardBinList: [],
-        cardBin: null
+        cardBin: {}
       }
     },
     created() {
@@ -184,7 +184,7 @@ import {getCardBin} from "@/api/custom/opencard";
       },
       selectCardBin(index) {
         this.cardBin = this.cardBinList[index];
-        console.log(this.cardBin)
+        // console.log(this.cardBin)
       }
     }
   }

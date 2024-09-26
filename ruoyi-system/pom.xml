@@ -47,6 +47,11 @@
             <groupId>com.alibaba.fastjson2</groupId>
             <artifactId>fastjson2</artifactId>
         </dependency>
+        <!-- 阿里JSON解析器 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
 
 <!--        &lt;!&ndash;        tron start   &ndash;&gt;-->
 <!--        <dependency>-->
