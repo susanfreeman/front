@@ -7,14 +7,14 @@
     <div class="card_balance">
       <div class="card_balance_l">
         <p>Balance</p>
-        <div>17.00 USD</div>
+        <div>{{this.cardBal}} USD</div>
         <img
           src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAAXNSR0IArs4c6QAABBxJREFUWEftmGtQ1FUYh59d5bYQcb+IiLiAhHGrGSf4IHkrjEgbIqQQBxxmLIIcSmUwG0pNpFEn0ymdStRSuyBI2I0MZ4rsQ1QIcpPdADEYrrHAcmeb/9nCYUAWP4R82P30P+97znmf8zuXfeeVAeh0Oi8gC3gcsJJss/jrBb4B0mUymUqm0+m8gauA/SxCTBWqAwiRgC4AT99jmP/C50lAGuC+OQLUIwHp5giMwDACGdoNo0JGhQwpYMhvPEN3pVB71zAtbcPjY8xMZXgvthhvDwyOUdcwINqe7ma0tg/T1z+Go918nB1Mhb2pZZDrtf3iW+lhjpeH+fj47p4RbjYPifaDPoop2SZsmaZ3hOJfNHxa2EFRSbcYcGDHIhKjncT36QttvLK/AStLOeVfBRLyTIVYwKEMD6LW2ZGSWU/B5a4JgWq/D8L2/vlIi3l4fTmtHfoF/1bgj7ur2SSoO56hmNRafriq4cmVNpzMlrITWBtfyR9VWpJinEiJdyEg4pqwXznrx7kv2zl+rhVb63lsjHRgbExH/a1BPj4oJRMIf+qb9eMAH+xfwvo1djMHev9sC7sPN+HhZsqv+QGU12hZFVcpJvj582XUqAdI2KlCYS5HfSWYtZurRJ91YTbkZCuRy2UTgq2Jr6SsSssDXhZU1fWTHOdM5svuMweqqNWy8nk9gKo4mD1Hm8jJbWPFcmtyj/mw590mjpxuISTYioITvuw40MDJL9pE/wBfBXvT3AkJ1icRpRW9hCdU4+pkQsYLbqS8UU/oQ1ZcPO47cyApCfB9rIzOv0c4/443SRlqevpGOfW2kicetWXD1hpKSntI3uRMZqo72oFRdh28yScX25HyB7kcTmUrCQ+zJTnzTz671MFLm1x4LtKe0GevY6mQoy4OnqTktO/QlnSVOKSBvgrKqrUsdJG2z1+sSrnqd/q0Y3yYtYSnVt8+C5U3tMRuu8FfrcOsDrXmaKYngRHXGBrWERNhL+Y49FGzgP7x/DJ8lbdvsTTvtEA5ua1sz2ocl3XXi25sS3ClSqVlxUb9dpYVBtDYPChukXSVNb2jbH61jmr1ALGR9igXmbP32K1JWyMZjry+mNhIhwm+aYFUjQM8ElUhBpiayCi7FICDrQln8ttI29eAs4MJFV8HkravnjP57RMmtraaR8GJpcSl1dHUMkRitCNhy61Fn7zvOskv6iIhypHsdI+ZA0k9t+5Wo+0fI8hPQVriAjFYAir6qRv/pQq2Jy0g99sOCi930dw2jKWFnCA/S7ZEOwm13npPr072zkW4OOofz5JSjXgifDzNeS154d0BTan1/2g0/rkaEteokFEhQwoY8hvP0EwUmnPFhjxggyHyWfKLcoyUJUkFK5tZCnqnMJ2iYCV5dTqd8t+SXvi9Lun9A7+T7D2L0sieAAAAAElFTkSuQmCC"
         />
       </div>
 
       <div class="card_balance_r">
-        *** 3281
+        {{cardVal.cardNo}}
         <img
           src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAPFJREFUOE/l00ELAUEUB/D/+xbU+hx8iVVakfakbR1IUXwAuW1KJOVir5s7x5X1UQgnTib2sKMhsi17mOvO9c37zeu9N8TYvRAEwZSIUpA7R4DqdL3ejgBkkffTBwFxuULCWUmCXNfF5XKGphUjrfN9H5PJGKVSGYqSCcUjPWo2G7DtOYbDEUyz9rksEF2vYLVawnEWUNV8PMQYg6YVsN16H+wb6fX66HS6kWp/Tu0bs6wB1mv3Wck/RKh/x//GPG/zfD0OiYVEUGCGUUU2m0Or1Y7d2yQtpOwHFj3aAVBkgVce3wtIBTADkJbBOOcnIjIfQwCcTYE0ey4AAAAASUVORK5CYII="
         />
@@ -31,7 +31,7 @@
           <div class="recharge">
             <div class="inp">
               <el-input
-                v-model="input"
+                v-model="reChargeForm.amount"
                 placeholder="请输入金额"
                 class="coin-input"
               >
@@ -42,66 +42,68 @@
             </div>
 
             <div class="balance" style="">
-              <p>可用 <label>5.75 USD</label></p>
-              <p class="max">限额 (20.00 USD ~ 500.00 USD)</p>
+              <p>可用 <label>{{usdBal}} USD</label></p>
+              <p class="max">限额 ({{rechargeLimit.cardRechargeMin}} USD ~ {{rechargeLimit.cardRechargeMax}} USD)</p>
             </div>
 
-            <el-button type="primary">确认</el-button>
+            <el-button type="primary" :disabled="isUsed" @click="handleCharge">确认</el-button>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="提现" name="second" class="exchange">
-          <div class="recharge">
-            <div class="inp">
-              <el-input
-                v-model="withdrawalValue"
-                placeholder="请输入金额"
-                class="coin-input"
-              >
-                <el-button type="text" slot="suffix"> 全部 </el-button>
-                <el-button type="text" slot="suffix" class="text-button">
-                  USD
-                </el-button>
-              </el-input>
-            </div>
+<!--        <el-tab-pane label="提现" name="second" class="exchange">-->
+<!--          <div class="recharge">-->
+<!--            <div class="inp">-->
+<!--              <el-input-->
+<!--                v-model="withdrawalValue"-->
+<!--                placeholder="请输入金额"-->
+<!--                class="coin-input"-->
+<!--              >-->
+<!--                <el-button type="text" slot="suffix"> 全部 </el-button>-->
+<!--                <el-button type="text" slot="suffix" class="text-button">-->
+<!--                  USD-->
+<!--                </el-button>-->
+<!--              </el-input>-->
+<!--            </div>-->
 
-            <div class="balance" style="">
-              <p>卡余额 </p>
-              <p class="max">0.00 USD</p>
-            </div>
+<!--            <div class="balance" style="">-->
+<!--              <p>卡余额 </p>-->
+<!--              <p class="max">0.00 USD</p>-->
+<!--            </div>-->
 
-            <el-button type="primary">确认</el-button>
-          </div>
-        </el-tab-pane>
+<!--            <el-button type="primary">确认</el-button>-->
+<!--          </div>-->
+<!--        </el-tab-pane>-->
       </el-tabs>
     </div>
 
     <div class="detail">
       <p class="title">明细</p>
-      <p class="total_money">
-        <label style="">充值总金额</label>
-        <label style="display: none">提现总金额</label>
-        <span>$ 20.00</span>
-      </p>
+<!--      <p class="total_money">-->
+<!--        <label style="">充值总金额</label>-->
+<!--        <label style="display: none">提现总金额</label>-->
+<!--        <span>$ 20.00</span>-->
+<!--      </p>-->
 
       <ul class="detail_b">
-        <li>
+        <li v-for="(item,index) in transList" :key="index">
           <p class="info_t">
             <span>卡片充值</span>
             <!---->
-            <label class="success">已完成</label>
+            <label class="success">
+                  <dict-tag :options="dict.type.bus_trans_status" :value="item.transStatus"/>
+            </label>
           </p>
           <ul class="info_b">
             <li>
               <label>金额</label>
-              <span>20.00 USD</span>
+              <span>{{item.transAmt}} USD</span>
             </li>
             <li>
               <label>手续费</label>
-              <span>1.00 USD</span>
+              <span>{{item.transFee}} USD</span>
             </li>
             <li>
               <label>时间</label>
-              <span>08/20 14:29</span>
+              <span>{{item.transTime}}</span>
             </li>
           </ul>
         </li>
@@ -111,16 +113,101 @@
 </template>
 
 <script>
+import {getCardInfo,queryBalance,cardRecharge} from "@/api/custom/opencard";
+import {getBalance} from "@/api/custom/exchange";
+import {getTrans} from "@/api/custom/trans";
+
   export default {
+    dicts: ['bus_trans_status'],
+    props: ['card'],
     data() {
       return {
         activeName: 'first',
         input: '',
-        withdrawalValue: ''
+        withdrawalValue: '',
+        cardVal: {},
+        isUsed: false,
+        // usdtBal: 0,
+        // eurBal: 0,
+        // eur2UsdBal: 0,
+        // totalAmount: 0,
+        usdBal: 0,
+        cardBal: 0,
+        rechargeLimit: {},
+        reChargeForm: {
+          amount: 0,
+          uocId: null
+        },
+        transForm: {
+          transType: 'R',
+          uocId: '0'
+        },
+        transList: []
       }
     },
-
+    created() {
+      this.getBal();
+    },
+    mounted () {
+      this.cardVal = this.$route.params.card
+      this.reChargeForm.uocId = this.cardVal.uocId;
+      this.transForm.uocId = this.cardVal.uocId;
+      this.getCardLimitMethod();
+      this.getCardBal();
+      this.getRechargeTrans();
+      console.log(this.cardVal);
+    },
     methods: {
+      getCardLimitMethod() {
+        this.loading = true;
+        console.log(this.cardVal);
+        getCardInfo(this.cardVal.uocId).then(response => {
+          this.rechargeLimit = response.data;
+          this.loading = false;
+        });
+      },
+
+      getBal() {
+        getBalance().then(res => {
+          if (res.code == 200) {
+            this.usdBal = res.data.balanceUsd;
+            // this.usdtBal = res.data.balanceUsdt;
+            // this.eurBal = res.data.balanceEur;
+            // this.changeAmtForm.sourceAmount = res.data.balanceEur;
+          }
+        });
+      },
+
+      getCardBal() {
+        queryBalance(this.cardVal.uocId).then(res => {
+          if (res.code == 200) {
+            this.cardBal = res.data.balance;
+          }
+        });
+      },
+
+      handleCharge() {
+        if (this.reChargeForm.amount < this.rechargeLimit.cardRechargeMin
+          || this.reChargeForm.amount > this.rechargeLimit.cardRechargeMax) {
+          this.$message("充值金额不在限额范围内，请检查！");
+          return;
+        }
+        this.isUsed = true;
+        cardRecharge(this.reChargeForm).then(res => {
+          if (res.code == 200) {
+            this.$message("处理中，请稍后查询！")
+          }
+        });
+      },
+
+      getRechargeTrans() {
+        getTrans(this.transForm).then(res => {
+          if (res.code == 200) {
+            this.transList = res.rows;
+          }
+        });
+      },
+
       goBack() {
         this.$router.push('account')
       },

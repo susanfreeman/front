@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-// 查询余额
+// 查询余额变动列表
 export function getBaltrans(query) {
   return request({
     url: '/baltrans/list',

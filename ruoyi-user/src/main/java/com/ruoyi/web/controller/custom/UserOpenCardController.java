@@ -113,6 +113,7 @@ public class UserOpenCardController extends BaseController {
         retMap.put("openDt", tblUserOpenCard.getTransTime());
         retMap.put("uocId", tblUserOpenCard.getUocId());
         retMap.put("cardRechargeMin", cardBinInfo.getCardRechargeMin());
+        retMap.put("cardRechargeMax", cardBinInfo.getCardMonthLimit());
         retMap.put("cardRechargeFee", cardBinInfo.getCardRechargeFee());
         return AjaxResult.success(retMap);
     }
@@ -278,7 +279,7 @@ public class UserOpenCardController extends BaseController {
             IOpenCardService openCardService = SpringUtils.getBean(tblChannelInfo.getCiAopName());
             openCardService.queryCardInfoStatusAndBalance(tblUserOpenCard, tblChannelInfo, Constants.QUEYR_STATUS.BALANCE);
             MaskUtils.maskFields(tblUserOpenCard);
-            return success(String.format("%s:该卡当前余额为：%s",tblUserOpenCard.getCardNo(),tblUserOpenCard.getBalance()));
+            return success(tblUserOpenCard);
         } catch (Exception e) {
             return error(String.format("%s:余额查询失败，请稍后重试!", tblUserOpenCard.getCardHead()));
         }

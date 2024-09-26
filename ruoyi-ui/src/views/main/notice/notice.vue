@@ -70,7 +70,7 @@
         });
       },
         toDetail(notice) {
-          console.log(notice);
+          // console.log(notice);
             this.$router.push({name:"notice-detail",params: {
                 notice: notice
           }}
