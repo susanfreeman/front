@@ -170,6 +170,10 @@ export default {
   height: 38px;
   float: right;
 
+.login-code-img {
+  height: 36px;
+  float: right;
+}
 img {
   cursor: pointer;
   vertical-align: middle;
