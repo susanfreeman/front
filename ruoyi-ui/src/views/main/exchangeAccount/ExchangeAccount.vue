@@ -83,11 +83,13 @@
                     src="../../../assets/newlogo-1.png"
                     alt=""
                     class="coin_img"
+                    @click="openPayment('支付')"
                   />
                   <img
                     src="../../../assets/down.png"
                     alt=""
                     class="pay_arrow_bottom"
+                    @click="openPayment('支付')"
                   />
                   <input type="text" placeholder="0.00" class="num" />
                 </div>
@@ -106,11 +108,13 @@
                     src="../../../assets/newlogo-2.png"
                     alt=""
                     class="coin_img"
+                    @click="openPayment('得到')"
                   />
                   <img
                     src="../../../assets/down.png"
                     alt=""
                     class="pay_arrow_bottom"
+                    @click="openPayment('得到')"
                   />
                   <input type="text" placeholder="0.00" class="num" />
                 </div>
@@ -235,6 +239,28 @@
         >
       </span>
     </el-dialog>
+
+    <el-dialog
+      :title="payTitle"
+      :visible.sync="paymentVisible"
+      :width="isMobile ? '90%' : '30%'"
+      center
+    >
+      <ul class="list list2">
+        <li
+          v-for="(item, index) in payList"
+          :key="index"
+          @click="handleSelectPay(item)"
+        >
+          <div class="list_l">
+            <img :src="item.img" alt="" class="icon opacity2" />
+            <span>
+              <span class="opacity2">{{ item.name }}</span>
+            </span>
+          </div>
+        </li>
+      </ul>
+    </el-dialog>
   </div>
 </template>
 
@@ -246,7 +272,7 @@
   export default {
     data() {
       return {
-        activeName: 'first',
+        activeName: "first",
         visible: false,
         current: 1,
         centerDialogVisible: false,
@@ -258,9 +284,26 @@
         changeAmtForm: {
           sourceCurr: "EUR",
           targetCurr: "USD",
-          sourceAmount: 0
-        }
-      }
+          sourceAmount: 0,
+        },
+
+        paymentVisible: false,
+        payTitle: "",
+        payList: [
+          {
+            img: "../../../assets/newlogo-1.png",
+            name: "USDT",
+          },
+          {
+            img: "../../../assets/newlogo-2.png",
+            name: "USD",
+          },
+          {
+            img: "../../../assets/newlogo-3.png",
+            name: "GBP",
+          },
+        ],
+      };
     },
     created() {
       this.getBal();
@@ -323,7 +366,12 @@
 
       gotoexchangeLog() {
         this.$router.push('/home/exchange-account/exchangeLog')
-      }
+      },
+      openPayment(type) {
+        this.paymentVisible = true;
+        this.payTitle = type;
+      },
+      handleSelectPay() {},
     }
   }
 </script>

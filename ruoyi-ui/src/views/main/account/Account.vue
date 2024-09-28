@@ -439,6 +439,7 @@ export default {
     .account_l {
       width: 407px;
       padding: 10px 32px;
+      overflow-y: scroll;
     }
     .account-carousel {
       display: none;
@@ -618,6 +619,19 @@ export default {
           }
         }
       }
+    }
+  }
+}
+</style>
+
+<style lang="less">
+.account-carousel {
+  .el-carousel__indicators--horizontal {
+    width: 100%;
+    text-align: center;
+    .el-carousel__button {
+      width: 6px;
+      height: 4px;
     }
   }
 }
