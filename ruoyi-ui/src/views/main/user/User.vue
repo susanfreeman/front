@@ -104,6 +104,7 @@
 <script>
 
 import { getUserProfile } from "@/api/system/user";
+import {logout} from "@/api/login";
 
   export default {
     name: "Profile",
@@ -157,7 +158,8 @@ import { getUserProfile } from "@/api/system/user";
           type: 'warning'
         })
           .then(() => {
-            this.$router.push('/login')
+            logout();
+            //
           })
           .catch(() => {
             //   this.$message({

@@ -91,11 +91,12 @@
                     class="pay_arrow_bottom"
                     @click="openPayment('支付')"
                   />
-                  <input type="text" placeholder="0.00" class="num" />
+<!--                  <el-input v-model="getChangeAmtForm.sourceCurr" placeholder="0.00" @change="getTaExchange"  class="num" ></el-input>-->
+                  <input v-model="getChangeAmtForm.sourceAmount" type="text" placeholder="0.00"  @change="getTaExchange" class="num" />
                 </div>
-                <img src="../../../assets/max.png" alt="" class="coin_r" />
+                <img src="../../../assets/max.png" alt="" class="coin_r" @click="handleMax"/>
               </div>
-              <p class="balance">余额(0.00)</p>
+              <p class="balance">余额({{payExchargeBal}})</p>
 
               <div class="line">
                 <img @click="exchangeEvent" src="../../../assets/change.png" alt="" />
@@ -116,12 +117,12 @@
                     class="pay_arrow_bottom"
                     @click="openPayment('得到')"
                   />
-                  <input type="text" placeholder="0.00" class="num" />
+                  <input type="text" placeholder="0.00" v-model="getRechargeTargetAmount" class="num" />
                 </div>
                 <!-- <img src="../../../assets/max.png" alt="" class="coin_r" /> -->
               </div>
 
-              <p class="balance">余额(0.00)</p>
+              <p class="balance">余额({{getExchargeBal}})</p>
               <p class="exchange">1 USDT ≈ 1 USD</p>
             </div>
             <div class="button">
@@ -234,7 +235,7 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="centerDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="centerDialogVisible = false"
+        <el-button type="primary" @click="handleExchange"
           >确 定</el-button
         >
       </span>
@@ -266,6 +267,7 @@
 
 <script>
 import {
+  change,
   getBalance,
   getRechargeAddr,
   getRechargeList,
@@ -291,6 +293,12 @@ export default {
         sourceAmount: 0,
       },
 
+      getChangeAmtForm: {
+        sourceCurr: "EUR",
+        targetCurr: "USD",
+        sourceAmount: '',
+      },
+
       paymentVisible: false,
       payTitle: "",
       payList: [
@@ -303,8 +311,8 @@ export default {
           name: "USD",
         },
         {
-          img: require("../../../assets/newlogo-3.png"),
-          name: "GBP",
+          img: require("../../../assets/newlogo-4.png"),
+          name: "EUR",
         },
       ],
       payObj: {
@@ -312,9 +320,12 @@ export default {
         name: "USDT",
       },
       haveObj: {
-        img: require("../../../assets/newlogo-2.png"),
-        name: "USD",
+        img: require("../../../assets/newlogo-4.png"),
+        name: "EUR",
       },
+      getRechargeTargetAmount: 0,
+      payExchargeBal: 0,
+      getExchargeBal: 0
     };
   },
   created() {
@@ -337,10 +348,25 @@ export default {
     },
     getTa() {
       getTargetAmount(this.changeAmtForm).then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.code == 200) {
           this.eur2UsdBal = res.data;
           this.calculamount();
+        }
+      });
+    },
+    handleMax() {
+      this.getChangeAmtForm.sourceAmount = this.payExchargeBal;
+      this.getTaExchange();
+    },
+    getTaExchange() {
+      this.getChangeAmtForm.sourceCurr = this.payObj.name;
+      this.getChangeAmtForm.targetCurr = this.haveObj.name;
+      console.log(this.getChangeAmtForm);
+      getTargetAmount(this.getChangeAmtForm).then((res) => {
+        console.log(res);
+        if (res.code == 200) {
+          this.getRechargeTargetAmount = res.data;
         }
       });
     },
@@ -348,7 +374,8 @@ export default {
       this.totalAmount = this.usdtBal + this.usdBal + this.eur2UsdBal;
     },
     handleClick(tab, event) {
-      console.log(tab, event);
+      this.changeCurr("USDT", "pay");
+      this.changeCurr("EUR", "have");
     },
 
     swicthExchange() {
@@ -388,20 +415,63 @@ export default {
       switch (this.payTitle) {
         case "支付":
           this.payObj = item;
+          this.changeCurr(this.payObj.name,"pay")
           break;
 
         case "得到":
           this.haveObj = item;
+          this.changeCurr(this.haveObj.name,"have")
           break;
       }
-
       this.paymentVisible = false
+    },
+    changeCurr(curr,filed) {
+      switch (curr){
+        case "EUR":
+          if (filed == "pay") {
+            this.payExchargeBal = this.eurBal;
+          }
+          else {
+            this.getExchargeBal = this.eurBal;
+          }
+          break;
+        case "USDT":
+          if (filed == "pay") {
+            this.payExchargeBal = this.usdtBal;
+          }
+          else {
+            this.getExchargeBal = this.usdtBal;
+          }
+          break;
+        case "USD":
+          if (filed == "pay") {
+            this.payExchargeBal = this.usdBal;
+          }
+          else {
+            this.getExchargeBal = this.usdBal;
+          }
+          break;
+      }
     },
     //互换
     exchangeEvent() {
       let savePay = JSON.parse(JSON.stringify(this.payObj))
       this.payObj = JSON.parse(JSON.stringify(this.haveObj))
       this.haveObj = savePay
+      this.changeCurr(this.payObj.name,"pay")
+      this.changeCurr(this.haveObj.name, "have");
+      // this.handleMax();
+      this.getTaExchange();
+    },
+    handleExchange() {
+      this.centerDialogVisible = false;
+      if (this.payExchargeBal < this.getChangeAmtForm.sourceAmount) {
+        this.$message("余额不足，请先充值！");
+        return;
+      }
+      change(this.getChangeAmtForm).then((res) => {
+        this.$message(res.msg);
+      });
     }
   },
 };

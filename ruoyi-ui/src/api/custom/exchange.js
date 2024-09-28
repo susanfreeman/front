@@ -32,3 +32,12 @@ export function getTargetAmount(data) {
     data: data
   })
 }
+
+// 查询币种兑换后金额
+export function change(data) {
+  return request({
+    url: '/exchange/change',
+    method: 'post',
+    data: data
+  })
+}
