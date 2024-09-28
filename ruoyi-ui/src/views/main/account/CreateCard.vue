@@ -77,6 +77,57 @@
           <el-input v-model="form.documentNum"></el-input>
         </el-form-item>
 
+        <el-form-item label="护照图片地址:">
+          <el-input
+            v-model="form.Passport"
+            :disabled="true"
+            placeholder="选择文件"
+          >
+            <el-button slot="append" type="info" @click="openPassport">
+              选择...
+            </el-button>
+          </el-input>
+          <el-upload
+            action=""
+            :auto-upload="false"
+            :show-file-list="false"
+            :on-change="passportChange"
+            v-show="false"
+          >
+            <el-button
+              size="small"
+              type="primary"
+              id="passportButton"
+            ></el-button>
+          </el-upload>
+        </el-form-item>
+
+        <el-form-item label="手持证件照:">
+          <el-input
+            v-model="form.IDPhoto"
+            :disabled="true"
+            placeholder="选择文件"
+          >
+            <el-button slot="append" type="info" @click="openIDPhoto">
+              选择...</el-button
+            >
+          </el-input>
+
+          <el-upload
+            action=""
+            :auto-upload="false"
+            :show-file-list="false"
+            :on-change="IDPhotoChange"
+            v-show="false"
+          >
+            <el-button
+              size="small"
+              type="primary"
+              id="IDPhotoButton"
+            ></el-button>
+          </el-upload>
+        </el-form-item>
+
         <el-form-item label="生日:">
           <el-date-picker
             type="date"
@@ -112,8 +163,13 @@ export default {
         email: "",
         document: "护照",
         documentNum: "",
+        Passport: "",
+        IDPhoto: "",
         date: "",
       },
+
+      passportFile: null,
+      IDPhotoFile: null,
     };
   },
   methods: {
@@ -122,6 +178,25 @@ export default {
     },
 
     onSubmit() {},
+
+    openPassport() {
+      document.getElementById("passportButton").click();
+    },
+    //护照地址
+    passportChange(file) {
+      console.log(file);
+      this.form.Passport = file.name;
+      this.passportFile = file.raw;
+    },
+
+    openIDPhoto() {
+      document.getElementById("IDPhotoButton").click();
+    },
+    //手持证件照
+    IDPhotoChange(file) {
+      this.form.IDPhoto = file.name;
+      this.IDPhotoFile = file.raw;
+    },
   },
 };
 </script>
@@ -144,5 +219,10 @@ export default {
   .kyc-form {
     background: #fff;
   }
+}
+</style>
+<style lang="less">
+.el-input.is-disabled .el-input__inner {
+  color: #000;
 }
 </style>

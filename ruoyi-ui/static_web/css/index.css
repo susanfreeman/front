@@ -319,7 +319,7 @@
 	height: 540px;
 	overflow: hidden;
 	background-color: #FCD535;
-    margin: 100px auto;
+    /* margin: 100px auto; */
 }
 
 .carousel-inner {
@@ -596,7 +596,8 @@
 		margin-top: 110px;
 	}
 	.introduce1_outer, .introduce1 {
-		width: 1080px;
+		/* width: 1080px; */
+    width: 100%;
 		height: auto;
 		/* margin: 0px auto 60px; */
 		padding: 0;
@@ -677,8 +678,8 @@
 		flex-direction: column-reverse;
 	}
 	.faq {
-		/* width: 100%; */
-		width: 1080px;
+		width: 100% !important;
+		/* width: 1080px; */
 		padding: 32px 16px 0;
 	}
 	.cooperation {
@@ -706,6 +707,8 @@
 		width: 100%;
 		display: flex;
 		justify-content: center;
+    flex-wrap: wrap;
+    height: 100%;
 	}
 	.ios_box {
 		width: 100%;
