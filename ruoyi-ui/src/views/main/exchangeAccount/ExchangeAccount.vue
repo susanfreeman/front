@@ -239,7 +239,7 @@
 </template>
 
 <script>
-  import {getBalance,getRechargeAddr,getRechargeList,getTargetAmount} from "@/api/custom/exchange";
+  import {getBalance,getTargetAmount} from "@/api/custom/exchange";
 
   import { mapGetters } from 'vuex'
 

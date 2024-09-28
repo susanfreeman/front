@@ -1,6 +1,6 @@
 <template>
   <div class="pc">
-    <span class="pc_back" @click="goBack"> 
+    <span class="pc_back" @click="goBack">
       <i class="el-icon-back"></i>
       权益
     </span>
@@ -10,7 +10,7 @@
 
       <p class="high">订阅卡<span>预付卡</span></p>
       <div class="visa_info">
-        <p class="num">4767 1500 6751 3281</p>
+        <p class="num">{{cardVal.cardNo}}</p>
       </div>
 
       <img src="../../../assets/banklogo-9.png" alt="" class="master_logo" />
@@ -18,78 +18,121 @@
 
     <div class="programme">
       <div class="rights">
-        <div class="rights_content">
-          <img src="../../../assets/icon-11.png" alt="" />
-          <div>
-            <p class="word1">月费</p>
-            <p class="word2">1.00 USD</p>
-          </div>
-        </div>
+<!--        <div class="rights_content">-->
+<!--          <img src="../../../assets/icon-11.png" alt="" />-->
+<!--          <div>-->
+<!--            <p class="word1">月费</p>-->
+<!--            <p class="word2">1.00 USD</p>-->
+<!--          </div>-->
+<!--        </div>-->
 
-        <div class="rights_content">
-          <img src="../../../assets/icon-12.png" alt="" />
-          <div>
-            <p class="word1">充值上限</p>
-            <p class="word2">500.00 USD</p>
-          </div>
-        </div>
+<!--        <div class="rights_content">-->
+<!--          <img src="../../../assets/icon-12.png" alt="" />-->
+<!--          <div>-->
+<!--            <p class="word1">充值上限</p>-->
+<!--            <p class="word2">500.00 USD</p>-->
+<!--          </div>-->
+<!--        </div>-->
 
-        <div class="rights_content">
-          <img src="../../../assets/icon-13.png" alt="" />
-          <div>
-            <p class="word1">卡片充值费用</p>
-            <p class="word2">2.50%</p>
-            <p class="word2">(Min 1USD)</p>
-          </div>
-        </div>
+<!--        <div class="rights_content">-->
+<!--          <img src="../../../assets/icon-13.png" alt="" />-->
+<!--          <div>-->
+<!--            <p class="word1">卡片充值费用</p>-->
+<!--            <p class="word2">2.50%</p>-->
+<!--            <p class="word2">(Min 1USD)</p>-->
+<!--          </div>-->
+<!--        </div>-->
 
-        <div class="rights_content">
-          <img src="../../../assets/icon-14.png" alt="" />
-          <div>
-            <p class="word1">消费手续费</p>
-            <p class="word2">0.5USD/笔（消费<1.01USD收取）</p>
-          </div>
-        </div>
+<!--        <div class="rights_content">-->
+<!--          <img src="../../../assets/icon-14.png" alt="" />-->
+<!--          <div>-->
+<!--            <p class="word1">消费手续费</p>-->
+<!--            <p class="word2">0.5USD/笔（消费<1.01USD收取）</p>-->
+<!--          </div>-->
+<!--        </div>-->
       </div>
     </div>
 
-    <div class="know">
-      <p>用卡须知</p>
-      <div>
-        1、因资金不足导致授权失败累计达到10次，卡片将被冻结；
-        <br />
-        2、卡片的总授权失败率超过20%，卡片将被冻结；
-        <br />
-        3、卡片需支付0.5美元的每笔授权失败罚金方能解冻；
-        <br />
-        4、单笔消费≤1美元的交易，将收取每笔0.5美元的手续费;
-        <br />
-        5、申请无需KYC，卡片资金上限为500USD。
-      </div>
+
+    <div class="know" >
+      <ul class="tips">
+        <li class="tip" v-html="cardBin.remark"></li>
+      </ul>
+
+      <!--      <p>用卡须知</p>-->
+<!--      <div>-->
+<!--        1、因资金不足导致授权失败累计达到10次，卡片将被冻结；-->
+<!--        <br />-->
+<!--        2、卡片的总授权失败率超过20%，卡片将被冻结；-->
+<!--        <br />-->
+<!--        3、卡片需支付0.5美元的每笔授权失败罚金方能解冻；-->
+<!--        <br />-->
+<!--        4、单笔消费≤1美元的交易，将收取每笔0.5美元的手续费;-->
+<!--        <br />-->
+<!--        5、申请无需KYC，卡片资金上限为500USD。-->
+<!--      </div>-->
     </div>
 
     <div class="jump">
-      <div>
+      <div v-show="!kycFlag" >
         <p class="tips">完成身份认证,免费升级为 <span>高级卡</span></p>
-        <el-button type="primary" class="button0" round>去认证</el-button>
+        <el-button type="primary" class="button0" @click="goKyc" >去认证</el-button>
       </div>
-      <div class="cancellation">注销卡片</div>
+      <div class="cancellation" @click="cancelCard">注销卡片</div>
     </div>
   </div>
 </template>
 
 <script>
+import {getCardBinByCbid,cancel} from "@/api/custom/opencard";
+import {getBalance} from "@/api/custom/exchange";
+
   export default {
+    props: ['card'],
     data() {
         return {
-
+          loading: false,
+          cardVal: {},
+          cardBin: {},
+          kycFlag: false
         }
     },
-
+    mounted() {
+      this.cardVal = this.$route.params.card;
+      this.getCardBinByid();
+      this.getBal()
+    },
     methods: {
+      getBal() {
+        getBalance().then(res => {
+          if (res.code == 200) {
+            this.kycFlag = res.data.kycFlag=='Y';
+          }
+        });
+      },
         goBack() {
             this.$router.push("account")
-        }
+        },
+
+        goKyc() {
+            this.$router.push("create-card")
+        },
+
+      cancelCard() {
+        this.loading = true;
+        cancel(this.cardVal.uocId).then(response => {
+          this.$message(response.msg);
+        });
+      },
+
+      getCardBinByid() {
+        this.loading = true;
+        getCardBinByCbid(this.cardVal.cbId).then(response => {
+          this.cardBin = response.data;
+          this.loading = false;
+        });
+      }
+
     }
   }
 </script>

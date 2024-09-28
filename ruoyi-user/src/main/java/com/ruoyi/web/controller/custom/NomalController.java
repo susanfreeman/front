@@ -92,6 +92,16 @@ public class NomalController {
         return error();
     }
 
+    @GetMapping("/getCardBinByCbid/{cbId}")
+    public AjaxResult getCardBinByCbid(@PathVariable Long cbId)
+    {
+        TblCardBinInfo tblCardBinInfo = cardBinInfoService.selectTblCardBinInfoByCbId(cbId);
+        if (null != tblCardBinInfo) {
+            return success(tblCardBinInfo);
+        }
+        return error();
+    }
+
     /**
      * KYC
      */

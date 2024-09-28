@@ -155,12 +155,12 @@ import {getTrans} from "@/api/custom/trans";
       this.getCardLimitMethod();
       this.getCardBal();
       this.getRechargeTrans();
-      console.log(this.cardVal);
+      // console.log(this.cardVal);
     },
     methods: {
       getCardLimitMethod() {
         this.loading = true;
-        console.log(this.cardVal);
+        // console.log(this.cardVal);
         getCardInfo(this.cardVal.uocId).then(response => {
           this.rechargeLimit = response.data;
           this.loading = false;
@@ -171,9 +171,6 @@ import {getTrans} from "@/api/custom/trans";
         getBalance().then(res => {
           if (res.code == 200) {
             this.usdBal = res.data.balanceUsd;
-            // this.usdtBal = res.data.balanceUsdt;
-            // this.eurBal = res.data.balanceEur;
-            // this.changeAmtForm.sourceAmount = res.data.balanceEur;
           }
         });
       },

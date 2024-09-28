@@ -153,17 +153,20 @@
 
 <script>
 import {getCardBin} from "@/api/custom/opencard";
+import {getBalance} from "@/api/custom/exchange";
 
   export default {
     data() {
       return {
         loading: false,
         cardBinList: [],
-        cardBin: {}
+        cardBin: {},
+        kycFlag: false
       }
     },
     created() {
       this.getCardBinMethod();
+      this.getBal();
     },
     methods: {
       getCardBinMethod() {
@@ -174,13 +177,25 @@ import {getCardBin} from "@/api/custom/opencard";
           this.selectCardBin(0);
         });
       },
+      getBal() {
+        getBalance().then(res => {
+          if (res.code == 200) {
+            this.kycFlag = res.data.kycFlag=='Y';
+          }
+        });
+      },
       goBack() {
         this.$router.push("/home/account/account")
       },
 
       //立即开卡
       handleActivateCard() {
-        this.$router.push("/home/account/create-card")
+        if (this.cardBin.needKyc == 'Y' && !this.kycFlag) {
+          this.$router.push("create-card")
+        }else {
+          this.$router.push("create-card-simple")
+          // 姓名即可
+        }
       },
       selectCardBin(index) {
         this.cardBin = this.cardBinList[index];

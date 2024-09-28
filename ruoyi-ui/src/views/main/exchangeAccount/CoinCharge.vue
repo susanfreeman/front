@@ -96,7 +96,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import QRCode from 'qrcode'
-  import {getBalance,getRechargeAddr,getRechargeList,getTargetAmount} from "@/api/custom/exchange";
+  import {getRechargeAddr,getRechargeList} from "@/api/custom/exchange";
 
   export default {
     data() {

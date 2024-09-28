@@ -133,10 +133,10 @@
             <p>充值</p>
           </div>
 
-          <div @click="gotoCoinTransfer">
-            <img src="../../../assets/icon-2.png" alt="" />
-            <p>提现</p>
-          </div>
+<!--          <div @click="gotoCoinTransfer">-->
+<!--            <img src="../../../assets/icon-2.png" alt="" />-->
+<!--            <p>提现</p>-->
+<!--          </div>-->
 
           <div @click="visible = true">
             <img src="../../../assets/icon-3.png" alt="" />
@@ -258,7 +258,15 @@ export default {
     },
 
     goToEquity() {
-      this.$router.push("Equity");
+      // this.$router.push("");
+      if (!this.isSelectCard) {
+        this.$message('请先选择要充值的卡片');
+        return;
+      }
+      this.$router.push({name:"Equity",params: {
+          card: this.card
+        }}
+      );
     },
 
     //获取验证码

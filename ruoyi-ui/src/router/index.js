@@ -143,6 +143,12 @@ export const constantRoutes = [
             component: () => import("@/views/main/account/CreateCard.vue"),
             meta: "kyc验证"
           },
+          {
+            path: "create-card-simple",
+            name: "create-card-simple",
+            component: () => import("@/views/main/account/CreateCardSimple.vue"),
+            meta: "开卡"
+          },
 
           {
             path: "Equity",

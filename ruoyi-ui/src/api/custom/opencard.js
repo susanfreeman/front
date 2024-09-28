@@ -8,7 +8,7 @@ export function getCardBin() {
   })
 }
 
-// 查询币种兑换后金额
+// kyc验证
 export function kyc(data) {
   return request({
     url: '/kyc',
@@ -50,3 +50,20 @@ export function queryBalance(uocId) {
     method: 'get'
   })
 }
+
+// 销卡
+export function cancel(uocId) {
+  return request({
+    url: '/usercard/cancel/'+uocId,
+    method: 'get'
+  })
+}
+
+// 查询可用卡宾
+export function getCardBinByCbid(cbId) {
+  return request({
+    url: '/getCardBinByCbid/'+cbId,
+    method: 'get'
+  })
+}
+
