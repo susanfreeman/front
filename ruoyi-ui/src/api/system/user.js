@@ -27,23 +27,6 @@ export function addUser(data) {
   })
 }
 
-// 修改用户
-export function updateUser(data) {
-  return request({
-    url: '/system/user',
-    method: 'put',
-    data: data
-  })
-}
-
-// 删除用户
-export function delUser(userId) {
-  return request({
-    url: '/system/user/' + userId,
-    method: 'delete'
-  })
-}
-
 // 用户密码重置
 export function resetUserPwd(userId, password) {
   const data = {
@@ -75,6 +58,23 @@ export function getUserProfile() {
   return request({
     url: '/system/user/profile',
     method: 'get'
+  })
+}
+
+// 获取2fa
+export function getGoogle2fa() {
+  return request({
+    url: '/system/user/profile/getGoogle2fa',
+    method: 'get'
+  })
+}
+
+// 获取2fa
+export function reset2fa(data) {
+  return request({
+    url: '/system/user/profile/reset2fa',
+    method: 'post',
+    data: data
   })
 }
 
@@ -110,27 +110,4 @@ export function uploadAvatar(data) {
   })
 }
 
-// 查询授权角色
-export function getAuthRole(userId) {
-  return request({
-    url: '/system/user/authRole/' + userId,
-    method: 'get'
-  })
-}
 
-// 保存授权角色
-export function updateAuthRole(data) {
-  return request({
-    url: '/system/user/authRole',
-    method: 'put',
-    params: data
-  })
-}
-
-// 查询部门下拉树结构
-export function deptTreeSelect() {
-  return request({
-    url: '/system/user/deptTree',
-    method: 'get'
-  })
-}

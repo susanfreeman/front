@@ -58,3 +58,11 @@ export function getCodeImg() {
     timeout: 20000
   })
 }
+
+// 获取邮箱
+export function captchaEmail() {
+  return request({
+    url: '/captchaEmail',
+    method: 'get'
+  })
+}

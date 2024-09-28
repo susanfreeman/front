@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Orbiter验证码</title>
+    </head>
+    <body>
+        <div>
+            <div style="display: flex;align-items: center">
+                <div style="display: block;margin-left: 10px">
+                    <p >您好,${emailto}</p>
+                </div>
+            </div>
+            <p><strong>您正在Orbiter Wallet的验证码是：</strong></p>
+            <p>${code}</p>
+            <p>此邮件由系统自动发出,请勿直接回复,请勿泄露，保证安全。</p>
+        </div>
+    </body>
+</html>

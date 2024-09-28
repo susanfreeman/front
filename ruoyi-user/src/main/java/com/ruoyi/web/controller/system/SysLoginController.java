@@ -31,8 +31,6 @@ public class SysLoginController
     @Autowired
     private ISysMenuService menuService;
 
-    @Autowired
-    private SysPermissionService permissionService;
 
     /**
      * 登录方法

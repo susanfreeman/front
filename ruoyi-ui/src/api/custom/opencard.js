@@ -35,6 +35,15 @@ export function cardRecharge(data) {
   })
 }
 
+// 卡充值
+export function cardInfoBy2fa(data) {
+  return request({
+    url: '/usercard/cardInfoBy2fa',
+    method: 'post',
+    data: data
+  })
+}
+
 // 查询卡充值界面
 export function getCardInfo(uocId) {
   return request({

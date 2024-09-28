@@ -2,6 +2,7 @@ package com.ruoyi.web.controller.custom;
 
 import cn.hutool.core.date.DateTime;
 import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -13,6 +14,7 @@ import com.ruoyi.common.enums.CardOperatorStatus;
 import com.ruoyi.common.enums.CardOperatorType;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.SendGroupMsgTg;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.mask.MaskUtils;
 import com.ruoyi.common.utils.mfa.GeogleAuthUtil;
 import com.ruoyi.common.utils.spring.SpringUtils;
@@ -36,6 +38,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -79,7 +82,7 @@ public class UserOpenCardController extends BaseController {
     private ITblBalanceTransService tblBalanceTransService;
 
     @Autowired
-    private RedisCache redisService;
+    private RedisCache redisCache;
 
     @Autowired
     private ITblOperatorCardService operatorCardService;
@@ -122,16 +125,26 @@ public class UserOpenCardController extends BaseController {
     /**
      * 验证2FA
      */
-    @Log(title = "查看信息", businessType = BusinessType.UPDATE)
+//    @Log(title = "查看信息", businessType = BusinessType.UPDATE)
     @PostMapping("/cardInfoBy2fa")
     @ResponseBody
-    public AjaxResult verify2fa(@RequestBody TblUserOpenCard tblUserOpenCard) {
-        TblUserInfo userInfo = tblUserInfoService.selectTblUserInfoByUserId(getUserId());
-        Long uocId = tblUserOpenCard.getUocId();
-        Long code2fa = tblUserOpenCard.getCode2fa();
+    public AjaxResult verify2fa(@RequestBody Map paraMap) {
+        String uuid = (String) paraMap.get("uuid");
+        Long uocId = Long.parseLong(String.valueOf(paraMap.get("uocId")));
+        Long code2fa = Long.parseLong((String) paraMap.get("confirm2fa"));
+        String verifyCode = (String) paraMap.get("verifyCode");
+
+        String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + StringUtils.nvl(uuid, "");
+        String captcha = redisCache.getCacheObject(verifyKey);
+        if (!verifyCode.equals(captcha)) {
+            return error();
+        }
+        redisCache.deleteObject(verifyKey);
+
         GeogleAuthUtil ga = new GeogleAuthUtil();
+        TblUserInfo userInfo = tblUserInfoService.selectTblUserInfoByUserId(getUserId());
         if (!ga.check_code(userInfo.getCode2fa(), code2fa, System.currentTimeMillis())) {
-            return AjaxResult.error("验证失败");
+            return error();
         }
 
         if (null != uocId) {
@@ -229,39 +242,6 @@ public class UserOpenCardController extends BaseController {
     }
 
 
-//    @GetMapping("/transactionData/{uocId}")
-//    public String getTransactionData(@PathVariable("uocId") String uocId, ModelMap model) {
-//        model.addAttribute("uocId", uocId);
-//        return prefix + "/transactionData";
-//    }
-
-//    @PostMapping("/transactionData")
-//    @ResponseBody
-//    public TableDataInfo getTransactionData(@RequestParam("uocId") String uocId) {
-//        TblUserOpenCard cardinfo = tblUserOpenCardService.selectTblUserOpenCardByUocId(Long.valueOf(uocId));
-//        startPage();
-//        // 获取分页参数
-//        PageDomain pageDomain = TableSupport.buildPageRequest();
-//        Integer pageNum = pageDomain.getPageNum();
-//        Integer pageSize = pageDomain.getPageSize();
-//
-//        TblChannelInfo currChannel = (TblChannelInfo) redisService.getValueByKey(RedisKeys.REDIS_CHANNEL_NAME.PYVIO);
-//        if (currChannel == null) {
-//            TblChannelInfo tblChannelInfoQuery = new TblChannelInfo();
-//            tblChannelInfoQuery.setCiAopName("pyvio");
-//            List<TblChannelInfo> tblChannelInfos = tblChannelInfoService.selectTblChannelInfoList(tblChannelInfoQuery);
-//            if (tblChannelInfos != null && !tblChannelInfos.isEmpty()) {
-//                currChannel = tblChannelInfos.get(0);
-//                redisService.setKeyValue(RedisKeys.REDIS_CHANNEL_NAME.PYVIO, currChannel);
-//            }
-//        }
-//
-//        String beginTime = "2024-01-01 00:00:00";
-//        String endTime = DateTime.now().toString(DatePattern.NORM_DATETIME_PATTERN);
-//        AuthTransactionsGetResponse res = PyvioIssuing.authTransactionsGetRequest(currChannel, cardinfo.getCardNo(), pageNum, pageSize, beginTime, endTime);
-//        return getDataTable(res.getList());
-//    }
-
     /**
      * 查看余额
      */
@@ -325,5 +305,6 @@ public class UserOpenCardController extends BaseController {
             return error(String.format("%s:销卡异常，请稍后重试!", tblUserOpenCard.getCardHead()));
         }
     }
+
 
 }

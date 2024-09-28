@@ -2,11 +2,11 @@
   <div class="pc">
     <div class="user-info">
       <img src="../../../assets/user-me.png" alt="" class="user_img" />
-      <span>LLJJ LLL</span>
-      <p>
-        UID:DP55858892
-        <img src="../../../assets/copy.png" alt="" class="copy" />
-      </p>
+      <span>{{ user.email }}</span>
+<!--      <p>-->
+<!--        UID:DP55858892-->
+<!--        <img src="../../../assets/copy.png" alt="" class="copy" />-->
+<!--      </p>-->
       <div class="bell">
         <img src="../../../assets/bell.png" alt="" />
         <span>0</span>
@@ -102,8 +102,28 @@
 </template>
 
 <script>
+
+import { getUserProfile } from "@/api/system/user";
+
   export default {
+    name: "Profile",
+    data() {
+      return {
+        user: {},
+        userInfo: {},
+        activeTab: "userinfo"
+      };
+    },
+    created() {
+      this.getUser();
+    },
     methods: {
+      getUser() {
+        getUserProfile().then(response => {
+          this.user = response.data;
+        });
+      },
+
       gotosecurity() {
         this.$router.push('/home/user/security')
       },

@@ -29,6 +29,7 @@
             <p class="name">
               <span>{{item.firstName}} {{item.lastName}}</span>
               <span class="expiry">Expiry {{item.expire}}</span>
+              <span class="expiry">cvv {{item.cvv}}</span>
             </p>
           </div>
         </div>
@@ -80,7 +81,8 @@
               <div>
                 <p class="name">
                   <span>{{item.firstName}} {{item.lastName}}</span>
-                  <span class="expiry">Expiry {{item.expire}}</span>
+                  <span class="expiry">Expiry: {{item.expire}}</span>
+                  <span class="expiry">cvv: {{item.cvv}}</span>
                 </p>
               </div>
             </div>
@@ -138,7 +140,7 @@
 <!--            <p>提现</p>-->
 <!--          </div>-->
 
-          <div @click="visible = true">
+          <div @click="getCvv">
             <img src="../../../assets/icon-3.png" alt="" />
             <p>CVV安全码</p>
           </div>
@@ -172,12 +174,12 @@
       <el-form :model="form" ref="form" label-position="top">
         <el-form-item
           label=""
-          prop="code"
+          prop="verifyCode"
           :rules="[
             { required: true, message: '请输入验证码', trigger: 'blur' },
           ]"
         >
-          <el-input v-model="form.code" placeholder="邮箱验证码">
+          <el-input v-model="form.verifyCode" placeholder="邮箱验证码">
             <el-button
               type="text"
               slot="suffix"
@@ -191,19 +193,19 @@
 
         <el-form-item
           label=""
-          prop="code"
+          prop="confirm2fa"
           :rules="[
             { required: true, message: '请输入验证码', trigger: 'blur' },
           ]"
         >
-          <el-input v-model="form.code2" placeholder="谷歌验证码">
+          <el-input v-model="form.confirm2fa" placeholder="谷歌验证码">
             <el-button type="text" slot="suffix"> 如何获取？ </el-button>
           </el-input>
         </el-form-item>
       </el-form>
 
       <div style="text-align: center">
-        <el-button type="primary" @click="visible = false" style="width: 50%">
+        <el-button type="primary" @click="showCardInfo" style="width: 50%">
           确 认
         </el-button>
       </div>
@@ -213,7 +215,8 @@
 
 <script>
 import { mapGetters } from "vuex";
-import {userCardList} from "@/api/custom/opencard";
+import {userCardList,cardInfoBy2fa} from "@/api/custom/opencard";
+import {captchaEmail} from "@/api/login";
 
 export default {
   data() {
@@ -221,10 +224,12 @@ export default {
       loading: false,
       visible: false,
       isSelectCard: false,
-
+      index: 0,
       form: {
-        code: "",
-        code2: "",
+        verifyCode: "",
+        confirm2fa: "",
+        uocId: "",
+        uuid: ""
       },
       cardList: [],
       codeDisabled: false,
@@ -243,6 +248,13 @@ export default {
     ...mapGetters(["isMobile"]),
   },
   methods: {
+    getCvv() {
+      if (this.form.uocId == "") {
+        this.$message("请先选择要查看的卡片");
+        return;
+      }
+      this.visible = true;
+    },
     getOpenCardList() {
       this.loading = true;
       userCardList(this.queryData).then(response => {
@@ -271,6 +283,12 @@ export default {
 
     //获取验证码
     getCode() {
+      captchaEmail().then(response => {
+        this.form.uuid = response.uuid;
+        this.$message("邮件发送成功");
+      });
+
+
       this.time = 60;
       this.codeInput = this.time + "s";
       this.codeDisabled = true;
@@ -304,7 +322,9 @@ export default {
     selectCard(index) {
       if (index > 0){
         this.card = this.cardList[index-1];
+        this.form.uocId = this.card.uocId;
         this.isSelectCard = true;
+        this.index = index;
         // console.log(this.card);
       }else {
         this.card = {};
@@ -312,6 +332,16 @@ export default {
     },
     selectCardDiv(i) {
       this.selectCard(i + 1);
+    },
+    showCardInfo() {
+      this.loading = true;
+      cardInfoBy2fa(this.form).then(response => {
+        this.cardList[this.index - 1] = response.data;
+        this.card = response.data;
+        this.loading = false;
+        this.visible = false;
+        this.$message(response.msg);
+      });
     }
   },
 };

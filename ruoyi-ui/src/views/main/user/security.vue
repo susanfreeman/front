@@ -5,16 +5,16 @@
       安全中心
     </div>
 
-    <div class="level">
-      <p class="level_t">安全等级： 低</p>
-      <el-progress :percentage="50" :show-text="false"></el-progress>
-    </div>
+<!--    <div class="level">-->
+<!--      <p class="level_t">安全等级： 低</p>-->
+<!--      <el-progress :percentage="50" :show-text="false"></el-progress>-->
+<!--    </div>-->
 
     <ul class="info">
       <li>
         <span>邮箱</span>
         <div class="info_r">
-          <span>oneketes@protonmail.com</span>
+          <span>{{user.email}}</span>
           <i class="el-icon-arrow-right"></i>
         </div>
       </li>
@@ -39,10 +39,11 @@
           </el-switch>
         </div>
       </li>
-      <li @click="gotogoogle">
+      <li  @click="gotogoogle">
         <span>谷歌验证码</span>
         <div class="info_r">
-          <span class="warn"><i class="el-icon-warning"></i> 未绑定</span>
+          <span class="warn" v-show="!isBindGoogle"><i class="el-icon-warning"></i> 未绑定</span>
+          <span class="success" v-show="isBindGoogle"><i class="el-icon-success"></i> 已绑定</span>
           <i class="el-icon-arrow-right"></i>
         </div>
       </li>
@@ -58,17 +59,36 @@
         </div>
       </li>
     </ul>
-  </div>    
+  </div>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        value: false
-      }
+import {getUserProfile} from "@/api/system/user";
+
+export default {
+  name: "Profile",
+  data() {
+    return {
+      user: {},
+      activeTab: "userinfo",
+      value: false,
+      isBindGoogle: false
+    };
+  },
+  created() {
+    this.getUser();
+  },
+  methods: {
+    getUser() {
+      getUserProfile().then(response => {
+        this.user = response.data;
+        this.userInfo = response.userInfo;
+        if (this.userInfo.code2fa != '') {
+          this.isBindGoogle = true;
+        }
+      });
     },
-    methods: {
+
       handleBack() {
         this.$router.push('/home/user/me')
       },
@@ -78,7 +98,9 @@
       },
 
       gotogoogle() {
+      if(!this.isBindGoogle){
         this.$router.push('/home/user/google')
+      }
       }
     }
   }
