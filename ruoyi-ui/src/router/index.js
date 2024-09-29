@@ -326,6 +326,12 @@ export const constantRoutes = [
             component: () => import("@/views/main/user/googleAuthenticator.vue"),
             meta: "下载谷歌验证器"
           },
+          {
+            path: "edit-password",
+            name: "edit-password",
+            component: () => import("@/views/main/user/EditPassword.vue"),
+            meta: "修改登录密码"
+          },
         ],
         meta: "我的"
       },

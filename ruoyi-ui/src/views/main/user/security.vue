@@ -52,7 +52,7 @@
     <p class="title">密码管理</p>
 
     <ul class="info">
-      <li>
+      <li @click="goToEditPassword">
         <span>修改登录密码</span>
         <div class="info_r">
           <i class="el-icon-arrow-right"></i>
@@ -101,6 +101,9 @@ export default {
       if(!this.isBindGoogle){
         this.$router.push('/home/user/google')
       }
+      },
+      goToEditPassword() {
+        this.$router.push('/home/user/edit-password')
       }
     }
   }

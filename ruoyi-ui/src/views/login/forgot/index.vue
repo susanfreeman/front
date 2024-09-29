@@ -14,8 +14,8 @@
             {
               type: 'email',
               message: '请输入正确的邮箱地址',
-              trigger: ['blur', 'change']
-            }
+              trigger: ['blur', 'change'],
+            },
           ]"
         >
           <el-input
@@ -28,7 +28,7 @@
           label=""
           prop="code"
           :rules="[
-            { required: true, message: '请输入验证码', trigger: 'blur' }
+            { required: true, message: '请输入验证码', trigger: 'blur' },
           ]"
         >
           <el-input v-model="registerForm.code" placeholder="请输入验证码">
@@ -55,7 +55,7 @@
           label=""
           prop="pass"
           :rules="[
-            { required: true, message: '请输入新密码', trigger: 'blur' }
+            { required: true, message: '请输入新密码', trigger: 'blur' },
           ]"
         >
           <el-input
@@ -71,7 +71,7 @@
           label=""
           prop="rePass"
           :rules="[
-            { required: true, message: '请再次输入新密码', trigger: 'blur' }
+            { required: true, message: '请再次输入新密码', trigger: 'blur' },
           ]"
         >
           <el-input
@@ -95,7 +95,7 @@
 
     <el-dialog
       :visible.sync="visible"
-      width="30%"
+      :width="isMobile ? '90%' : '30%'"
       :show-close="false"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
@@ -112,103 +112,108 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        current: 0,
+import { mapGetters } from "vuex";
 
-        registerForm: {
-          email: '',
-          code: ''
-        },
+export default {
+  data() {
+    return {
+      current: 0,
 
-        setForm: {
-          pass: '',
-          rePass: ''
-        },
+      registerForm: {
+        email: "",
+        code: "",
+      },
 
-        codeDisabled: false,
-        codeInput: '获取验证码',
-        time: 60,
+      setForm: {
+        pass: "",
+        rePass: "",
+      },
 
-        visible: false
+      codeDisabled: false,
+      codeInput: "获取验证码",
+      time: 60,
+
+      visible: false,
+    };
+  },
+  computed: {
+    ...mapGetters(["isMobile"]),
+  },
+  methods: {
+    //获取验证码
+    getCode() {
+      this.time = 60;
+      this.codeInput = this.time + "s";
+      this.codeDisabled = true;
+
+      let timeEle = setInterval(() => {
+        this.time--;
+
+        this.codeInput = this.time + "s";
+      }, 1000);
+
+      setTimeout(() => {
+        this.time = 0;
+        this.codeInput = "再次发送";
+        this.codeDisabled = false;
+
+        clearInterval(timeEle);
+        timeEle = null;
+      }, 61000);
+    },
+
+    handleNext() {
+      this.current = 1;
+    },
+
+    goToLogin() {
+      if (this.current == 0) {
+        this.$router.push("login");
+      } else {
+        this.current = 0;
       }
     },
-    methods: {
-      //获取验证码
-      getCode() {
-        this.time = 60
-        this.codeInput = this.time + 's'
-        this.codeDisabled = true
 
-        let timeEle = setInterval(() => {
-          this.time--
-
-          this.codeInput = this.time + 's'
-        }, 1000)
-
-        setTimeout(() => {
-          this.time = 0
-          this.codeInput = '再次发送'
-          this.codeDisabled = false
-
-          clearInterval(timeEle)
-          timeEle = null
-        }, 61000)
-      },
-
-      handleNext() {
-        this.current = 1
-      },
-
-      goToLogin() {
-        if (this.current == 0) {
-          this.$router.push('login')
-        } else {
-          this.current = 0
-        }
-      },
-
-      submit() {
-        this.visible = true
-      },
-      goBackLogin() {
-        this.$router.push('login')
-      }
-    }
-  }
+    submit() {
+      this.visible = true;
+    },
+    goBackLogin() {
+      this.$router.push("login");
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
-  .register-body {
-    .el-icon-back {
-      font-size: 30px;
-      cursor: pointer;
-      color: #333;
-      @media screen and (max-width: 600px) {
-        position: absolute;
-        top: 10px;
-      }
-    }
-    .title {
-      font-size: 24px;
-      font-weight: 700;
-      line-height: 32px;
-      color: #000;
-      margin: 32px 0;
-    }
-    .sub-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: #000;
-      margin-bottom: 32px;
+.register-body {
+  .el-icon-back {
+    font-size: 30px;
+    cursor: pointer;
+    color: #333;
+    @media screen and (max-width: 600px) {
+      position: absolute;
+      top: 10px;
     }
   }
-  .dialog-title {
+  .title {
     font-size: 24px;
-      font-weight: 700;
-      line-height: 32px;
-      color: #000;
-      margin-bottom: 32px;
+    font-weight: 700;
+    line-height: 32px;
+    color: #000;
+    margin: 32px 0;
   }
+  .sub-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 32px;
+  }
+}
+.dialog-title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  color: #000;
+  margin-bottom: 32px;
+}
 </style>
