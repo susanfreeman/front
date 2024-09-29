@@ -14,9 +14,7 @@
 
       <el-form-item label="" prop="code">
         <el-input v-model="registerForm.code" placeholder="请输入验证码">
-          <el-button type="text" slot="suffix" @click="getCode">{{
-            codeInput
-          }}</el-button>
+          <el-button type="text" slot="suffix" @click="getCode">{{ codeInput }}</el-button>
         </el-input>
       </el-form-item>
 
@@ -40,6 +38,21 @@
         ></el-input>
       </el-form-item>
 
+      <el-form-item prop="code" v-if="captchaEnabled">
+        <el-input
+          v-model="registerForm.validCode"
+          auto-complete="off"
+          placeholder="验证码"
+          style="width: 63%"
+          @keyup.enter.native="handleRegister"
+        >
+          <svg-icon slot="prefix" icon-class="validCode" class="el-input__icon input-icon" />
+        </el-input>
+        <div class="register-code">
+          <img :src="codeUrl" @click="getVerifyCode" class="register-code-img"/>
+        </div>
+      </el-form-item>
+
       <el-form-item label="">
         <el-input
           v-model="registerForm.reCode"
@@ -55,6 +68,8 @@
 </template>
 
 <script>
+import {captchaEmail, getCodeImg, register} from "@/api/login";
+
   export default {
     data() {
       var validatePass2 = (rule, value, callback) => {
@@ -68,12 +83,16 @@
       }
 
       return {
+        loading: false,
         registerForm: {
           email: '',
           code: '',
           pass: '',
           rePass: '',
-          reCode: ''
+          validCode: '',
+          reCode: '',
+          uuid: "",
+          mailUuid: ''
         },
 
         rules: {
@@ -91,15 +110,35 @@
           ],
           rePass: [{ validator: validatePass2, trigger: 'blur' }]
         },
-
+        codeUrl:"",
         codeDisabled: false,
         codeInput: '获取验证码',
+        captchaEnabled: true,
         time: 60
       }
     },
+    created() {
+      this.getVerifyCode();
+    },
     methods: {
+      getVerifyCode() {
+        getCodeImg().then(res => {
+          this.captchaEnabled = res.captchaEnabled === undefined ? true : res.captchaEnabled;
+          if (this.captchaEnabled) {
+            this.codeUrl = "data:image/gif;base64," + res.img;
+            this.registerForm.uuid = res.uuid;
+          }
+        });
+      },
+
       //获取验证码
       getCode() {
+        captchaEmail(this.registerForm).then(response => {
+          console.log(response.uuid)
+          this.registerForm.mailUuid = response.uuid;
+          this.$message("邮件发送成功");
+        });
+
         this.time = 60
         this.codeInput = this.time + 's'
         this.codeDisabled = true
@@ -127,10 +166,25 @@
       handleRegister() {
         this.$refs.registerForm.validate((valid) => {
           if (valid) {
-            alert('submit!')
-          } else {
-            console.log('error submit!!')
-            return false
+            this.loading = true;
+            const username = this.registerForm.username;
+            register(this.registerForm).then(res => {
+              this.$alert("<font color='red'>恭喜你，您的账号 " + username + " 注册成功！</font>", '系统提示', {
+                dangerouslyUseHTMLString: true,
+                type: 'success'
+              }).then(() => {
+                this.$router.push("/login");
+              }).catch(() => {});
+            }).catch(() => {
+              this.loading = false;
+              if (this.captchaEnabled) {
+                this.getVerifyCode();
+              }
+            })
+          //
+          // } else {
+          //   console.log('error submit!!')
+          //   return false
           }
         })
       }
@@ -162,5 +216,21 @@
       color: #000;
       margin-bottom: 32px;
     }
+  }
+
+.register-code {
+    width: 33%;
+    height: 38px;
+    float: right;
+
+  .register-code-img {
+    height: 36px;
+    float: right;
+  }
+  img {
+    cursor: pointer;
+    vertical-align: middle;
+  }
+
   }
 </style>

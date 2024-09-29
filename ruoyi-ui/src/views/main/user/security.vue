@@ -83,7 +83,7 @@ export default {
       getUserProfile().then(response => {
         this.user = response.data;
         this.userInfo = response.userInfo;
-        if (this.userInfo.code2fa != '') {
+        if (this.userInfo.code2fa != '' && this.userInfo.code2fa != null) {
           this.isBindGoogle = true;
         }
       });

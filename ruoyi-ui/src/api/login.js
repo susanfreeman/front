@@ -60,9 +60,15 @@ export function getCodeImg() {
 }
 
 // 获取邮箱
-export function captchaEmail() {
+export function captchaEmail(data) {
+  if (data == null) {
+    data = {}
+  }
   return request({
     url: '/captchaEmail',
-    method: 'get'
-  })
+    method: 'post',
+    data: data,
+    timeout: 30000
+  });
 }
+

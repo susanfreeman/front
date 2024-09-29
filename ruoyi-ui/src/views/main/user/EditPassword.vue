@@ -9,14 +9,14 @@
       <el-form :model="form" ref="form" label-position="top">
         <el-form-item
           label="当前密码"
-          prop="currentpass"
+          prop="oldPassword"
           :rules="[
             { required: true, message: '请输入现在的密码', trigger: 'blur' }
           ]"
         >
           <el-input
             type="password"
-            v-model="form.currentpass"
+            v-model="form.oldPassword"
             autocomplete="off"
             placeholder="请输入现在的密码"
             show-password
@@ -25,14 +25,14 @@
 
         <el-form-item
           label="新密码"
-          prop="pass"
+          prop="newPassword"
           :rules="[
             { required: true, message: '请输入新密码', trigger: 'blur' }
           ]"
         >
           <el-input
             type="password"
-            v-model="form.pass"
+            v-model="form.newPassword"
             autocomplete="off"
             placeholder="请输入新密码"
             show-password
@@ -56,7 +56,7 @@
         </el-form-item>
       </el-form>
       <div style="margin-top: 50px">
-        <el-button type="primary" @click="visible = true" style="width: 100%">
+        <el-button type="primary" @click="updatePwd" style="width: 100%">
           确 认
         </el-button>
       </div>
@@ -82,16 +82,16 @@
 
 <script>
 import { mapGetters } from "vuex";
+import {updateUserPwd} from "@/api/system/user";
 
 export default {
   data() {
     return {
       form: {
-        currentpass: "",
-        pass: "",
-        repass: ""
+        oldPassword: "",
+        newPassword: "",
+        rePass: ""
       },
-
       visible: false
     };
   },
@@ -102,6 +102,20 @@ export default {
   methods: {
     handleBack() {
       this.$router.push("/home/user/security");
+    },
+
+    updatePwd() {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          if (this.form.rePass != this.form.newPassword) {
+            this.$message("两次密码不一致！")
+            return;
+          }
+          updateUserPwd(this.form).then((res) => {
+            this.$message(res.msg);
+          });
+        }
+      })
     },
 
     goBackLogin() {

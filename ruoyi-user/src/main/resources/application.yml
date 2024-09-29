@@ -1,0 +1,188 @@
+# 项目相关配置
+ruoyi:
+  # 名称
+  name: RuoYi
+  # 版本
+  version: 3.8.8
+  # 版权年份
+  copyrightYear: 2024
+  # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
+  profile: D:/ruoyi/uploadPath
+  # 获取ip地址开关
+  addressEnabled: false
+  # 验证码类型 math 数字计算 char 字符验证
+  captchaType: math
+
+# 开发环境配置
+server:
+  # 服务器的HTTP端口，默认为8080
+  port: 8023
+  servlet:
+    # 应用的访问路径
+    context-path: /
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # 连接数满后的排队数，默认为100
+    accept-count: 1000
+    threads:
+      # tomcat最大线程数，默认为200
+      max: 800
+      # Tomcat启动初始化的线程数，默认值10
+      min-spare: 100
+
+# 日志配置
+logging:
+  level:
+    com.ruoyi: debug
+    org.springframework: warn
+
+# 用户配置
+user:
+  password:
+    # 密码最大错误次数
+    maxRetryCount: 5
+    # 密码锁定时间（默认10分钟）
+    lockTime: 10
+
+# Spring配置
+spring:
+  # 模板引擎
+  thymeleaf:
+    mode: HTML
+    encoding: utf-8
+    # 禁用缓存
+    cache: false
+  # 资源信息
+  messages:
+    # 国际化资源文件路径
+    basename: static/i18n/messages
+    encoding: UTF-8
+    cache-duration: 3600
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  profiles:
+    active: druid
+  # 文件上传
+  servlet:
+    multipart:
+      # 单个文件大小
+      max-file-size: 10MB
+      # 设置总上传的文件大小
+      max-request-size: 20MB
+  # 服务模块
+  devtools:
+    restart:
+      # 热部署开关
+      enabled: true
+  mail:
+    # 配置 SMTP 服务器地址
+    host: us2.smtp.mailhostbox.com
+    # 发送者邮箱
+    username: service@orbiterwallet.com
+    # 配置密码，注意不是真正的密码，而是刚刚申请到的授权码
+    password: Aa1234567890
+    # 端口号465或587
+    port: 25
+    # 默认的邮件编码为UTF-8
+    default-encoding: UTF-8
+    # 配置SSL 加密工厂
+    properties: # 设置邮件超时时间防止服务器阻塞
+      timeout: 5000
+      connection-timeout: 5000
+      write-timeout: 5000
+      mail:
+        smtp:
+          socketFactoryClass: javax.net.ssl.SSLSocketFactory
+        #表示开启 DEBUG 模式，这样，邮件发送过程的日志会在控制台打印出来，方便排查错误
+        debug: true
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    # 数据库索引
+    database: 0
+    # 密码
+    password:
+    # 连接超时时间
+    timeout: 10s
+    lettuce:
+      pool:
+        # 连接池中的最小空闲连接
+        min-idle: 0
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池的最大数据库连接数
+        max-active: 8
+        # #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
+
+# token配置
+token:
+  # 令牌自定义标识
+  header: Authorization
+  # 令牌密钥
+  secret: abcdefghijklmnopqrstuvwxyz
+  # 令牌有效期（默认30分钟）
+  expireTime: 30
+
+# MyBatis配置
+mybatis:
+  # 搜索指定包别名
+  typeAliasesPackage: com.ruoyi.**.domain
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapperLocations: classpath*:mapper/**/*Mapper.xml
+  # 加载全局的配置文件
+  configLocation: classpath:mybatis/mybatis-config.xml
+
+# PageHelper分页插件
+pagehelper:
+  helperDialect: mysql
+  supportMethodsArguments: true
+  params: count=countSql
+
+# Swagger配置
+swagger:
+  # 是否开启swagger
+  enabled: true
+  # 请求前缀
+  pathMapping: /dev-api
+
+# 防止XSS攻击
+xss:
+  # 过滤开关
+  enabled: true
+  # 排除链接（多个用逗号分隔）
+  excludes: /system/notice
+  # 匹配链接
+  urlPatterns: /system/*,/monitor/*,/tool/*
+
+
+
+mail:
+  register:
+    subject: xxxx注册验证码
+
+channel:
+  pyvio:
+    publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA255bQQCCLOct2VnhspdH+fAtUnHScXwC+xp9Q3yEbuHY19uwD+HGDYKZhLsRtbOAMtOgCP1VQvAoVCBhErgPxZn5N1LLa5pCzjU0pd0V2S9AlUfsDGAvXdOtHKx3DttmE2P9rdGzGiqGFOcDKBsCoA3wQk74SIhVB1kvhzXenDvcytz6m2z/uuf+7qiC2nJ9Op5bSvLSDINASea1ldsMHRBJmQODJkV3OcaGkS/tN+nFeERb6rIP1VtLDFQONaFFMCTdtu+5kBpk+Yys022eAqw0HsGUDwW8wTLmGnO3ctn9lxII8HDTjEVw3nC+NYmTBD0gsoSXo0FcjLXqewtjKwIDAQAB
+
+safeheron:
+  config:
+    baseUrl: https://api.safeheron.vip
+    apiKey: 537b72ffafb84fc28f6e71806c369b67
+    safeheronPublicKey: MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAnx5+UdRgFErpJqTjWayQdLsdfxlZVbeaxMGIdoDHn39jCNmoEcZAQRQusF82uEQfQehM6tGQGKcWMUgc3N9o06iKa1AdJcTT03J2CHRxyCAlt74H2sDIYN7h2aMqrMFq6RJDrgvC4wA+gBzl/7LG9AU0+HZHMXFL2Iqj0/AaSWuvSwQISrVPGjkOXRR+j6Fs3UTJKlsbvfaeXLx1FBb77jEL5lcMn+k8oFxUWqE45CaA2QdQDPFDNZR9z3WKOBzvrcyPlvvs4cnHGW9vcmPOpJd/kWNv0Qr4gffYlKp5nLFKTWFFbCgjpbXNLLelKt3HAary19FcDHQoC8LRqkslJA0uhLC2lpWnyRtEDYwjGBWi3sZx9a6NunouL9O6or+8tOal9clWNyRKWi6+/nWVkalKL1sRE9DopGg51JiM/WHnAm+U/eJVI+QyapxOLVpa/szDA4Jfs1UgtqH4d4eEvidvDGmEdAXZoBVQeVj4YhtIBbKKWUOtxI7RXHaf7tz542bSf6rRqsm6LUihzL8JYXToui8vH8to2OnGvtIg+/MXapQAkVmX9DSUjayFMIn+XvUiw/wWT6/TiaAOU1QIMksFTf1Jvqd0vyIAGB0alpaceTdhsy+VJO36bNp2qqKPCXjJbIaXuQoddBV7VGcTD1eV322VHOyq2Fdv/wi1YXsCAwEAAQ==
+    privateKey: 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
+    timeout: 20000
+    webhookSafeheronPublicKey: MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvOKJTdZmHnw2t2+Rrw9kTHox+Id9WsJji0tS7NkXQyzQmV4VwW0XRLLmXHVtwgo4N2mrIhUbTPCfbcelA+7A7cKle/cpWRdgz9Meo5d/d297HSPMIqpXHtvvnpg8GUlj2uFLLTD2ZrGJyWuzz2Jxsdn88NlaJJ3LrIYKjP2s6MNZ/2hTcD1HjLL29AIo5xiX3xBVDPg0IDY/WN06IVlbW1IaqccZdqrav/sql4IQ+Ie6YV4HwNNyPt/Z+RpLvzrUZZh8F/8U43FX8ek0+2Ix+6KJhpnDTNmh033k8j2wArenX09dLBFZ5S0G8JeI2S/hbujeljgnGIDn7ivlYi4ynrh8vYPiTFbbXyeKnhXOQWxHcEIjKyuO/acxmSqe9vQO0O938Om1u3WFVr7Q1nCXlwbnK50Xs4TKoybmppkEQYlFKpJiCJjf9QZDetIQH6Lqt+sGYtuKfB5euKp3zO2Op2Dl6xwOqVRevMWB7ZKdaj9vfmHzy2CQni8ZTxbOYNdbWVnJQBie0Z8Pko7bTuUUX9IgZ34JUC1voRvGfRIPubLJseFZnLZSa/naQrwnA4B5plHkk6X/tKEGs8LK2/PFShKYdztAr9nxKkjXsVfBTYcJOKrAm3Gaa4pl3o7QkF/8RtSl+eDkwgcC9fAN36YfikbI26lv4V1eqFBZ1A/zXf8CAwEAAQ==
+
+support:
+  coinList: USDT_ERC20,USDC_ERC20,USDT_TRC20,USDC_TRC20,TRX(SHASTA)_TRON_TESTNET
+
+pord:
+  inviteuri: http://localhost/register?code=
+
+tg:
+  uri: https://api.telegram.org/bot7392093094:AAH53Rbw0LFbF9lMX_y_GYEEsuK5nriqHgU/sendMessage
+  chatId: -4532403220
+  techChatId: -4532403220

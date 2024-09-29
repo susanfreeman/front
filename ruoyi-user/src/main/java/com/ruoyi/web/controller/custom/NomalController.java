@@ -10,6 +10,7 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.redis.RedisCache;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.SendGroupMsgTg;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.uuid.IdUtils;
 import com.ruoyi.generator.util.VelocityInitializer;
 import com.ruoyi.mail.service.IEmailService;
@@ -150,9 +151,14 @@ public class NomalController {
     /**
      * 验证码生成
      */
-    @GetMapping(value = "/captchaEmail")
-    public AjaxResult getKaptchaImageToEmail() {
-        String emailto = getLoginUser().getUser().getEmail();
+    @PostMapping(value = "/captchaEmail")
+    public AjaxResult getKaptchaImageToEmail(@RequestBody Map paraMap) {
+        String emailto = "";
+        if (StringUtils.isNotBlank((String) paraMap.get("email"))) {
+            emailto = (String) paraMap.get("email");
+        } else {
+            emailto =getLoginUser().getUser().getEmail();
+        }
         String code = captchaProducer.createText();
         // 保存验证码信息
         String uuid = IdUtils.simpleUUID();

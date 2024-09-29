@@ -1,6 +1,18 @@
 package com.ruoyi.framework.web.service;
 
+import com.ruoyi.agent.service.ITblAgentInfoService;
+import com.ruoyi.coin.service.ITblColdCoinAddressService;
+import com.ruoyi.coin.service.impl.SafeHeronUtils;
+import com.ruoyi.common.exception.ServiceException;
+import com.ruoyi.user.domain.TblUserInfo;
+import com.ruoyi.user.service.ITblUserInfoService;
+import com.safeheron.client.config.SafeheronConfig;
+import com.safeheron.client.response.CreateAccountResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Component;
 import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.constant.Constants;
@@ -17,6 +29,13 @@ import com.ruoyi.framework.manager.AsyncManager;
 import com.ruoyi.framework.manager.factory.AsyncFactory;
 import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.system.service.ISysUserService;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+
+import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * 注册校验方法
@@ -24,6 +43,7 @@ import com.ruoyi.system.service.ISysUserService;
  * @author ruoyi
  */
 @Component
+@Slf4j
 public class SysRegisterService
 {
     @Autowired
@@ -34,13 +54,32 @@ public class SysRegisterService
 
     @Autowired
     private RedisCache redisCache;
+    @Autowired
+    private DataSourceTransactionManager dataSourceTransactionManager;
+
+    @Autowired
+    private TransactionDefinition transactionDefinition;
+
+    @Autowired
+    private ITblUserInfoService tblUserInfoService;
+
+    @Autowired
+    private ITblAgentInfoService agentInfoService;
+
+
+    @Resource(name = "safeheronConfig")
+    private SafeheronConfig safeheronConfig;
+
+    @Value("${support.coinList}")
+    private List<String> coinList;
+
 
     /**
      * 注册
      */
     public String register(RegisterBody registerBody)
     {
-        String msg = "", username = registerBody.getUsername(), password = registerBody.getPassword();
+        String msg = "", username = registerBody.getEmail(), password = registerBody.getPass();
         SysUser sysUser = new SysUser();
         sysUser.setUserName(username);
 
@@ -48,8 +87,11 @@ public class SysRegisterService
         boolean captchaEnabled = configService.selectCaptchaEnabled();
         if (captchaEnabled)
         {
-            validateCaptcha(username, registerBody.getCode(), registerBody.getUuid());
+            validateCaptcha(username, registerBody.getValidCode(), registerBody.getUuid());
         }
+
+        // 验证邮箱
+        validateCaptcha(username, registerBody.getCode(), registerBody.getMailUuid());
 
         if (StringUtils.isEmpty(username))
         {
@@ -75,9 +117,58 @@ public class SysRegisterService
         }
         else
         {
-            sysUser.setNickName(username);
+            sysUser.setUserName(username);
+            sysUser.setEmail(username);
             sysUser.setPassword(SecurityUtils.encryptPassword(password));
-            boolean regFlag = userService.registerUser(sysUser);
+            boolean regFlag = false;
+            TransactionStatus transactionStatus = dataSourceTransactionManager.getTransaction(transactionDefinition);
+            try {
+
+                regFlag = userService.registerUser(sysUser);
+
+//                CreateAccountResponse accountAndAddCoin = SafeHeronUtils.createAccountAndAddCoin(safeheronConfig,
+//                        username.substring(0,username.indexOf("@") + 1) + sysUser.getUserId(), true, coinList);
+                TblUserInfo userInfo = new TblUserInfo();
+                userInfo.setUserId(sysUser.getUserId());
+                userInfo.setBalance(new BigDecimal(0));
+                userInfo.setBalanceFroze(new BigDecimal(0));
+                userInfo.setBalanceUsdt(new BigDecimal(0));
+                userInfo.setBalanceGbp(new BigDecimal(0));
+                userInfo.setBalanceEur(new BigDecimal(0));
+                userInfo.setEmail(username);
+//                userInfo.setTronAddr(accountAndAddCoin.getAccountKey());
+                if(StringUtils.isNotBlank(sysUser.getInviteUri()) && sysUser.getInviteUri().startsWith("A")) {
+                    Optional.ofNullable(agentInfoService.selectTblAgentInfoByInviteUri(sysUser.getInviteUri()))
+                            .map(info -> {
+                                userInfo.setAiId(info.getAiId());
+                                return info;
+                            })
+                            .orElseGet(() -> {
+                                // 如果 agentInfo 为 null，是否需要做其他操作
+                                return null;
+                            });
+                }else if(StringUtils.isNotBlank(sysUser.getInviteUri()) && sysUser.getInviteUri().startsWith("U")) {
+                    Optional.ofNullable(tblUserInfoService.selectTblUserInfoByInviteUri(sysUser.getInviteUri()))
+                            .map(info -> {
+                                userInfo.setInviteUiId(info.getUiId());
+                                return info;
+                            })
+                            .orElseGet(() -> {
+                                // 如果 agentInfo 为 null，是否需要做其他操作
+                                return null;
+                            });
+                }
+                String random = RandomStringUtils.random(4, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray());
+                int length = (sysUser.getUserId() + "").length();
+                userInfo.setInviteUri("U"+StringUtils.leftPad(sysUser.getUserId()+"", 5, random.substring(length-1)));
+                tblUserInfoService.insertTblUserInfo(userInfo);
+                dataSourceTransactionManager.commit(transactionStatus); // 手动提交
+            } catch (Exception e) {
+                dataSourceTransactionManager.rollback(transactionStatus);
+                log.error("注册失败",e);
+                throw new ServiceException("注册失败,请联系系统管理人员");
+            }
+
             if (!regFlag)
             {
                 msg = "注册失败,请联系系统管理人员";
