@@ -15,10 +15,10 @@ if(href.includes("en-us")) {
 						<div class="pc_btn">
 							<a class="login" href="http://127.0.0.1:10008/web-app/Login">Sign In</a>
 							<a class="register" href="/web-app/agreement">Register</a>
-						</div>						
+						</div>
 						<a href="rights.html">card equity</a>
 						<a class="pc_hide" href="faq.html">Q&A</a>
-						<a class="pc_hide" href="download.html">Download App</a>						
+						<a class="pc_hide" href="download.html">Download App</a>
 						<a href="google-authenticator.html">Google Authenticator</a>
 						<a class="lang_outer">
 							ENGLISH
@@ -36,26 +36,26 @@ if(href.includes("en-us")) {
 			<div class="footer_inner">
 				<div class="footer_l">
 					<img src="/img2/orbiter_white.png" />
-					<p>THE WORLD IN YOUR WALLET<span>Copyright © 2021-2024 Dupay.one</span></p>
+					<p>THE WORLD IN YOUR WALLET<span>Copyright © 2021-2024 orbiterwallet</span></p>
 				</div>
 				<div class="footer_r">
-					<a class="telegram" href="https://t.me/DupayEnglish">
-						<img src="/img/Telegram.png" /> 
+					<a class="telegram" href="https://t.me/+5PVX1nJZaJVkNmNl">
+						<img src="/img/Telegram.png" />
 						<label>Join the official Telegram group</label>
 					</a>
 					<div class="jump">
-						<a href="https://twitter.com/Dupay_CN" class="twitter">
-							<img src="/img/twitter.png" /> 
-							@Dupay_CN
+						<a href="https://t.me/orbiterwalletgroup" class="twitter">
+							<img src="/img/twitter.png" />
+							@orbiterwallet
 						</a>
 						<p>
-							<img src="/img/email.png" /> 
-							support@dupay.one
+							<img src="/img/email.png" />
+							orbiterwallet@gmail.com
 						</p>
 					</div>
 				</div>
 			</div>
-		
+
 		`
 } else {
 	dom1 = `
@@ -73,7 +73,7 @@ if(href.includes("en-us")) {
 					<a href="rights.html">卡片权益</a>
 					<a href="faq.html">帮助中心</a>
 					<a class="pc_hide" href="download.html">下载APP</a>
-					<a href="google-authenticator.html">谷歌身份验证器</a>					
+					<a href="google-authenticator.html">谷歌身份验证器</a>
 					<a class="lang_outer">
 						简体中文
 						<img class="arrow" src="img/arrow_bottom.png" />
@@ -90,26 +90,26 @@ if(href.includes("en-us")) {
 			<div class="footer_inner">
 				<div class="footer_l">
 					<img src="../img2/orbiter_white.png" />
-					<p>THE WORLD IN YOUR WALLET<span>Copyright © 2021-2024 Dupay.one</span></p>
+					<p>THE WORLD IN YOUR WALLET<span>Copyright © 2021-2024 orbiterwallet</span></p>
 				</div>
 				<div class="footer_r">
-					<a class="telegram" href="https://t.me/DupayCard">
-						<img src="/img/Telegram.png" /> 
+					<a class="telegram" href="https://t.me/+5PVX1nJZaJVkNmNl">
+						<img src="/img/Telegram.png" />
 						<label>加入官方Telegram群</label>
 					</a>
 					<div class="jump">
-						<a href="https://twitter.com/Dupay_CN" class="twitter">
-							<img src="/img/twitter.png" /> 
-							@Dupay_CN
+						<a href="https://t.me/orbiterwalletgroup" class="twitter">
+							<img src="/img/twitter.png" />
+							@orbiterwallet
 						</a>
 						<p>
-							<img src="/img/email.png" /> 
-							support@dupay.one
+							<img src="/img/email.png" />
+							orbiterwallet@gmail.com
 						</p>
 					</div>
 				</div>
 			</div>
-			
+
 		`
 }
 

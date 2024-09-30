@@ -86,7 +86,7 @@
 	background-position-y: 0px;
 	margin-left: auto; /* 自动计算左外边距 */
   	margin-right: auto; /* 自动计算右外边距 */
-	padding: 300px 0 0 0px;
+	padding: 200px 0 0 0px;
 }
 
 .banner_num {
@@ -265,7 +265,7 @@
     position: fixed;
     right: 10px;
     bottom: 100px;
-    width: 50px;
+    width: 130px;
     height: auto;
     z-index: 1000;
   }
@@ -384,9 +384,9 @@
 
 
 .introduce3_l {
-  position: absolute;
+  /* position: absolute; */
 	width: 436px;
-  z-index: 100;
+  /* z-index: 100; */
 }
 
 .introduce3_l .introduce3_l_t {
@@ -414,9 +414,9 @@
 }
 
 .introduce3_r {
-  position: absolute;
-  z-index: 10;
-	width: 650px;
+  /* position: absolute;
+  z-index: 10; */
+	width: 350px;
 }
 
 .faq {

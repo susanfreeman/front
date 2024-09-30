@@ -18,7 +18,8 @@
 
         <div class="login">
           <div class="balance">
-            $ *** 查看
+            $ ***
+            <i class="el-icon-view" style="margin-left: 10px"></i>
             <span>如何充值</span>
           </div>
         </div>
@@ -71,7 +72,8 @@
 
             <div class="login">
               <div class="balance">
-                $ *** 查看
+                $ ***
+                <i class="el-icon-view" style="margin-left: 10px"></i>
                 <span>如何充值2</span>
               </div>
             </div>
