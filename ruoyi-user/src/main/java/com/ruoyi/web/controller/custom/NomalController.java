@@ -134,21 +134,6 @@ public class NomalController {
     }
 
     /**
-     * KYC
-     */
-    @Log(title = "Kyc", businessType = BusinessType.UPDATE)
-    @PostMapping("/kyc")
-    public AjaxResult kyc(@RequestBody TblUserInfo tblUserInfo) {
-        TblUserInfo userInfo = tblUserInfoService.selectTblUserInfoByUserId(getUserId());
-        tblUserInfo.setUiId(userInfo.getUiId());
-        tblUserInfo.setKycFlag("P");
-        tblUserInfoService.updateTblUserInfo(tblUserInfo);
-        return success();
-    }
-
-
-
-    /**
      * 验证码生成
      */
     @PostMapping(value = "/captchaEmail")

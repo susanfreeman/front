@@ -158,8 +158,9 @@ import {logout} from "@/api/login";
           type: 'warning'
         })
           .then(() => {
-            logout();
-            //
+            logout().then(res =>{
+              location.href = '/index';
+            });
           })
           .catch(() => {
             //   this.$message({

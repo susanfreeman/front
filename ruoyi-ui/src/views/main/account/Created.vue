@@ -161,7 +161,7 @@ import {getBalance} from "@/api/custom/exchange";
         loading: false,
         cardBinList: [],
         cardBin: {},
-        kycFlag: false
+        kycFlag: 'N'
       }
     },
     created() {
@@ -180,7 +180,7 @@ import {getBalance} from "@/api/custom/exchange";
       getBal() {
         getBalance().then(res => {
           if (res.code == 200) {
-            this.kycFlag = res.data.kycFlag=='Y';
+            this.kycFlag = res.data.kycFlag;
           }
         });
       },
@@ -190,11 +190,22 @@ import {getBalance} from "@/api/custom/exchange";
 
       //立即开卡
       handleActivateCard() {
-        if (this.cardBin.needKyc == 'Y' && !this.kycFlag) {
-          this.$router.push("create-card")
+        if (this.cardBin.needKyc == 'Y') {
+          if (this.kycFlag == 'N') {
+            this.$router.push({
+                name: "create-card", params: {
+                  card: this.cardBin
+                }
+              }
+            );
+          } else if (this.kycFlag == 'P') {
+            this.$message.warning("KYC审核中，请耐心等候~~~");
+          }
         }else {
-          this.$router.push("create-card-simple")
-          // 姓名即可
+          this.$router.push({name:"create-card-simple",params: {
+              card: this.cardBin
+            }}
+          );
         }
       },
       selectCardBin(index) {

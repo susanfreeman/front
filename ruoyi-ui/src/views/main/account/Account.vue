@@ -18,9 +18,9 @@
 
         <div class="login">
           <div class="balance">
-            $ ***
-            <i class="el-icon-view" style="margin-left: 10px"></i>
-            <span>如何充值</span>
+            {{item.balance}}
+            <i class="el-icon-view" style="margin-left: 10px"  @click="queryBal(index)"></i>
+<!--            <span>如何充值</span>-->
           </div>
         </div>
 
@@ -217,7 +217,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import {userCardList,cardInfoBy2fa} from "@/api/custom/opencard";
+import {userCardList, cardInfoBy2fa, queryBalance} from "@/api/custom/opencard";
 import {captchaEmail} from "@/api/login";
 
 export default {
@@ -283,6 +283,7 @@ export default {
       );
     },
 
+
     //获取验证码
     getCode() {
       captchaEmail().then(response => {
@@ -344,7 +345,17 @@ export default {
         this.visible = false;
         this.$message(response.msg);
       });
-    }
+    },
+
+    queryBal(index) {
+      this.loading = true;
+      queryBalance(this.cardList[index].uocId).then(res => {
+        if (res.code == 200) {
+          this.cardList[index].balance = res.data.balance;
+        }
+        this.loading = false;
+      });
+    },
   },
 };
 </script>
