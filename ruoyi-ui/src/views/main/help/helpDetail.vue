@@ -4,7 +4,7 @@
       <i class="el-icon-back"></i>
     </div>
 
-    <p class="title">Dupay预付卡维护通知</p>
+    <p class="title">Orbiter预付卡维护通知</p>
     <p class="date">2024-09-07</p>
     <div class="content">
       <span>亲爱的用户：</span><br />
@@ -15,7 +15,7 @@
       <br />
       感谢您的理解与配合。<br />
       <br />
-      <span>Dupay Teams</span><br />
+      <span>Orbiter Teams</span><br />
       2024/09/07<br />
     </div>
   </div>

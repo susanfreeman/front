@@ -9,12 +9,12 @@
     <ul class="cards">
       <li>
         <img src="../../../assets/status-1.png" />
-        <label>Dupay 预付卡</label>
+        <label>Orbiter 预付卡</label>
         <span class="">去认证</span>
       </li>
       <li>
         <img src="../../../assets/status-2.png" />
-        <label>Dupay 借记卡 </label>
+        <label>Orbiter 借记卡 </label>
         <span class="">已注销</span>
       </li>
     </ul>

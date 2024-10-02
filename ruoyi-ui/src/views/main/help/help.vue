@@ -35,7 +35,7 @@
           <img src="../../../assets/help-1.png" alt="" class="info_l" />
           <div class="info_r">
             <div>费用</div>
-            <p>Dupay相关费用说明</p>
+            <p>Orbiter相关费用说明</p>
           </div>
         </div>
         <i class="el-icon-arrow-right"></i>

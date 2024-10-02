@@ -7,9 +7,9 @@
 
     <p class="hot_t">热门问题</p>
     <el-collapse v-model="activeNames" @change="handleChange">
-      <el-collapse-item title="如何将USDT充值进Dupay Master/Visa卡？" name="1">
+      <el-collapse-item title="如何将USDT充值进Orbiter Master/Visa卡？" name="1">
         <div>
-          在欧易，币安等平台买USDT—提币到Dupay钱包账户（注意选择相同网络与链路）—Dupay钱包转成USD/GBP—充到Dupay预付卡/借记卡里。
+          在欧易，币安等平台买USDT—提币到Orbiter钱包账户（注意选择相同网络与链路）—Orbiter钱包转成USD/GBP—充到Orbiter预付卡/借记卡里。
         </div>
       </el-collapse-item>
       <el-collapse-item
@@ -45,10 +45,10 @@
           注：借记卡请提前准备证件避免中途中断，如果有问题可前往telegram联系人工客服进行帮助与指导。
         </div>
       </el-collapse-item>
-      <el-collapse-item title="Dupay的使用场景有那些？" name="4">
-        <div>Dupay的常见使用场景如下：</div>
+      <el-collapse-item title="Orbiter的使用场景有那些？" name="4">
+        <div>Orbiter的常见使用场景如下：</div>
         <div>
-          1、Dupay Master/Visa卡支持绑定App store、Google play商店、Youtube
+          1、Orbiter Master/Visa卡支持绑定App store、Google play商店、Youtube
           premium、Paypal商户、Twitter premium和支持非3DS卡的电商网站等。
         </div>
         <div>2、暂不支持Apple pay和Google pay。</div>

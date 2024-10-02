@@ -55,7 +55,7 @@
         <li>
           <span>我的推荐链接</span>
           <p>
-            https://dupay...vYha5F
+            https://Orbiter...vYha5F
             <img src="../../../assets/copy.png" alt="" class="copy" />
           </p>
         </li>
