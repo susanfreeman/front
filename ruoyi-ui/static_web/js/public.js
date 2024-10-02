@@ -223,7 +223,7 @@ body.appendChild(footer);
 var link = document.createElement('link');
 link.type = 'image/x-icon';
 link.rel = 'shortcut icon';
-link.href = '../img/dupay.ico';
+link.href = '../img/logo.png';
 document.getElementsByTagName('head')[0].appendChild(link);
 
 (function(c, l, a, r, i, t, y) {
