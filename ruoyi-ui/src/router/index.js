@@ -42,13 +42,17 @@ export const constantRoutes = [
     ]
   },
   {
-    path: "/home",
+    path: '',
     redirect: "/home/account/account"
   },
   {
-    path: "/home/account",
+    path: "/home",
     redirect: "/home/account/account"
   },
+  // {
+  //   path: "/home/account",
+  //   redirect: "/home/account/account"
+  // },
   {
     path: "/home/notice",
     redirect: "/home/notice/notice-index"
@@ -338,11 +342,6 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/register',
-    component: () => import('@/views/register'),
-    hidden: true
-  },
-  {
     path: '/404',
     component: () => import('@/views/error/404'),
     hidden: true
@@ -351,35 +350,7 @@ export const constantRoutes = [
     path: '/401',
     component: () => import('@/views/error/401'),
     hidden: true
-  },
-  {
-    path: '',
-    component: Layout,
-    redirect: 'index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/main/account/index'),
-        name: 'Index',
-        meta: { title: '首页', icon: 'dashboard', affix: true }
-      }
-    ]
-  },
-  {
-    path: '/user',
-    component: Layout,
-    hidden: true,
-    redirect: 'noredirect',
-    children: [
-      {
-        path: 'profile',
-        component: () => import('@/views/system/user/profile/index'),
-        name: 'Profile',
-        meta: { title: '个人中心', icon: 'user' }
-      }
-    ]
   }
-
 ]
 
 // 动态路由，基于用户权限动态去加载
