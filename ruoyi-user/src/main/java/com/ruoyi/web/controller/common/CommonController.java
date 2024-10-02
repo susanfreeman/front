@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.common.utils.file.MimeTypeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import com.ruoyi.common.config.RuoYiConfig;
 import com.ruoyi.common.constant.Constants;
@@ -72,8 +71,34 @@ public class CommonController
     /**
      * 通用上传请求（单个）
      */
+    @PostMapping("/uploadImage")
+    public AjaxResult uploadImage(@RequestPart("image") MultipartFile image) throws Exception
+    {
+        try
+        {
+            // 上传文件路径
+            String filePath = RuoYiConfig.getUploadPath();
+            // 上传并返回新文件名称
+            String fileName = FileUploadUtils.upload(filePath, image,MimeTypeUtils.IMAGE_EXTENSION);
+            String url = serverConfig.getUrl() + fileName;
+            AjaxResult ajax = AjaxResult.success();
+            ajax.put("url", url);
+            ajax.put("fileName", fileName);
+            ajax.put("newFileName", FileUtils.getName(fileName));
+            ajax.put("originalFilename", image.getOriginalFilename());
+            return ajax;
+        }
+        catch (Exception e)
+        {
+            return AjaxResult.error(e.getMessage());
+        }
+    }
+
+    /**
+     * 通用上传请求（单个）
+     */
     @PostMapping("/upload")
-    public AjaxResult uploadFile(MultipartFile file) throws Exception
+    public AjaxResult upload(@RequestPart MultipartFile file) throws Exception
     {
         try
         {
@@ -112,7 +137,7 @@ public class CommonController
             for (MultipartFile file : files)
             {
                 // 上传并返回新文件名称
-                String fileName = FileUploadUtils.upload(filePath, file);
+                String fileName = FileUploadUtils.upload(filePath, file, MimeTypeUtils.IMAGE_EXTENSION);
                 String url = serverConfig.getUrl() + fileName;
                 urls.add(url);
                 fileNames.add(fileName);

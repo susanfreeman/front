@@ -43,6 +43,14 @@ export function cardInfoBy2fa(data) {
     data: data
   })
 }
+// 卡充值
+export function applyCard(data) {
+  return request({
+    url: '/applyCard',
+    method: 'post',
+    data: data
+  })
+}
 
 // 查询卡充值界面
 export function getCardInfo(uocId) {

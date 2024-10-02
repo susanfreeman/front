@@ -2,7 +2,7 @@
   <div class="pc">
     <div class="pc_back" @click="handleBack">
       <i class="el-icon-back"></i>
-      KYC验证
+      开卡
     </div>
 
     <div class="kyc-form">
@@ -17,77 +17,35 @@
 <!--          </el-select>-->
 <!--        </el-form-item>-->
 
+        <el-form-item label="卡头:">
+          <el-input v-model="form.cardHead" :disabled="true" ></el-input>
+        </el-form-item>
         <el-form-item label="姓氏:">
-          <el-input v-model="form.surname"></el-input>
+          <el-input v-model="form.firstName"
+                    :rules="[
+            { required: true, message: '请输入姓氏', trigger: 'blur' }
+          ]"></el-input>
         </el-form-item>
 
         <el-form-item label="名:">
-          <el-input v-model="form.name"></el-input>
+          <el-input v-model="form.lastName" :rules="[
+            { required: true, message: '请输入名', trigger: 'blur' }
+          ]"></el-input>
         </el-form-item>
 
-<!--        <el-form-item label="邮编:">-->
-<!--        <el-input v-model="form.postalCode"></el-input>-->
-<!--        </el-form-item>-->
+        <el-form-item label="充值金额:">
+          <el-input type="number" v-model="form.chargeAmt" :rules="[
+            { required: true, message: '请输入充值金额', trigger: 'blur' }
+          ]" @blur="calculateFee"></el-input>
+        </el-form-item>
 
-<!--        <el-form-item label="国家(地区):">-->
-<!--          <el-select-->
-<!--            v-model="form.country"-->
-<!--            placeholder="请选择国家(地区)"-->
-<!--            style="width: 100%"-->
-<!--          >-->
-<!--            <el-option label="美国" value="美国"></el-option>-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
-
-<!--        <el-form-item label="省:">-->
-<!--          <el-input v-model="form.province"></el-input>-->
-<!--        </el-form-item>-->
-
-<!--        <el-form-item label="城市:">-->
-<!--          <el-input v-model="form.city"></el-input>-->
-<!--        </el-form-item>-->
-
-<!--        <el-form-item label="手机号前缀:">-->
-<!--          <el-input v-model="form.phonePrefix"></el-input>-->
-<!--        </el-form-item>-->
-
-<!--        <el-form-item label="手机号码:">-->
-<!--          <el-input v-model="form.phone"></el-input>-->
-<!--        </el-form-item>-->
-
-<!--        <el-form-item label="地址:">-->
-<!--          <el-input v-model="form.adress"></el-input>-->
-<!--        </el-form-item>-->
-
-<!--        <el-form-item label="邮箱:">-->
-<!--          <el-input v-model="form.email"></el-input>-->
-<!--        </el-form-item>-->
-
-<!--        <el-form-item label="证件类型:">-->
-<!--          <el-select-->
-<!--            v-model="form.document"-->
-<!--            placeholder="请选择证件类型"-->
-<!--            style="width: 100%"-->
-<!--          >-->
-<!--            <el-option label="护照" value="护照"></el-option>-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
-
-<!--        <el-form-item label="证件号码:">-->
-<!--          <el-input v-model="form.documentNum"></el-input>-->
-<!--        </el-form-item>-->
-
-<!--        <el-form-item label="生日:">-->
-<!--          <el-date-picker-->
-<!--            type="date"-->
-<!--            placeholder="YYYY-MM-DD"-->
-<!--            v-model="form.date"-->
-<!--            style="width: 100%"-->
-<!--          ></el-date-picker>-->
-<!--        </el-form-item>-->
 
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">申请卡片</el-button>
+          <label>本次充值最小金额：{{cardVal.cardRechargeMin}}</label></br>
+          <label>本次开卡手续费：{{cardVal.cardOpenFee}}</label></br>
+          <label>本次充值手续费率：{{cardVal.cardRechargeFee}}%</label></br>
+          <label>本次共消费金额预估：{{fee}}</label></br>
+          <el-button type="primary" @click="onSubmit">开卡并充值</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -95,33 +53,54 @@
 </template>
 
 <script>
+import {getUserProfile} from "@/api/system/user";
+import {applyCard} from "@/api/custom/opencard";
+
 export default {
   data() {
     return {
+      props: ['card'],
       form: {
-        currency: "人民币",
-        surname: "",
-        name: "",
-        postalCode: "",
-        country: "美国",
-        province: "",
-        city: "",
-        phonePrefix: "",
-        phone: "",
-        adress: "",
-        email: "",
-        document: "护照",
-        documentNum: "",
-        date: "",
+        cardHead: "",
+        firstName: "",
+        lastName: "",
+        chargeAmt: "",
       },
+      cardVal: {},
+      fee: 0
     };
+  },
+  created() {
+    this.getUser();
+  },
+  mounted() {
+    this.cardVal = this.$route.params.card;
+    console.log(this.cardVal);
+    this.form.cardHead = this.cardVal.cardBin;
   },
   methods: {
     handleBack() {
       this.$router.push("/home/account/Created");
     },
 
-    onSubmit() {},
+    getUser() {
+      getUserProfile().then(response => {
+        this.form.firstName = response.userInfo.firstName;
+        this.form.lastName = response.userInfo.lastName;
+      });
+    },
+    calculateFee() {
+      this.fee = parseFloat(this.cardVal.cardOpenFee) + parseFloat(this.form.chargeAmt) + parseFloat(this.form.chargeAmt * this.cardVal.cardRechargeFee/100);
+    },
+    onSubmit() {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          applyCard(this.form).then(res => {
+            this.$alert(res.msg);
+          })
+        }
+      })
+    },
   },
 };
 </script>

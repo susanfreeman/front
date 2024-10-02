@@ -31,8 +31,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -86,6 +88,20 @@ public class OpenCardController
     @Autowired
     ITblUserOpenCardService tblUserOpenCardService;
 
+
+    /**
+     * 开卡
+     */
+    @Log(title = "Kyc", businessType = BusinessType.UPDATE)
+    @PostMapping("/kyc")
+    @ResponseBody
+    public AjaxResult kyc(@RequestBody TblUserInfo tblUserInfo) {
+        TblUserInfo userInfo = tblUserInfoService.selectTblUserInfoByUserId(getUserId());
+        tblUserInfo.setUiId(userInfo.getUiId());
+        tblUserInfo.setKycFlag("P");
+        tblUserInfoService.updateTblUserInfo(tblUserInfo);
+        return success();
+    }
     /**
      * 开卡
      */

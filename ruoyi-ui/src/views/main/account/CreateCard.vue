@@ -8,34 +8,36 @@
     <div class="kyc-form">
       <el-form ref="form" :model="form" label-width="100px">
         <el-form-item label="币种:">
-          <el-select
-            v-model="form.currency"
-            placeholder="请选择币种"
-            style="width: 100%"
-          >
-            <el-option label="人民币" value="人民币"></el-option>
+          <el-select v-model="form.curr" placeholder="请选择币种" clearable style="width:100%">
+            <el-option
+              v-for="dict in dict.type.bus_cur"
+              :key="dict.value"
+              :label="dict.label"
+              :value="dict.value"
+            />
           </el-select>
         </el-form-item>
 
         <el-form-item label="姓氏:">
-          <el-input v-model="form.surname"></el-input>
+          <el-input v-model="form.firstName"></el-input>
         </el-form-item>
 
         <el-form-item label="名:">
-          <el-input v-model="form.name"></el-input>
+          <el-input v-model="form.lastName"></el-input>
         </el-form-item>
 
         <el-form-item label="邮编:">
-          <el-input v-model="form.postalCode"></el-input>
+          <el-input v-model="form.postCode"></el-input>
         </el-form-item>
 
         <el-form-item label="国家(地区):">
-          <el-select
-            v-model="form.country"
-            placeholder="请选择国家(地区)"
-            style="width: 100%"
-          >
-            <el-option label="美国" value="美国"></el-option>
+          <el-select v-model="form.country" placeholder="请选择国家(地区)" clearable style="width:100%">
+            <el-option
+              v-for="dict in dict.type.buss_country"
+              :key="dict.value"
+              :label="dict.label"
+              :value="dict.value"
+            />
           </el-select>
         </el-form-item>
 
@@ -48,15 +50,15 @@
         </el-form-item>
 
         <el-form-item label="手机号前缀:">
-          <el-input v-model="form.phonePrefix"></el-input>
+          <el-input v-model="form.mobilePrefix"></el-input>
         </el-form-item>
 
         <el-form-item label="手机号码:">
-          <el-input v-model="form.phone"></el-input>
+          <el-input v-model="form.mobile"></el-input>
         </el-form-item>
 
         <el-form-item label="地址:">
-          <el-input v-model="form.adress"></el-input>
+          <el-input v-model="form.address"></el-input>
         </el-form-item>
 
         <el-form-item label="邮箱:">
@@ -64,22 +66,23 @@
         </el-form-item>
 
         <el-form-item label="证件类型:">
-          <el-select
-            v-model="form.document"
-            placeholder="请选择证件类型"
-            style="width: 100%"
-          >
-            <el-option label="护照" value="护照"></el-option>
+          <el-select v-model="form.idType" placeholder="请选择证件类型" clearable style="width:100%">
+            <el-option
+              v-for="dict in dict.type.buss_cert_type"
+              :key="dict.value"
+              :label="dict.label"
+              :value="dict.value"
+            />
           </el-select>
         </el-form-item>
 
         <el-form-item label="证件号码:">
-          <el-input v-model="form.documentNum"></el-input>
+          <el-input v-model="form.idNo"></el-input>
         </el-form-item>
 
         <el-form-item label="护照图片地址:">
           <el-input
-            v-model="form.Passport"
+            v-model="form.passportImg"
             :disabled="true"
             placeholder="选择文件"
           >
@@ -104,7 +107,7 @@
 
         <el-form-item label="手持证件照:">
           <el-input
-            v-model="form.IDPhoto"
+            v-model="form.faceImg"
             :disabled="true"
             placeholder="选择文件"
           >
@@ -132,7 +135,7 @@
           <el-date-picker
             type="date"
             placeholder="YYYY-MM-DD"
-            v-model="form.date"
+            v-model="form.birthday"
             style="width: 100%"
           ></el-date-picker>
         </el-form-item>
@@ -146,47 +149,74 @@
 </template>
 
 <script>
+import {kyc} from "@/api/custom/opencard";
+import {getUserProfile} from "@/api/system/user";
+import axios from "axios";
+import {getToken} from "@/utils/auth";
+
 export default {
+  dicts: ["bus_cur", "buss_country","buss_cert_type"],
   data() {
     return {
       form: {
-        currency: "人民币",
-        surname: "",
-        name: "",
-        postalCode: "",
-        country: "美国",
+        curr: "",
+        firstName: "",
+        lastName: "",
+        postCode: "",
+        country: "",
         province: "",
         city: "",
-        phonePrefix: "",
-        phone: "",
-        adress: "",
+        mobilePrefix: "",
+        mobile: "",
+        address: "",
         email: "",
-        document: "护照",
-        documentNum: "",
-        Passport: "",
-        IDPhoto: "",
-        date: "",
+        idType: "",
+        idNo: "",
+        passportImg: "",
+        faceImg: "",
+        birthday: "",
       },
 
+      urls: [],
       passportFile: null,
       IDPhotoFile: null,
     };
+  },
+  created() {
+    this.initData();
   },
   methods: {
     handleBack() {
       this.$router.push("/home/account/Created");
     },
 
-    onSubmit() {},
+    onSubmit() {
+      this.uploadImage();
+    },
+
+    realSubmit() {
+      if (this.urls != null && this.urls.length == 2) {
+        this.form.passportImg = this.urls[0];
+        this.form.faceImg = this.urls[1];
+        kyc(this.form).then(res => {
+          this.$alert(res.msg);
+        })
+      }
+    },
 
     openPassport() {
       document.getElementById("passportButton").click();
     },
     //护照地址
     passportChange(file) {
-      console.log(file);
-      this.form.Passport = file.name;
+      const isLt2M = file.size / 1024 / 1024 < 2
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+        return;
+      }
+      this.form.passportImg = file.name;
       this.passportFile = file.raw;
+      console.log(file);
     },
 
     openIDPhoto() {
@@ -194,9 +224,60 @@ export default {
     },
     //手持证件照
     IDPhotoChange(file) {
-      this.form.IDPhoto = file.name;
+      const isLt2M = file.size / 1024 / 1024 < 2
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+        return;
+      }
+
+      this.form.faceImg = file.name;
       this.IDPhotoFile = file.raw;
+      console.log(file);
     },
+
+    initData() {
+      getUserProfile().then(res =>{
+        this.form = res.userInfo;
+      })
+    },
+
+    uploadImage() {
+      if (this.passportFile == null || this.IDPhotoFile == null) {
+        this.$message.error("请先选择证照！");
+        return
+      }
+      const formData = new FormData();
+      formData.append('image', this.passportFile, this.form.passportImg);
+      axios.post(process.env.VUE_APP_BASE_API + '/common/uploadImage', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: "Bearer " + getToken()
+        }
+      })
+        .then(response => {
+          this.urls[0] = response.data.url;
+          if (this.urls[1] != null) {
+            this.realSubmit();
+          }
+        })
+
+      const formData1 = new FormData();
+      formData1.append('image', this.IDPhotoFile, this.form.faceImg);
+      axios.post(process.env.VUE_APP_BASE_API + '/common/uploadImage', formData1, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: "Bearer " + getToken()
+        }
+      })
+        .then(response => {
+          this.urls[1] = response.data.url;
+          if (this.urls[0] != null) {
+            this.realSubmit();
+          }
+        })
+
+      console.log(this.urls);
+    }
   },
 };
 </script>
