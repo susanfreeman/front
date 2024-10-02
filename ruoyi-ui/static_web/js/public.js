@@ -7,7 +7,7 @@ if(href.includes("en-us")) {
 	dom1 = `
 				<div class="head_inner">
 					<span>
-						<a href="/index.html"><img href="/index.html" class="logo" src="/img/depay.png" /></a>
+						<a href="/index.html"><img href="/index.html" class="logo" src="/img/logo.png" /></a>
 						<img class="menu" src="/img/menu.png" />
 						<img class="close" src="/img/close.png" />
 					</span>
@@ -61,7 +61,7 @@ if(href.includes("en-us")) {
 	dom1 = `
 			<div class="head_inner">
 				<span>
-					<a href="index.html"><img href="index.html" class="logo" src="img/depay.png" /></a>
+					<a href="index.html"><img href="index.html" class="logo" src="img/logo.png" /></a>
 					<img class="menu" src="img/menu.png" />
 					<img class="close" src="img/close.png" />
 				</span>

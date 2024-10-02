@@ -22,11 +22,11 @@ export default {
       content1: `Orbiter Account Terms and Conditions
                    1. Orbiter Account
                    1. These Orbiter Account Terms and Conditions are between you (the account holder) and Orbiter. By using your Orbiter Account, Card and the app, you are agreeing to these terms.
-                   2. The Orbiter Account is an e-money product so is not protected by the Financial Services Compensation Scheme (FSCS). However, your funds are held in a segregated account, which may only be used for the purpose of holding customer funds, and which is protected by safeguarding requirements under the Electronic Money Regulations 2011. These protections mean that in the unlikely event DEPAY TECH CO,. LTD became insolvent, the return of customer funds would take priority over all other creditors and uses other than in one respect, which is the cost of the insolvency proceedings. However, you should be aware that in an unusually severe insolvency event, some or all of your funds could be at risk and you could lose your money.
+                   2. The Orbiter Account is an e-money product so is not protected by the Financial Services Compensation Scheme (FSCS). However, your funds are held in a segregated account, which may only be used for the purpose of holding customer funds, and which is protected by safeguarding requirements under the Electronic Money Regulations 2011. These protections mean that in the unlikely event Orbiter TECH CO,. LTD became insolvent, the return of customer funds would take priority over all other creditors and uses other than in one respect, which is the cost of the insolvency proceedings. However, you should be aware that in an unusually severe insolvency event, some or all of your funds could be at risk and you could lose your money.
                    3. Your Orbiter Account is an e-money account with additional features, including Direct Debits and Faster Payments.
-                   4. Your Orbiter card is a VISA card provided by DEPAY TECH CO,. LTD.
+                   4. Your Orbiter card is a VISA card provided by Orbiter TECH CO,. LTD.
                   5. Protecting your privacy is very important to us. Please review our Privacy Notice to understand our commitment to maintaining your privacy. It also contains important information on the personal data we collect about you, how we process your personal data and who your personal data might be shared with.
-                  6. Your agreement with us includes these terms, along with the DEPAY TECH Terms and Conditions and our Privacy Notice. You can request a copy of any of these documents, by contacting us.
+                  6. Your agreement with us includes these terms, along with the Orbiter TECH Terms and Conditions and our Privacy Notice. You can request a copy of any of these documents, by contacting us.
                   7. Definitions
                   In these terms and conditions, the following words and phrases have the meanings shown next to them:
                   Continuous Payment Authority or Recurring payment – When you have given a company permission to regularly take money from your card; the company can request payment from your card whenever it is deemed that you owe them money
@@ -43,7 +43,7 @@ export default {
                   Orbiter Account – This is your e-money account as a whole which includes the main account you were issued with when applying, along with any other Extra Accounts you may have set up
                   Orbiter Card – A prepaid Visa Debit card provided for use with your Orbiter Account
                   Verifying your identity – The confirmation of your personal identity and information through checks performed when you open your Orbiter Account or upon requests for further information
-                  Website – The website, Orbiter.one, operated by DEPAY TECH CO,. LTD.
+                  Website – The website, Orbiter.one, operated by Orbiter TECH CO,. LTD.
                   Working day – A day between and including Monday to Friday, between 9am and 5pm (UK time) and Saturdays between 10am and 5pm (UK time) except for bank or public holidays in England and Wales
                   You/your – The person who has opened a Orbiter Account and is authorised to use the card and account as provided for in this agreement
                   3. Account set up and access
