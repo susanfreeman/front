@@ -593,7 +593,9 @@
 		height: auto;
 	}
 	.introduce1_outer {
-		margin-top: 110px;
+		/* margin-top: 110px; */
+    background-color: #FCD535 !important;
+    padding-bottom: 20px !important;
 	}
 	.introduce1_outer, .introduce1 {
 		/* width: 1080px; */

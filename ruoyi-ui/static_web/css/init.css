@@ -409,6 +409,7 @@ body {
 		padding: 11px 16px 6px;
 		display: block;
 		height: auto;
+
 	}
 	.lang_outer {
 		height: auto!important;
@@ -433,6 +434,7 @@ body {
 		height: 52px;
 		line-height: 52px;
 		padding-left: 20px;
+    color: #fff !important;
 	}
 	.head_inner .pc_btn {
 		width: 100%;
