@@ -49,10 +49,10 @@ export const constantRoutes = [
     path: "/home",
     redirect: "/home/account/account"
   },
-  // {
-  //   path: "/home/account",
-  //   redirect: "/home/account/account"
-  // },
+  {
+    path: "/home/account",
+    redirect: "/home/account/account"
+  },
   {
     path: "/home/notice",
     redirect: "/home/notice/notice-index"
