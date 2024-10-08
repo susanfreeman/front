@@ -111,6 +111,10 @@ public class SysRegisterService
         {
             msg = "密码长度必须在5到20个字符之间";
         }
+        else if (StringUtils.isEmpty(registerBody.getReCode()))
+        {
+            msg = "用户推荐不能为空";
+        }
         else if (!userService.checkUserNameUnique(sysUser))
         {
             msg = "保存用户'" + username + "'失败，注册账号已存在";

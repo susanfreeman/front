@@ -13,7 +13,7 @@
       </el-form-item>
 
       <el-form-item label="" prop="code">
-        <el-input v-model="registerForm.code" placeholder="请输入验证码">
+        <el-input v-model="registerForm.code" placeholder="请输入邮箱验证码">
           <el-button type="text" slot="suffix" @click="getCode">{{ codeInput }}</el-button>
         </el-input>
       </el-form-item>
@@ -38,13 +38,12 @@
         ></el-input>
       </el-form-item>
 
-      <el-form-item prop="code" v-if="captchaEnabled">
+      <el-form-item prop="validCode" v-if="captchaEnabled">
         <el-input
           v-model="registerForm.validCode"
           auto-complete="off"
           placeholder="验证码"
           style="width: 63%"
-          @keyup.enter.native="handleRegister"
         >
           <svg-icon slot="prefix" icon-class="validCode" class="el-input__icon input-icon" />
         </el-input>
@@ -53,10 +52,11 @@
         </div>
       </el-form-item>
 
-      <el-form-item label="">
+      <el-form-item label="" prop="reCode">
         <el-input
           v-model="registerForm.reCode"
-          placeholder="请输入推荐码（选填）"
+          placeholder="请输入推荐码（必填）"
+          @keyup.enter.native="handleRegister"
         ></el-input>
       </el-form-item>
     </el-form>
@@ -104,11 +104,11 @@ import {captchaEmail, getCodeImg, register} from "@/api/login";
               trigger: ['blur', 'change']
             }
           ],
-          code: [{ required: true, message: '请输入验证码', trigger: 'blur' }],
-          pass: [
-            { required: true, message: '请输入登录密码', trigger: 'blur' }
-          ],
-          rePass: [{ validator: validatePass2, trigger: 'blur' }]
+          code: [{ required: true, message: '请输入邮箱验证码', trigger: 'blur' }],
+          pass: [{ required: true, message: '请输入登录密码', trigger: 'blur' }],
+          rePass: [{ validator: validatePass2, trigger: 'blur' }],
+          validCode: [{ required: true, message: '请输入验证码', trigger: 'blur' }],
+          reCode: [{ required: true, message: '请输入推荐码', trigger: 'blur' }]
         },
         codeUrl:"",
         codeDisabled: false,
@@ -164,7 +164,7 @@ import {captchaEmail, getCodeImg, register} from "@/api/login";
       },
 
       handleRegister() {
-        this.$refs.registerForm.validate((valid) => {
+        this.$refs.registerForm.validate(valid => {
           if (valid) {
             this.loading = true;
             const username = this.registerForm.username;
@@ -181,10 +181,6 @@ import {captchaEmail, getCodeImg, register} from "@/api/login";
                 this.getVerifyCode();
               }
             })
-          //
-          // } else {
-          //   console.log('error submit!!')
-          //   return false
           }
         })
       }
