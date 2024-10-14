@@ -120,13 +120,17 @@ if(href.includes("en-us")) {
 //body.insertBefore(header, first);
 let header = document.querySelector(".head")
 let menu = document.querySelector(".menu")
+let bubble = document.querySelector(".bubble-container")
+
 menu.onclick = function() {
 	header.setAttribute("class", "head head_show");
+  bubble.style.display = "none"
 }
 
 let close = document.querySelector(".close")
 close.onclick = function() {
 	header.setAttribute("class", "head");
+  bubble.style.display = "block"
 }
 
 $(".lang_outer").click(function() {

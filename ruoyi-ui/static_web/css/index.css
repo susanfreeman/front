@@ -629,9 +629,15 @@
 		padding-left: 17px;
 		margin: 10px 0 16px;
 	}
+  .iphone_word {
+    display: none;
+  }
 	.down_b {
 		padding-left: 17px;
 	}
+  .down_b .ios {
+    display: none;
+  }
 	.app_word {
 		font-size: 12px;
 		font-weight: 400;
@@ -658,10 +664,10 @@
 		overflow: hidden;
 		margin: 0 auto 10px;
 		padding: 32px 16px;
-    	display: flex;
-    	flex-direction: column;
-    	align-items: center;
-    	justify-content: center !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center !important;
 	}
 	.introduce3_l {
 		width: 100%;
