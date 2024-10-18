@@ -67,8 +67,8 @@ if(href.includes("en-us")) {
 				</span>
 				<div>
 					<div class="pc_btn">
-						<a class="login" href="/web-app/Login">登录</a>
-						<a class="register" href="/web-app/agreement">注册</a>
+            <a class="login" href="https://www.orbiterwallet.com/login/login">登录</a>
+            <a class="register" href="https://www.orbiterwallet.com/login/agreement">注册</a>
 					</div>
 					<a href="rights.html">卡片权益</a>
 					<a href="faq.html">帮助中心</a>
